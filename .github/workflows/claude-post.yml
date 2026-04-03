@@ -177,11 +177,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
 
-      - name: Notify Google Indexing API
+- name: Notify Google Indexing API
         run: |
           pip install google-auth requests --quiet
           python3 << 'PYEOF'
           import json, requests, os
+          import google.auth.transport.requests
           from google.oauth2 import service_account
 
           filename = open("/tmp/post_filename.txt").read().strip()
@@ -189,7 +190,9 @@ jobs:
           creds = service_account.Credentials.from_service_account_info(
               key, scopes=["https://www.googleapis.com/auth/indexing"]
           )
-          creds.refresh(requests.Request())
+
+          auth_req = google.auth.transport.requests.Request()
+          creds.refresh(auth_req)
 
           url = f"https://ecothrifthome.com/blog/{filename}"
           resp = requests.post(
