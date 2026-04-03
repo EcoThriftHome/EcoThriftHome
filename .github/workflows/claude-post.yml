@@ -1,0 +1,28 @@
+name: Claude Blog Post
+
+on:
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: 'File name (e.g. my-post.html)'
+        required: true
+      content:
+        description: 'Full HTML content of the post'
+        required: true
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Write post file
+        run: echo "${{ github.event.inputs.content }}" > "blog/${{ github.event.inputs.filename }}"
+      - name: Commit and push
+        run: |
+          git config user.email "claude-bot@ecothrifthome.com"
+          git config user.name "Claude Bot"
+          git add .
+          git commit -m "New post: ${{ github.event.inputs.filename }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
