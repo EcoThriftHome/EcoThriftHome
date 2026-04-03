@@ -44,20 +44,192 @@ jobs:
 
           Write a complete, publish-ready HTML blog post about: {topic}
 
-          REQUIREMENTS:
-          - Follow the exact HTML structure of the site (Inter/Merriweather fonts, ../css/style.css, ../js/main.js)
-          - Include full SEO meta tags, Open Graph, Twitter Card
-          - Include Article + FAQ + Breadcrumb schema.org JSON-LD
-          - Post hero section with class="post-hero" including .post-hero-stats with 3 stats
-          - Article in class="post-layout container" with aside class="post-sidebar"
-          - Sidebar: related posts linking to led-bulb-upgrade-save-200-per-year.html, smart-thermostat-habits-save-180-per-year.html, smart-power-strips-stop-phantom-power.html
-          - 2 Amazon product recommendations with affiliate tag: stangandco0b-20 using amazon.com/s?k= search URLs
-          - FAQ section (H3 questions matching FAQ schema)
-          - Affiliate disclosure at bottom
-          - Standard EcoThrift header and footer (logo, full nav, Pinterest link)
-          - Published date: {today} ({today_nice})
+          Published date: {today} ({today_nice})
+          Canonical URL: https://ecothrifthome.com/blog/SLUG.html (replace SLUG with a descriptive slug)
+
+          YOU MUST USE THESE EXACT HTML STRUCTURES — DO NOT INVENT YOUR OWN:
+
+          HEAD (copy exactly, only change title/meta content):
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+          <link rel="stylesheet" href="../css/style.css">
+
+          HEADER (copy exactly):
+          <header class="site-header" role="banner">
+            <div class="container">
+              <div class="header-inner">
+                <a href="/" class="logo" aria-label="EcoThrift Home - Homepage">
+                  <span class="logo-icon" aria-hidden="true">🌿</span>
+                  <div class="logo-text">
+                    <span class="logo-name">EcoThrift Home</span>
+                    <span class="logo-tagline">Save Energy. Save Money.</span>
+                  </div>
+                </a>
+                <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+                  <span></span><span></span><span></span>
+                </button>
+                <nav id="main-nav" class="main-nav" role="navigation" aria-label="Main navigation">
+                  <ul role="list">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#blog-posts">Blog Posts</a></li>
+                    <li><a href="/#savings-calculator">Savings Calculator</a></li>
+                    <li><a href="/#top-products">Top Products</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </header>
+
+          POST HERO (copy structure exactly):
+          <div class="post-hero">
+            <div class="container">
+              <nav class="post-breadcrumb" aria-label="Breadcrumb">
+                <a href="/">Home</a>
+                <span class="sep" aria-hidden="true">›</span>
+                <a href="/#blog-posts">Blog</a>
+                <span class="sep" aria-hidden="true">›</span>
+                <span aria-current="page">[SHORT TITLE]</span>
+              </nav>
+              <div class="post-meta">
+                <span class="post-category">[CATEGORY]</span>
+                <span class="post-date"><time datetime="{today}">{today_nice}</time></span>
+                <span class="post-read-time">[X] min read</span>
+              </div>
+              <h1>[FULL H1 TITLE]</h1>
+              <p class="post-subtitle">[SUBTITLE]</p>
+              <div class="post-hero-stats" aria-label="Key statistics">
+                <div class="stat"><span class="stat-value">[VALUE]</span><span class="stat-label">[LABEL]</span></div>
+                <div class="stat"><span class="stat-value">[VALUE]</span><span class="stat-label">[LABEL]</span></div>
+                <div class="stat"><span class="stat-value">[VALUE]</span><span class="stat-label">[LABEL]</span></div>
+              </div>
+            </div>
+          </div>
+
+          MAIN LAYOUT (copy exactly):
+          <div class="post-layout container">
+            <article class="post-content" id="article-main">
+              [ARTICLE CONTENT HERE]
+            </article>
+            <aside class="post-sidebar" aria-label="Related posts and resources">
+              [SIDEBAR HERE]
+            </aside>
+          </div>
+
+          AMAZON PRODUCT CARDS (copy exactly, use this structure for every product):
+          <div class="product-rec" itemscope itemtype="https://schema.org/Product">
+            <h4 itemprop="name">🥇 [PRODUCT NAME]</h4>
+            <p itemprop="description">[DESCRIPTION]</p>
+            <div class="product-rec-meta">
+              <span class="rec-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <span itemprop="priceCurrency" content="USD">~</span>
+                <span itemprop="price">[PRICE]</span>
+              </span>
+              <span class="rec-savings">[SAVINGS STAT]</span>
+            </div>
+            <a href="https://www.amazon.com/s?k=[URL-ENCODED-PRODUCT-NAME]&tag=stangandco0b-20"
+               class="btn btn-amazon"
+               rel="nofollow sponsored noopener noreferrer"
+               target="_blank"
+               aria-label="Buy [PRODUCT] on Amazon (affiliate link, opens in new tab)">
+              <i class="fab fa-amazon" aria-hidden="true"></i> Check Price on Amazon
+            </a>
+          </div>
+
+          SIDEBAR (copy exactly):
+          <div class="sidebar-widget">
+            <h4>Related Posts</h4>
+            <div class="sidebar-posts">
+              <div class="sidebar-post">
+                <a href="led-bulb-upgrade-save-200-per-year.html">
+                  <span class="sidebar-post-icon" aria-hidden="true">💡</span>
+                  <div><h5>The $30 LED Upgrade That Cuts Your Lighting Bill by 80%</h5><p>Saves up to $200/yr</p></div>
+                </a>
+              </div>
+              <div class="sidebar-post">
+                <a href="smart-thermostat-habits-save-180-per-year.html">
+                  <span class="sidebar-post-icon" aria-hidden="true">🌡️</span>
+                  <div><h5>Smart Thermostat Habits That Save $180/Year</h5><p>Saves up to $180/yr</p></div>
+                </a>
+              </div>
+              <div class="sidebar-post">
+                <a href="smart-power-strips-stop-phantom-power.html">
+                  <span class="sidebar-post-icon" aria-hidden="true">🔌</span>
+                  <div><h5>Smart Power Strips: Stop Phantom Power</h5><p>Saves up to $100/yr</p></div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="sidebar-widget">
+            <h4>Quick Savings Facts</h4>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:.625rem;">
+              <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
+              <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
+              <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
+              <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
+              <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
+            </ul>
+          </div>
+          <div class="post-cta-box">
+            <h4>Calculate Your Savings</h4>
+            <p>See how much your household can save with our free calculator.</p>
+            <a href="/#savings-calculator" class="btn btn-primary">Open Calculator</a>
+          </div>
+
+          FOOTER (copy exactly):
+          <footer class="site-footer" role="contentinfo">
+            <div class="container">
+              <div class="footer-grid">
+                <div class="footer-brand">
+                  <a href="/" class="logo footer-logo" aria-label="EcoThrift Home">
+                    <span aria-hidden="true">🌿</span>
+                    <div><span class="logo-name">EcoThrift Home</span><span class="logo-tagline">Save Energy. Save Money.</span></div>
+                  </a>
+                  <p>Evidence-based, budget-first energy saving tips for every home.</p>
+                </div>
+                <nav class="footer-nav" aria-label="Footer navigation">
+                  <h3>Explore</h3>
+                  <ul role="list">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#blog-posts">Blog Posts</a></li>
+                    <li><a href="/#top-products">Top Products</a></li>
+                    <li><a href="/#faq">FAQs</a></li>
+                  </ul>
+                </nav>
+                <nav class="footer-nav" aria-label="Company navigation">
+                  <h3>Company</h3>
+                  <ul role="list">
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                    <li><a href="/about.html#affiliate-disclosure">Disclosure</a></li>
+                    <li><a href="/privacy.html">Privacy</a></li>
+                  </ul>
+                </nav>
+                <div class="footer-social">
+                  <h3>Follow</h3>
+                  <div class="social-links">
+                    <a href="https://pinterest.com/ecothrifthome" rel="noopener noreferrer" target="_blank" aria-label="Pinterest"><i class="fab fa-pinterest" aria-hidden="true"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="footer-bottom">
+                <p class="affiliate-disclosure"><strong>Affiliate Disclosure:</strong> EcoThrift Home is a participant in the Amazon Services LLC Associates Program. As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.</p>
+                <p class="copyright">&copy; <span id="current-year"></span> EcoThrift Home. All rights reserved.</p>
+              </div>
+            </div>
+          </footer>
+          <script src="../js/main.js"></script>
+
+          ALSO REQUIRED:
+          - Include Article + FAQ + Breadcrumb schema.org JSON-LD in <head>
+          - Key takeaway box: <div class="key-takeaway" role="note"><strong>Key Takeaway:</strong> [ONE SENTENCE]</div>
+          - A savings comparison <table class="savings-table"> with thead and tbody
+          - An authoritative <blockquote> citing EPA, DOE, or ENERGY STAR
+          - Affiliate disclosure paragraph before closing article tag
           - 1200-1800 words of body content
-          - canonical URL: https://ecothrifthome.com/blog/SLUG.html
 
           Return ONLY the raw HTML. No explanation, no markdown fences. Start with <!DOCTYPE html> and end with </html>."""
 
