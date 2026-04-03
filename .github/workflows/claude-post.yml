@@ -2,8 +2,8 @@ name: Auto Blog Post
 
 on:
   schedule:
-    - cron: '0 14 * * 1,3,4,6'  # Every Monday & Thursday at 9am CT
-  workflow_dispatch:        # Keep manual trigger too
+    - cron: '0 14 * * 1,3,4,6'
+  workflow_dispatch:
     inputs:
       postname:
         description: 'Optional filename override'
@@ -33,7 +33,7 @@ jobs:
           pip install anthropic --quiet
 
           python3 << 'PYEOF'
-          import anthropic, json, re, os
+          import anthropic, re, os
           from datetime import date
 
           topic = os.environ["TOPIC"]
@@ -54,7 +54,7 @@ jobs:
           - 2 Amazon product recommendations with affiliate tag: stangandco0b-20 using amazon.com/s?k= search URLs
           - FAQ section (H3 questions matching FAQ schema)
           - Affiliate disclosure at bottom
-          - Standard EcoThrift header and footer (logo 🌿, full nav, Pinterest link)
+          - Standard EcoThrift header and footer (logo, full nav, Pinterest link)
           - Published date: {today} ({today_nice})
           - 1200-1800 words of body content
           - canonical URL: https://ecothrifthome.com/blog/SLUG.html
@@ -63,14 +63,13 @@ jobs:
 
           client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
           message = client.messages.create(
-              model="claude-opus-4-5",
+              model="claude-sonnet-4-6",
               max_tokens=8000,
               messages=[{"role": "user", "content": prompt}]
           )
 
           html = message.content[0].text.strip()
 
-          # Extract slug from canonical URL in the HTML
           match = re.search(r'ecothrifthome\.com/blog/([a-z0-9-]+)\.html', html)
           slug = match.group(1) if match else f"post-{today}"
           filename = f"{slug}.html"
@@ -87,100 +86,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TOPIC: ${{ steps.topic.outputs.topic }}
 
-      - name: Commit and push
-        run: |
-          FILENAME=$(cat /tmp/post_filename.txt)
-          git config user.email "claude-bot@ecothrifthome.com"
-          git config user.name "Claude Bot"
-          git add .
-          git commit -m "Auto post: $FILENAME"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
-- name: Update homepage
-        run: |
-          python3 << 'PYEOF'
-          import re, os
-          from datetime import date
-
-          filename = open("/tmp/post_filename.txt").read().strip()
-          slug = filename.replace(".html", "")
-          today = date.today().strftime("%Y-%m-%d")
-          today_nice = date.today().strftime("%B %-d, %Y")
-
-          # Read the generated post to extract title, description, category, emoji
-          with open(f"blog/{filename}") as f:
-              post_html = f.read()
-
-          title_match = re.search(r'<h1[^>]*>(.+?)</h1>', post_html, re.DOTALL)
-          desc_match  = re.search(r'<meta name="description" content="([^"]+)"', post_html)
-          cat_match   = re.search(r'<span class="post-category"[^>]*>([^<]+)</span>', post_html)
-          save_match  = re.search(r'Save up to \$?([\d,]+)', post_html)
-          read_match  = re.search(r'(\d+) min read', post_html)
-
-          title    = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else slug.replace("-", " ").title()
-          desc     = desc_match.group(1) if desc_match else "A practical guide to saving energy and money at home."
-          category = cat_match.group(1).strip() if cat_match else "Energy Saving"
-          savings  = save_match.group(1) if save_match else "100"
-          readtime = read_match.group(1) if read_match else "6"
-
-          # Pick an emoji based on category keywords
-          emoji_map = {
-              "light": "💡", "bulb": "💡",
-              "heat": "🌡️", "cool": "🌡️", "thermo": "🌡️",
-              "power": "🔌", "strip": "🔌", "phantom": "🔌", "vampire": "🧛",
-              "water": "🚰", "shower": "🚰",
-              "window": "🪟", "draft": "🌬️", "seal": "🌬️",
-              "solar": "☀️", "panel": "☀️",
-              "washer": "🫧", "laundry": "🫧",
-              "fridge": "🧊", "freezer": "🧊",
-          }
-          emoji = "⚡"
-          title_lower = title.lower()
-          for keyword, icon in emoji_map.items():
-              if keyword in title_lower:
-                  emoji = icon
-                  break
-
-          new_card = f"""
-          <!-- Post: {slug} -->
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/{filename}" class="post-card-link" aria-label="Read: {title}">
-              <div class="post-card-img" aria-hidden="true">
-                <span class="post-icon">{emoji}</span>
-                <div class="savings-badge" aria-label="Annual savings up to ${savings}">Save up to ${savings}/yr</div>
-              </div>
-              <div class="post-card-body">
-                <div class="post-meta">
-                  <span class="post-category" aria-label="Category: {category}">{category}</span>
-                  <time datetime="{today}" itemprop="datePublished">{today_nice}</time>
-                </div>
-                <h3 itemprop="headline">{title}</h3>
-                <p itemprop="description">{desc}</p>
-                <div class="post-footer">
-                  <span class="read-time" aria-label="{readtime} minute read"><i class="far fa-clock" aria-hidden="true"></i> {readtime} min read</span>
-                  <span class="read-more" aria-hidden="true">Read Guide →</span>
-                </div>
-              </div>
-            </a>
-          </article>
-"""
-
-          with open("index.html") as f:
-              index = f.read()
-
-          # Insert before the closing </div><!-- /.posts-grid --> tag
-          updated = index.replace(
-              '        </div><!-- /.posts-grid -->',
-              new_card + '        </div><!-- /.posts-grid -->'
-          )
-
-          with open("index.html", "w") as f:
-              f.write(updated)
-
-          print(f"Homepage updated with card for: {filename}")
-          PYEOF
-          - name: Update homepage
+      - name: Update homepage
         run: |
           python3 << 'PYEOF'
           import re, os
@@ -259,6 +165,18 @@ jobs:
 
           print(f"Homepage updated with card for: {filename}")
           PYEOF
+
+      - name: Commit and push
+        run: |
+          FILENAME=$(cat /tmp/post_filename.txt)
+          git config user.email "claude-bot@ecothrifthome.com"
+          git config user.name "Claude Bot"
+          git add .
+          git commit -m "Auto post: $FILENAME"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
+
       - name: Notify Google Indexing API
         run: |
           pip install google-auth requests --quiet
