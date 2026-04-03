@@ -180,6 +180,85 @@ jobs:
 
           print(f"Homepage updated with card for: {filename}")
           PYEOF
+          - name: Update homepage
+        run: |
+          python3 << 'PYEOF'
+          import re, os
+          from datetime import date
+
+          filename = open("/tmp/post_filename.txt").read().strip()
+          slug = filename.replace(".html", "")
+          today = date.today().strftime("%Y-%m-%d")
+          today_nice = date.today().strftime("%B %-d, %Y")
+
+          with open(f"blog/{filename}") as f:
+              post_html = f.read()
+
+          title_match = re.search(r'<h1[^>]*>(.+?)</h1>', post_html, re.DOTALL)
+          desc_match  = re.search(r'<meta name="description" content="([^"]+)"', post_html)
+          cat_match   = re.search(r'<span class="post-category"[^>]*>([^<]+)</span>', post_html)
+          save_match  = re.search(r'Save up to \$?([\d,]+)', post_html)
+          read_match  = re.search(r'(\d+) min read', post_html)
+
+          title    = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else slug.replace("-", " ").title()
+          desc     = desc_match.group(1) if desc_match else "A practical guide to saving energy and money at home."
+          category = cat_match.group(1).strip() if cat_match else "Energy Saving"
+          savings  = save_match.group(1) if save_match else "100"
+          readtime = read_match.group(1) if read_match else "6"
+
+          emoji_map = {
+              "light": "💡", "bulb": "💡",
+              "heat": "🌡️", "cool": "🌡️", "thermo": "🌡️",
+              "power": "🔌", "strip": "🔌", "phantom": "🔌", "vampire": "🧛",
+              "water": "🚰", "shower": "🚰",
+              "window": "🪟", "draft": "🌬️", "seal": "🌬️",
+              "solar": "☀️", "panel": "☀️",
+              "washer": "🫧", "laundry": "🫧",
+              "fridge": "🧊", "freezer": "🧊",
+          }
+          emoji = "⚡"
+          for keyword, icon in emoji_map.items():
+              if keyword in title.lower():
+                  emoji = icon
+                  break
+
+          new_card = f"""
+          <!-- Post: {slug} -->
+          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/{filename}" class="post-card-link" aria-label="Read: {title}">
+              <div class="post-card-img" aria-hidden="true">
+                <span class="post-icon">{emoji}</span>
+                <div class="savings-badge" aria-label="Annual savings up to ${savings}">Save up to ${savings}/yr</div>
+              </div>
+              <div class="post-card-body">
+                <div class="post-meta">
+                  <span class="post-category" aria-label="Category: {category}">{category}</span>
+                  <time datetime="{today}" itemprop="datePublished">{today_nice}</time>
+                </div>
+                <h3 itemprop="headline">{title}</h3>
+                <p itemprop="description">{desc}</p>
+                <div class="post-footer">
+                  <span class="read-time" aria-label="{readtime} minute read"><i class="far fa-clock" aria-hidden="true"></i> {readtime} min read</span>
+                  <span class="read-more" aria-hidden="true">Read Guide →</span>
+                </div>
+              </div>
+            </a>
+          </article>
+"""
+
+          with open("index.html") as f:
+              index = f.read()
+
+          updated = index.replace(
+              '   </div><!-- /.posts-grid -->',
+              new_card + '   </div><!-- /.posts-grid -->'
+          )
+
+          with open("index.html", "w") as f:
+              f.write(updated)
+
+          print(f"Homepage updated with card for: {filename}")
+          PYEOF
       - name: Notify Google Indexing API
         run: |
           pip install google-auth requests --quiet
