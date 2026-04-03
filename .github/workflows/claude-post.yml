@@ -1,5 +1,11 @@
+inputs:
+      filename:
+        description: 'Raw Gist URL of the file'
+        required: true
+      postname:
+        description: 'File name to save as (e.g. my-post.html)'
+        required: true
 name: Claude Blog Post
-
 on:
   workflow_dispatch:
     inputs:
