@@ -1,14 +1,13 @@
-name: Claude Blog Post
+name: Auto Blog Post
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '0 14 * * 1,4'  # Every Monday & Thursday at 9am CT
+  workflow_dispatch:        # Keep manual trigger too
     inputs:
-      filename:
-        description: 'Raw Gist URL of the file'
-        required: true
       postname:
-        description: 'File name to save as (e.g. my-post.html)'
-        required: true
+        description: 'Optional filename override'
+        required: false
 
 jobs:
   post:
@@ -20,16 +19,81 @@ jobs:
         with:
           token: ${{ secrets.CLAUDE_PAT }}
 
-      - name: Download post file
+      - name: Pick next topic
+        id: topic
         run: |
-          curl -L "${{ github.event.inputs.filename }}" -o "blog/${{ github.event.inputs.postname }}"
+          TOPIC=$(grep -v '^#' topics.txt | grep -v '^$' | head -1)
+          echo "topic=$TOPIC" >> $GITHUB_OUTPUT
+          sed -i "0,/^${TOPIC}/s/^${TOPIC}/# done: ${TOPIC}/" topics.txt
+          echo "Picked topic: $TOPIC"
+
+      - name: Generate post with Claude
+        id: generate
+        run: |
+          pip install anthropic --quiet
+
+          python3 << 'PYEOF'
+          import anthropic, json, re, os
+          from datetime import date
+
+          topic = os.environ["TOPIC"]
+          today = date.today().strftime("%Y-%m-%d")
+          today_nice = date.today().strftime("%B %-d, %Y")
+
+          prompt = f"""You are a content writer for EcoThrift Home (ecothrifthome.com), a blog about evidence-based, budget-first energy saving tips for homeowners. Tone: practical, friendly, data-driven. Never salesy.
+
+          Write a complete, publish-ready HTML blog post about: {topic}
+
+          REQUIREMENTS:
+          - Follow the exact HTML structure of the site (Inter/Merriweather fonts, ../css/style.css, ../js/main.js)
+          - Include full SEO meta tags, Open Graph, Twitter Card
+          - Include Article + FAQ + Breadcrumb schema.org JSON-LD
+          - Post hero section with class="post-hero" including .post-hero-stats with 3 stats
+          - Article in class="post-layout container" with aside class="post-sidebar"
+          - Sidebar: related posts linking to led-bulb-upgrade-save-200-per-year.html, smart-thermostat-habits-save-180-per-year.html, smart-power-strips-stop-phantom-power.html
+          - 2 Amazon product recommendations with affiliate tag: stangandco0b-20 using amazon.com/s?k= search URLs
+          - FAQ section (H3 questions matching FAQ schema)
+          - Affiliate disclosure at bottom
+          - Standard EcoThrift header and footer (logo 🌿, full nav, Pinterest link)
+          - Published date: {today} ({today_nice})
+          - 1200-1800 words of body content
+          - canonical URL: https://ecothrifthome.com/blog/SLUG.html
+
+          Return ONLY the raw HTML. No explanation, no markdown fences. Start with <!DOCTYPE html> and end with </html>."""
+
+          client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+          message = client.messages.create(
+              model="claude-opus-4-5",
+              max_tokens=8000,
+              messages=[{"role": "user", "content": prompt}]
+          )
+
+          html = message.content[0].text.strip()
+
+          # Extract slug from canonical URL in the HTML
+          match = re.search(r'ecothrifthome\.com/blog/([a-z0-9-]+)\.html', html)
+          slug = match.group(1) if match else f"post-{today}"
+          filename = f"{slug}.html"
+
+          with open(f"blog/{filename}", "w") as f:
+              f.write(html)
+
+          with open("/tmp/post_filename.txt", "w") as f:
+              f.write(filename)
+
+          print(f"Generated: {filename}")
+          PYEOF
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TOPIC: ${{ steps.topic.outputs.topic }}
 
       - name: Commit and push
         run: |
+          FILENAME=$(cat /tmp/post_filename.txt)
           git config user.email "claude-bot@ecothrifthome.com"
           git config user.name "Claude Bot"
           git add .
-          git commit -m "New post: ${{ github.event.inputs.postname }}"
+          git commit -m "Auto post: $FILENAME"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
@@ -38,21 +102,23 @@ jobs:
         run: |
           pip install google-auth requests --quiet
           python3 << 'PYEOF'
-          import json, requests
+          import json, requests, os
           from google.oauth2 import service_account
 
-          key = json.loads('''${{ secrets.GOOGLE_INDEXING_KEY }}''')
+          filename = open("/tmp/post_filename.txt").read().strip()
+          key = json.loads(os.environ["GOOGLE_INDEXING_KEY"])
           creds = service_account.Credentials.from_service_account_info(
-              key,
-              scopes=["https://www.googleapis.com/auth/indexing"]
+              key, scopes=["https://www.googleapis.com/auth/indexing"]
           )
           creds.refresh(requests.Request())
 
-          url = "https://ecothrifthome.com/blog/${{ github.event.inputs.postname }}"
+          url = f"https://ecothrifthome.com/blog/{filename}"
           resp = requests.post(
               "https://indexing.googleapis.com/v3/urlNotifications:publish",
               headers={"Authorization": f"Bearer {creds.token}"},
               json={"url": url, "type": "URL_UPDATED"}
           )
-          print(f"Indexing response: {resp.status_code} — {resp.text}")
+          print(f"Indexed: {url} — {resp.status_code}")
           PYEOF
+        env:
+          GOOGLE_INDEXING_KEY: ${{ secrets.GOOGLE_INDEXING_KEY }}
