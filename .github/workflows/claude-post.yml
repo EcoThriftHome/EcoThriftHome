@@ -14,9 +14,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.CLAUDE_PAT }}
-      - name: Download post file
+          - name: Download post file
         run: |
-          curl -L "${{ github.event.inputs.filename }}" -o "blog/$(basename '${{ github.event.inputs.filename }}')"
+          FILENAME="${{ github.event.inputs.filename }}"
+          curl -L "$FILENAME" -o "blog/${{ github.event.inputs.postname }}"
       - name: Commit and push
         run: |
           git config user.email "claude-bot@ecothrifthome.com"
