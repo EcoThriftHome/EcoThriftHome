@@ -128,29 +128,29 @@ jobs:
                   emoji = icon
                   break
 
-          new_card = f"""
-          <!-- Post: {slug} -->
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/{filename}" class="post-card-link" aria-label="Read: {title}">
-              <div class="post-card-img" aria-hidden="true">
-                <span class="post-icon">{emoji}</span>
-                <div class="savings-badge" aria-label="Annual savings up to ${savings}">Save up to ${savings}/yr</div>
-              </div>
-              <div class="post-card-body">
-                <div class="post-meta">
-                  <span class="post-category" aria-label="Category: {category}">{category}</span>
-                  <time datetime="{today}" itemprop="datePublished">{today_nice}</time>
-                </div>
-                <h3 itemprop="headline">{title}</h3>
-                <p itemprop="description">{desc}</p>
-                <div class="post-footer">
-                  <span class="read-time" aria-label="{readtime} minute read"><i class="far fa-clock" aria-hidden="true"></i> {readtime} min read</span>
-                  <span class="read-more" aria-hidden="true">Read Guide →</span>
-                </div>
-              </div>
-            </a>
-          </article>
-"""
+          new_card = (
+              '\n          <!-- Post: ' + slug + ' -->\n'
+              '          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">\n'
+              '            <a href="blog/' + filename + '" class="post-card-link" aria-label="Read: ' + title + '">\n'
+              '              <div class="post-card-img" aria-hidden="true">\n'
+              '                <span class="post-icon">' + emoji + '</span>\n'
+              '                <div class="savings-badge">Save up to $' + savings + '/yr</div>\n'
+              '              </div>\n'
+              '              <div class="post-card-body">\n'
+              '                <div class="post-meta">\n'
+              '                  <span class="post-category">' + category + '</span>\n'
+              '                  <time datetime="' + today + '" itemprop="datePublished">' + today_nice + '</time>\n'
+              '                </div>\n'
+              '                <h3 itemprop="headline">' + title + '</h3>\n'
+              '                <p itemprop="description">' + desc + '</p>\n'
+              '                <div class="post-footer">\n'
+              '                  <span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> ' + readtime + ' min read</span>\n'
+              '                  <span class="read-more" aria-hidden="true">Read Guide →</span>\n'
+              '                </div>\n'
+              '              </div>\n'
+              '            </a>\n'
+              '          </article>\n'
+          )
 
           with open("index.html") as f:
               index = f.read()
