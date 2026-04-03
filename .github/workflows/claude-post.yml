@@ -1,35 +1,58 @@
-inputs:
+name: Claude Blog Post
+
+on:
+  workflow_dispatch:
+    inputs:
       filename:
         description: 'Raw Gist URL of the file'
         required: true
       postname:
         description: 'File name to save as (e.g. my-post.html)'
         required: true
-name: Claude Blog Post
-on:
-  workflow_dispatch:
-    inputs:
-      filename:
-        description: 'File name (e.g. my-post.html)'
-        required: true
 
 jobs:
   post:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.CLAUDE_PAT }}
-          - name: Download post file
+
+      - name: Download post file
         run: |
-          FILENAME="${{ github.event.inputs.filename }}"
-          curl -L "$FILENAME" -o "blog/${{ github.event.inputs.postname }}"
+          curl -L "${{ github.event.inputs.filename }}" -o "blog/${{ github.event.inputs.postname }}"
+
       - name: Commit and push
         run: |
           git config user.email "claude-bot@ecothrifthome.com"
           git config user.name "Claude Bot"
           git add .
-          git commit -m "New post: $(basename '${{ github.event.inputs.filename }}')"
+          git commit -m "New post: ${{ github.event.inputs.postname }}"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
+
+      - name: Notify Google Indexing API
+        run: |
+          pip install google-auth requests --quiet
+          python3 << 'PYEOF'
+          import json, requests
+          from google.oauth2 import service_account
+
+          key = json.loads('''${{ secrets.GOOGLE_INDEXING_KEY }}''')
+          creds = service_account.Credentials.from_service_account_info(
+              key,
+              scopes=["https://www.googleapis.com/auth/indexing"]
+          )
+          creds.refresh(requests.Request())
+
+          url = "https://ecothrifthome.com/blog/${{ github.event.inputs.postname }}"
+          resp = requests.post(
+              "https://indexing.googleapis.com/v3/urlNotifications:publish",
+              headers={"Authorization": f"Bearer {creds.token}"},
+              json={"url": url, "type": "URL_UPDATED"}
+          )
+          print(f"Indexing response: {resp.status_code} — {resp.text}")
+          PYEOF
