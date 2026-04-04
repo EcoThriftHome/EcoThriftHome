@@ -1,6 +1,6 @@
 # done: weatherstripping and door seals to stop drafts
 # done: low-flow showerheads that save on water heating
-energy efficient window treatments and curtains
+# done: energy efficient window treatments and curtains
 unplugging phone chargers when not in use
 cold water laundry washing savings
 ceiling fans vs air conditioning costs
