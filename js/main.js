@@ -74,7 +74,7 @@ function calculateSavings() {
 })();
 
 /* ===== FAQ ACCORDION ===== */
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
   const questions = document.querySelectorAll('.faq-question');
   questions.forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -97,7 +97,7 @@ function calculateSavings() {
       }
     });
   });
-})();
+});
 
 /* ===== NEWSLETTER SIGNUP ===== */
 function handleNewsletterSignup(e) {
