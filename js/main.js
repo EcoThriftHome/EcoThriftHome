@@ -87,13 +87,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const otherId = other.getAttribute('aria-controls');
         const otherAnswer = document.getElementById(otherId);
         other.setAttribute('aria-expanded', 'false');
-        if (otherAnswer) otherAnswer.hidden = true;
+        if (otherAnswer) otherAnswer.style.display = 'none';
       });
 
       // Toggle this one
       if (!expanded) {
         this.setAttribute('aria-expanded', 'true');
-        if (answer) answer.hidden = false;
+        if (answer) answer.style.display = 'block';
       }
     });
   });
