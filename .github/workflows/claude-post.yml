@@ -3,10 +3,13 @@ name: Auto Blog Post
 on:
   schedule:
     - cron: '0 14 * * 1,3,4,6'
-  workflow_dispatch:
+workflow_dispatch:
     inputs:
+      filename:
+        description: 'Raw Gist URL of the file'
+        required: false
       postname:
-        description: 'Optional filename override'
+        description: 'File name to save as (e.g. my-post.html)'
         required: false
 
 jobs:
