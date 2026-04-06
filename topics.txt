@@ -4,7 +4,7 @@
 # done: unplugging phone chargers when not in use
 # done: cold water laundry washing savings
 # done: ceiling fans vs air conditioning costs
-programmable vs smart thermostat comparison
+# done: programmable vs smart thermostat comparison
 home energy audit how to do it yourself
 solar phone chargers and small devices
 best power usage monitors to track electricity
