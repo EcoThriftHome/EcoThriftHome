@@ -2,7 +2,7 @@ name: Auto Blog Post
 
 on:
   schedule:
-    - cron: '0 14 * * 1,4'
+    - cron: '0 14 * * 1,3,5'
   workflow_dispatch:
     inputs:
       filename:
@@ -358,6 +358,138 @@ jobs:
           PYEOF
 
 
+      - name: Generate and post 2 Pinterest pins
+        run: |
+          pip install anthropic Pillow requests --quiet
+          python3 << 'PINEOF'
+          import anthropic, re, os, json, time, base64
+          from PIL import Image, ImageDraw, ImageFont
+          from io import BytesIO
+
+          filename = open("/tmp/post_filename.txt").read().strip()
+          slug = filename.replace(".html", "")
+
+          with open(f"blog/{filename}") as f:
+              post_html = f.read()
+
+          title_match = re.search(r'<h1[^>]*>(.+?)</h1>', post_html, re.DOTALL)
+          desc_match  = re.search(r'<meta name="description" content="([^"]+)"', post_html)
+          save_match  = re.search(r'Save up to \$?([\d,]+)', post_html)
+
+          title    = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else slug.replace("-", " ").title()
+          desc     = desc_match.group(1) if desc_match else "Save money on energy at home."
+          savings  = save_match.group(1) if save_match else "100"
+          post_url = f"https://ecothrifthome.com/blog/{filename}"
+
+          client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+
+          pin_prompt = (
+              "Write 2 Pinterest pins for this EcoThrift Home blog post.\n"
+              f"Title: {title}\nDescription: {desc}\nSavings: ${savings}/yr\nURL: {post_url}\n\n"
+              "Pin 1: Lead with the savings amount, money-focused angle\n"
+              "Pin 2: Lead with how-it-works, educational angle\n\n"
+              "Each pin needs: headline (under 8 words), subheading (under 10 words), description (2-3 sentences + hashtags)\n\n"
+              'Return ONLY valid JSON, no explanation:\n'
+              '[{"headline":"...","subheading":"...","description":"..."},{"headline":"...","subheading":"...","description":"..."}]'
+          )
+
+          message = client.messages.create(
+              model="claude-sonnet-4-6",
+              max_tokens=800,
+              messages=[{"role": "user", "content": pin_prompt}]
+          )
+
+          pins = json.loads(message.content[0].text.strip())
+
+          PALETTES = [
+              {"bg": "#0F6E56", "accent": "#5DCAA5", "dark": "#085041", "text": "#E1F5EE", "muted": "#9FE1CB"},
+              {"bg": "#2C2C2A", "accent": "#EF9F27", "dark": "#444441", "text": "#F1EFE8", "muted": "#B4B2A9"},
+          ]
+
+          def wrap_text(draw, text, font, max_width):
+              words = text.split()
+              lines, current = [], ""
+              for word in words:
+                  test = (current + " " + word).strip()
+                  if draw.textbbox((0,0), test, font=font)[2] <= max_width:
+                      current = test
+                  else:
+                      if current: lines.append(current)
+                      current = word
+              if current: lines.append(current)
+              return lines
+
+          webhook_url = os.environ["ZAPIER_WEBHOOK_URL"]
+          board_id = "802977877252098630"
+
+          for i, (pin, palette) in enumerate(zip(pins, PALETTES), 1):
+              W, H = 1000, 1500
+              img = Image.new("RGB", (W, H), palette["bg"])
+              d = ImageDraw.Draw(img)
+
+              try:
+                  f_big = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 80)
+                  f_med = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 40)
+                  f_sm  = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 32)
+                  f_xs  = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24)
+              except:
+                  f_big = f_med = f_sm = f_xs = ImageFont.load_default()
+
+              d.rectangle([0, 0, W, 90], fill=palette["dark"])
+              d.text((40, 28), "EcoThrift Home - Save Energy. Save Money.", font=f_xs, fill=palette["accent"])
+
+              lines = wrap_text(d, pin["headline"], f_big, W-100)
+              y = 120
+              for line in lines:
+                  lw = d.textbbox((0,0), line, font=f_big)[2]
+                  d.text(((W-lw)//2, y), line, font=f_big, fill=palette["text"])
+                  y += 90
+
+              d.rounded_rectangle([80, y+10, W-80, y+16], radius=4, fill=palette["accent"])
+              y += 40
+
+              sub_lines = wrap_text(d, pin["subheading"], f_sm, W-120)
+              for line in sub_lines:
+                  lw = d.textbbox((0,0), line, font=f_sm)[2]
+                  d.text(((W-lw)//2, y), line, font=f_sm, fill=palette["muted"])
+                  y += 46
+
+              d.rounded_rectangle([80, H-320, W-80, H-200], radius=14, fill=palette["dark"])
+              sv = f"Save up to ${savings}/yr"
+              svw = d.textbbox((0,0), sv, font=f_med)[2]
+              d.text(((W-svw)//2, H-290), sv, font=f_med, fill=palette["accent"])
+
+              d.rounded_rectangle([80, H-180, W-80, H-90], radius=12, fill=palette["accent"])
+              cta = "Read the full guide"
+              ctw = d.textbbox((0,0), cta, font=f_med)[2]
+              d.text(((W-ctw)//2, H-165), cta, font=f_med, fill=palette["dark"])
+
+              urlw = d.textbbox((0,0), "ecothrifthome.com", font=f_xs)[2]
+              d.text(((W-urlw)//2, H-70), "ecothrifthome.com", font=f_xs, fill=palette["muted"])
+
+              # Save to temp, convert to base64 for webhook
+              buf = BytesIO()
+              img.save(buf, format="PNG")
+              b64 = base64.b64encode(buf.getvalue()).decode()
+
+              payload = {
+                  "title":       pin["headline"],
+                  "description": pin["description"],
+                  "image_b64":   b64,
+                  "post_url":    post_url,
+                  "board_id":    board_id,
+                  "pin_number":  i
+              }
+              resp = requests.post(webhook_url, json=payload)
+              print(f"Pin {i} webhook fired: {resp.status_code}")
+              time.sleep(5)
+
+          print("Pinterest pins posted successfully")
+          PINEOF
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ZAPIER_WEBHOOK_URL: ${{ secrets.ZAPIER_WEBHOOK_URL }}
+
       - name: Commit and push
         run: |
           FILENAME=$(cat /tmp/post_filename.txt)
@@ -368,7 +500,6 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
-
       - name: Notify Google Indexing API
         run: |
           pip install google-auth requests --quiet
