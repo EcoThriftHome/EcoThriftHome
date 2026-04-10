@@ -400,7 +400,21 @@ jobs:
               messages=[{"role": "user", "content": pin_prompt}]
           )
 
-          pins = json.loads(message.content[0].text.strip())
+          raw = message.content[0].text.strip()
+          print(f"Claude pin response: {raw[:200]}")
+
+          # Strip markdown fences if present
+          if raw.startswith("```"):
+              raw = re.sub(r'^```[a-z]*\n?', '', raw)
+              raw = re.sub(r'\n?```$', '', raw)
+              raw = raw.strip()
+
+          # Find JSON array in response
+          match = re.search(r'\[.*\]', raw, re.DOTALL)
+          if match:
+              raw = match.group(0)
+
+          pins = json.loads(raw)
 
           PALETTES = [
               {"bg": "#0F6E56", "accent": "#5DCAA5", "dark": "#085041", "text": "#E1F5EE", "muted": "#9FE1CB"},
