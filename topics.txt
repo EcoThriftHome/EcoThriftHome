@@ -8,7 +8,7 @@
 # done: home energy audit how to do it yourself
 # done: solar phone chargers and small devices
 # done: best power usage monitors to track electricity
-insulating your water heater
+# done: insulating your water heater
 sense energy monitor review save money tracking electricity
 thermal curtains and cellular shades cut heating cooling bills
 heat pump water heater vs traditional water heater savings
