@@ -362,9 +362,10 @@ jobs:
         run: |
           pip install anthropic Pillow requests --quiet
           python3 << 'PINEOF'
-          import anthropic, re, os, json, time, base64
+          import anthropic, re, os, json, time
           from PIL import Image, ImageDraw, ImageFont
           from io import BytesIO
+          import requests
 
           filename = open("/tmp/post_filename.txt").read().strip()
           slug = filename.replace(".html", "")
@@ -419,8 +420,11 @@ jobs:
               if current: lines.append(current)
               return lines
 
+          cloud_name  = os.environ["CLOUDINARY_CLOUD_NAME"]
+          api_key     = os.environ["CLOUDINARY_API_KEY"]
+          api_secret  = os.environ["CLOUDINARY_API_SECRET"]
           webhook_url = os.environ["ZAPIER_WEBHOOK_URL"]
-          board_id = "802977877252098630"
+          board_id    = "802977877252098630"
 
           for i, (pin, palette) in enumerate(zip(pins, PALETTES), 1):
               W, H = 1000, 1500
@@ -467,28 +471,42 @@ jobs:
               urlw = d.textbbox((0,0), "ecothrifthome.com", font=f_xs)[2]
               d.text(((W-urlw)//2, H-70), "ecothrifthome.com", font=f_xs, fill=palette["muted"])
 
-              # Save to temp, convert to base64 for webhook
+              # Save to buffer and upload to Cloudinary
               buf = BytesIO()
               img.save(buf, format="PNG")
-              b64 = base64.b64encode(buf.getvalue()).decode()
+              buf.seek(0)
 
+              public_id = f"ecothrift-pins/{slug}-pin-{i}"
+              upload_resp = requests.post(
+                  f"https://api.cloudinary.com/v1_1/{cloud_name}/image/upload",
+                  files={"file": (f"{slug}-pin-{i}.png", buf, "image/png")},
+                  data={"upload_preset": "ml_default", "public_id": public_id},
+                  auth=(api_key, api_secret)
+              )
+              upload_data = upload_resp.json()
+              image_url = upload_data.get("secure_url", "")
+              print(f"Pin {i} uploaded to Cloudinary: {image_url}")
+
+              # Fire Pabbly webhook with public image URL
               payload = {
                   "title":       pin["headline"],
                   "description": pin["description"],
-                  "image_b64":   b64,
+                  "image_url":   image_url,
                   "post_url":    post_url,
-                  "board_id":    board_id,
-                  "pin_number":  i
+                  "board_id":    board_id
               }
               resp = requests.post(webhook_url, json=payload)
               print(f"Pin {i} webhook fired: {resp.status_code}")
               time.sleep(5)
 
-          print("Pinterest pins posted successfully")
+          print("All 2 Pinterest pins posted successfully")
           PINEOF
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ZAPIER_WEBHOOK_URL: ${{ secrets.ZAPIER_WEBHOOK_URL }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
 
       - name: Commit and push
         run: |
