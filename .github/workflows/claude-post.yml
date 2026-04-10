@@ -24,6 +24,7 @@ jobs:
 
       - name: Pick next topic
         id: topic
+        if: ${{ !inputs.filename }}
         run: |
           TOPIC=$(grep -v '^#' topics.txt | grep -v '^$' | head -1)
           echo "topic=$TOPIC" >> $GITHUB_OUTPUT
@@ -32,6 +33,7 @@ jobs:
 
       - name: Generate post with Claude
         id: generate
+        if: ${{ !inputs.filename }}
         run: |
           pip install anthropic --quiet
 
@@ -267,6 +269,13 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TOPIC: ${{ steps.topic.outputs.topic }}
+
+      - name: Download manual post
+        if: ${{ inputs.filename }}
+        run: |
+          curl -L "${{ inputs.filename }}" -o "blog/${{ inputs.postname }}"
+          echo "${{ inputs.postname }}" > /tmp/post_filename.txt
+          echo "Downloaded: ${{ inputs.postname }}"
 
       - name: Update homepage
         run: |
