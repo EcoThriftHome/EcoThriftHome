@@ -362,7 +362,7 @@ jobs:
         run: |
           pip install anthropic Pillow requests --quiet
           python3 << 'PINEOF'
-          import anthropic, re, os, json, time
+          import anthropic, re, os, json, time, math
           from PIL import Image, ImageDraw, ImageFont
           from io import BytesIO
           import requests
@@ -391,7 +391,7 @@ jobs:
               "Pin 2: Lead with how-it-works, educational angle\n\n"
               "Each pin needs: headline (under 8 words), subheading (under 10 words), description (2-3 sentences + hashtags)\n\n"
               'Return ONLY valid JSON, no explanation:\n'
-              '[{"headline":"...","subheading":"...","description":"..."},{"headline":"...","subheading":"...","description":"..."}]'
+              '[{"headline":"...","subheading":"...","description":"...","eyebrow":"..."},{"headline":"...","subheading":"...","description":"...","eyebrow":"..."}]'
           )
 
           message = client.messages.create(
@@ -403,13 +403,11 @@ jobs:
           raw = message.content[0].text.strip()
           print(f"Claude pin response: {raw[:200]}")
 
-          # Strip markdown fences if present
           if raw.startswith("```"):
               raw = re.sub(r'^```[a-z]*\n?', '', raw)
               raw = re.sub(r'\n?```$', '', raw)
               raw = raw.strip()
 
-          # Find JSON array in response
           match = re.search(r'\[.*\]', raw, re.DOTALL)
           if match:
               raw = match.group(0)
@@ -418,7 +416,7 @@ jobs:
 
           PALETTES = [
               {"bg": "#0F6E56", "accent": "#5DCAA5", "dark": "#085041", "text": "#E1F5EE", "muted": "#9FE1CB"},
-              {"bg": "#2C2C2A", "accent": "#EF9F27", "dark": "#444441", "text": "#F1EFE8", "muted": "#B4B2A9"},
+              {"bg": "#1C1C1E", "accent": "#EF9F27", "dark": "#2C2C2A", "text": "#F1EFE8", "muted": "#888780"},
           ]
 
           def wrap_text(draw, text, font, max_width):
@@ -434,6 +432,15 @@ jobs:
               if current: lines.append(current)
               return lines
 
+          def lf(path, size):
+              try:
+                  return ImageFont.truetype(path, size)
+              except:
+                  return ImageFont.load_default()
+
+          BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+          REG  = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+
           cloud_name  = os.environ["CLOUDINARY_CLOUD_NAME"]
           api_key     = os.environ["CLOUDINARY_API_KEY"]
           api_secret  = os.environ["CLOUDINARY_API_SECRET"]
@@ -445,47 +452,71 @@ jobs:
               img = Image.new("RGB", (W, H), palette["bg"])
               d = ImageDraw.Draw(img)
 
-              try:
-                  f_big = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 80)
-                  f_med = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 40)
-                  f_sm  = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 32)
-                  f_xs  = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24)
-              except:
-                  f_big = f_med = f_sm = f_xs = ImageFont.load_default()
+              # Background geometric decoration
+              if i == 1:
+                  # Radiating lines top right for pin 1
+                  for angle in range(0, 360, 20):
+                      rad = math.radians(angle)
+                      d.line([(W//2, 380), (W//2+int(600*math.cos(rad)), 380+int(600*math.sin(rad)))], fill=palette["dark"], width=12)
+                  # Large circle
+                  d.ellipse([W//2-220, 160, W//2+220, 600], fill=palette["dark"])
+                  d.ellipse([W//2-170, 210, W//2+170, 550], fill=palette["accent"])
+                  d.ellipse([W//2-120, 260, W//2+120, 500], fill=palette["bg"])
+              else:
+                  # Grid pattern for pin 2
+                  for x in range(0, W, 70):
+                      d.line([(x, 0), (x, H)], fill=palette["dark"], width=1)
+                  for y in range(0, H, 70):
+                      d.line([(0, y), (W, y)], fill=palette["dark"], width=1)
+                  # Lightning bolt shape
+                  bolt = [(W//2+50, 160), (W//2-50, 430), (W//2+15, 430), (W//2-50, 700), (W//2+90, 370), (W//2-15, 370)]
+                  d.polygon(bolt, fill=palette["dark"])
+                  bolt2 = [(W//2+40, 170), (W//2-40, 420), (W//2+12, 420), (W//2-40, 685), (W//2+80, 362), (W//2-12, 362)]
+                  d.polygon(bolt2, fill=palette["accent"])
 
-              d.rectangle([0, 0, W, 90], fill=palette["dark"])
-              d.text((40, 28), "EcoThrift Home - Save Energy. Save Money.", font=f_xs, fill=palette["accent"])
+              # Logo bar
+              d.rectangle([0, 0, W, 92], fill=palette["dark"])
+              d.text((40, 26), "EcoThrift Home", font=lf(BOLD, 30), fill=palette["accent"])
+              url_w = d.textbbox((0,0), "ecothrifthome.com", font=lf(REG, 22))[2]
+              d.text((W-url_w-30, 34), "ecothrifthome.com", font=lf(REG, 22), fill=palette["muted"])
 
-              lines = wrap_text(d, pin["headline"], f_big, W-100)
-              y = 120
+              # Eyebrow tag
+              eyebrow = pin.get("eyebrow", "Energy Saving").upper()
+              d.text((50, 730), eyebrow, font=lf(BOLD, 26), fill=palette["accent"])
+
+              # Headline
+              lines = wrap_text(d, pin["headline"], lf(BOLD, 82), W-80)
+              y = 780
               for line in lines:
-                  lw = d.textbbox((0,0), line, font=f_big)[2]
-                  d.text(((W-lw)//2, y), line, font=f_big, fill=palette["text"])
-                  y += 90
+                  lw = d.textbbox((0,0), line, font=lf(BOLD, 82))[2]
+                  d.text(((W-lw)//2, y), line, font=lf(BOLD, 82), fill=palette["text"])
+                  y += 94
 
-              d.rounded_rectangle([80, y+10, W-80, y+16], radius=4, fill=palette["accent"])
-              y += 40
+              # Accent divider
+              d.rounded_rectangle([50, y+12, W-50, y+18], radius=4, fill=palette["accent"])
+              y += 48
 
-              sub_lines = wrap_text(d, pin["subheading"], f_sm, W-120)
+              # Subheading
+              sub_lines = wrap_text(d, pin["subheading"], lf(REG, 34), W-100)
               for line in sub_lines:
-                  lw = d.textbbox((0,0), line, font=f_sm)[2]
-                  d.text(((W-lw)//2, y), line, font=f_sm, fill=palette["muted"])
-                  y += 46
+                  lw = d.textbbox((0,0), line, font=lf(REG, 34))[2]
+                  d.text(((W-lw)//2, y), line, font=lf(REG, 34), fill=palette["muted"])
+                  y += 48
 
-              d.rounded_rectangle([80, H-320, W-80, H-200], radius=14, fill=palette["dark"])
+              # Savings stat box
+              stat_y = H - 310
+              d.rounded_rectangle([50, stat_y, W-50, stat_y+110], radius=16, fill=palette["dark"])
               sv = f"Save up to ${savings}/yr"
-              svw = d.textbbox((0,0), sv, font=f_med)[2]
-              d.text(((W-svw)//2, H-290), sv, font=f_med, fill=palette["accent"])
+              svw = d.textbbox((0,0), sv, font=lf(BOLD, 50))[2]
+              d.text(((W-svw)//2, stat_y+22), sv, font=lf(BOLD, 50), fill=palette["accent"])
 
-              d.rounded_rectangle([80, H-180, W-80, H-90], radius=12, fill=palette["accent"])
-              cta = "Read the full guide"
-              ctw = d.textbbox((0,0), cta, font=f_med)[2]
-              d.text(((W-ctw)//2, H-165), cta, font=f_med, fill=palette["dark"])
+              # CTA button
+              d.rounded_rectangle([50, H-185, W-50, H-95], radius=14, fill=palette["accent"])
+              cta = "Read the Full Guide →"
+              ctw = d.textbbox((0,0), cta, font=lf(BOLD, 36))[2]
+              d.text(((W-ctw)//2, H-170), cta, font=lf(BOLD, 36), fill=palette["dark"])
 
-              urlw = d.textbbox((0,0), "ecothrifthome.com", font=f_xs)[2]
-              d.text(((W-urlw)//2, H-70), "ecothrifthome.com", font=f_xs, fill=palette["muted"])
-
-              # Save to buffer and upload to Cloudinary
+              # Upload to Cloudinary
               buf = BytesIO()
               img.save(buf, format="PNG")
               buf.seek(0)
@@ -501,7 +532,11 @@ jobs:
               image_url = upload_data.get("secure_url", "")
               print(f"Pin {i} uploaded to Cloudinary: {image_url}")
 
-              # Fire Pabbly webhook with public image URL
+              if not image_url:
+                  print(f"Cloudinary error: {upload_data}")
+                  continue
+
+              # Fire Pabbly webhook
               payload = {
                   "title":       pin["headline"],
                   "description": pin["description"],
@@ -510,8 +545,12 @@ jobs:
                   "board_id":    board_id
               }
               resp = requests.post(webhook_url, json=payload)
-              print(f"Pin {i} webhook fired: {resp.status_code}")
-              time.sleep(5)
+              print(f"Pin {i} webhook fired: {resp.status_code} — {resp.text[:100]}")
+
+              # Wait 30 seconds between pins so Pabbly processes each one fully
+              if i < len(pins):
+                  print("Waiting 30 seconds before next pin...")
+                  time.sleep(30)
 
           print("All 2 Pinterest pins posted successfully")
           PINEOF
