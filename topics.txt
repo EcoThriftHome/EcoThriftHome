@@ -7,7 +7,7 @@
 # done: programmable vs smart thermostat comparison
 # done: home energy audit how to do it yourself
 # done: solar phone chargers and small devices
-best power usage monitors to track electricity
+# done: best power usage monitors to track electricity
 insulating your water heater
 sense energy monitor review save money tracking electricity
 thermal curtains and cellular shades cut heating cooling bills
