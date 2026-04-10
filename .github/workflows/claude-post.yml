@@ -444,8 +444,9 @@ jobs:
           cloud_name  = os.environ["CLOUDINARY_CLOUD_NAME"]
           api_key     = os.environ["CLOUDINARY_API_KEY"]
           api_secret  = os.environ["CLOUDINARY_API_SECRET"]
-          webhook_url = os.environ["ZAPIER_WEBHOOK_URL"]
-          board_id    = "802977877252098630"
+          webhook_url_1 = os.environ["ZAPIER_WEBHOOK_URL"]
+          webhook_url_2 = os.environ["ZAPIER_WEBHOOK_URL_2"]
+          board_id      = "802977877252098630"
 
           for i, (pin, palette) in enumerate(zip(pins, PALETTES), 1):
               W, H = 1000, 1500
@@ -544,8 +545,9 @@ jobs:
                   "post_url":    post_url,
                   "board_id":    board_id
               }
+              webhook_url = webhook_url_1 if i == 1 else webhook_url_2
               resp = requests.post(webhook_url, json=payload)
-              print(f"Pin {i} webhook fired: {resp.status_code} — {resp.text[:100]}")
+              print(f"Pin {i} fired to webhook {i}: {resp.status_code} — {resp.text[:100]}")
 
               # Wait 30 seconds between pins so Pabbly processes each one fully
               if i < len(pins):
@@ -557,6 +559,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ZAPIER_WEBHOOK_URL: ${{ secrets.ZAPIER_WEBHOOK_URL }}
+          ZAPIER_WEBHOOK_URL_2: ${{ secrets.ZAPIER_WEBHOOK_URL_2 }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
           CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
