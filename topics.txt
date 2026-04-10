@@ -10,7 +10,7 @@
 # done: best power usage monitors to track electricity
 # done: insulating your water heater
 # done: sense energy monitor review save money tracking electricity
-thermal curtains and cellular shades cut heating cooling bills
+# done: thermal curtains and cellular shades cut heating cooling bills
 heat pump water heater vs traditional water heater savings
 how to do a DIY home energy audit room by room
 attic insulation save 40 percent on heating costs
