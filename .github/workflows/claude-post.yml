@@ -362,7 +362,7 @@ jobs:
         run: |
           pip install anthropic Pillow requests --quiet
           python3 << 'PINEOF'
-          import anthropic, re, os, json, time, math
+          import anthropic, re, os, json, time, math, random
           from PIL import Image, ImageDraw, ImageFont
           from io import BytesIO
           import requests
@@ -375,7 +375,7 @@ jobs:
 
           title_match = re.search(r'<h1[^>]*>(.+?)</h1>', post_html, re.DOTALL)
           desc_match  = re.search(r'<meta name="description" content="([^"]+)"', post_html)
-          save_match  = re.search(r'Save up to \$?([\d,]+)', post_html)
+          save_match  = re.search(r'Save up to \\$?([\\d,]+)', post_html)
 
           title    = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else slug.replace("-", " ").title()
           desc     = desc_match.group(1) if desc_match else "Save money on energy at home."
@@ -389,7 +389,7 @@ jobs:
               f"Title: {title}\nDescription: {desc}\nSavings: ${savings}/yr\nURL: {post_url}\n\n"
               "Pin 1: Lead with the savings amount, money-focused angle\n"
               "Pin 2: Lead with how-it-works, educational angle\n\n"
-              "Each pin needs: headline (under 8 words), subheading (under 10 words), description (2-3 sentences + hashtags)\n\n"
+              "Each pin needs: headline (under 8 words), subheading (under 10 words), description (2-3 sentences + hashtags), eyebrow (2-3 word category label)\n\n"
               'Return ONLY valid JSON, no explanation:\n'
               '[{"headline":"...","subheading":"...","description":"...","eyebrow":"..."},{"headline":"...","subheading":"...","description":"...","eyebrow":"..."}]'
           )
@@ -441,9 +441,145 @@ jobs:
           BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
           REG  = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 
-          cloud_name  = os.environ["CLOUDINARY_CLOUD_NAME"]
-          api_key     = os.environ["CLOUDINARY_API_KEY"]
-          api_secret  = os.environ["CLOUDINARY_API_SECRET"]
+          def draw_water_heater(d, cx, cy, p):
+              d.rounded_rectangle([cx-120, cy-200, cx+120, cy+200], radius=60, fill=p["dark"])
+              d.rounded_rectangle([cx-100, cy-180, cx+100, cy+180], radius=50, fill="#4A7FA5")
+              d.rectangle([cx-20, cy-260, cx+20, cy-195], fill="#888")
+              d.ellipse([cx-30, cy-275, cx+30, cy-255], fill="#999")
+              d.rectangle([cx-50, cy+195, cx-20, cy+260], fill="#888")
+              d.rectangle([cx+20, cy+195, cx+50, cy+260], fill="#888")
+              d.rounded_rectangle([cx-60, cy-80, cx+60, cy+20], radius=10, fill=p["accent"])
+              d.ellipse([cx-30, cy-60, cx+30, cy], fill=p["dark"])
+              d.ellipse([cx-18, cy-48, cx+18, cy-12], fill="#EF9F27")
+              d.text((cx-24, cy+30), "HOT", font=lf(BOLD, 22), fill="#E1F5EE")
+              for sx, so in [(-40, 0), (0, -15), (40, 0)]:
+                  for j in range(3):
+                      y1 = cy - 290 - j*22
+                      d.line([(cx+sx, y1), (cx+sx+so, y1-16)], fill="#9FE1CB", width=3)
+
+          def draw_lightbulb(d, cx, cy, p):
+              for r, col in [(160,"#1a3a2a"),(130,"#1f4a32"),(100,"#2a6040")]:
+                  d.ellipse([cx-r, cy-r, cx+r, cy+r], fill=col)
+              d.ellipse([cx-90, cy-110, cx+90, cy+70], fill="#FAEEDA")
+              d.ellipse([cx-75, cy-95, cx+75, cy+55], fill="#FFFDE7")
+              d.rounded_rectangle([cx-45, cy+55, cx+45, cy+130], radius=8, fill="#B4B2A9")
+              d.rectangle([cx-40, cy+65, cx+40, cy+90], fill="#888")
+              d.rectangle([cx-40, cy+95, cx+40, cy+115], fill="#888")
+              for fx in [-20, 0, 20]:
+                  d.line([(cx+fx, cy-40), (cx+fx, cy+20)], fill="#EF9F27", width=3)
+              d.line([(cx-20, cy-40), (cx+20, cy-40)], fill="#EF9F27", width=3)
+              d.line([(cx-20, cy+20), (cx+20, cy+20)], fill="#EF9F27", width=3)
+              for angle in range(0, 360, 45):
+                  rad = math.radians(angle)
+                  d.line([(cx+int(100*math.cos(rad)), cy-20+int(100*math.sin(rad))),
+                          (cx+int(130*math.cos(rad)), cy-20+int(130*math.sin(rad)))], fill="#EF9F27", width=4)
+
+          def draw_thermostat(d, cx, cy, p):
+              d.rounded_rectangle([cx-130, cy-180, cx+130, cy+180], radius=30, fill=p["dark"])
+              d.rounded_rectangle([cx-115, cy-165, cx+115, cy+165], radius=25, fill="#1a2d4a")
+              d.rounded_rectangle([cx-90, cy-120, cx+90, cy+80], radius=15, fill="#0a1628")
+              d.text((cx-60, cy-100), "68F", font=lf(BOLD, 72), fill="#5DCAA5")
+              d.text((cx-55, cy-20), "SAVING MODE", font=lf(REG, 22), fill="#888780")
+              d.rounded_rectangle([cx-70, cy+10, cx+70, cy+30], radius=8, fill="#0F6E56")
+              d.text((cx-52, cy+13), "SAVE $180/yr", font=lf(REG, 16), fill="#9FE1CB")
+              d.ellipse([cx-50, cy+100, cx-10, cy+140], fill=p["accent"])
+              d.ellipse([cx+10, cy+100, cx+50, cy+140], fill="#2C2C2A")
+              d.text((cx-36, cy+112), "+", font=lf(BOLD, 32), fill=p["dark"])
+              d.text((cx+18, cy+112), "-", font=lf(BOLD, 32), fill="#888780")
+
+          def draw_power_strip(d, cx, cy, p):
+              d.rounded_rectangle([cx-200, cy-50, cx+200, cy+50], radius=20, fill="#2C2C2A")
+              d.rounded_rectangle([cx-185, cy-35, cx+185, cy+35], radius=15, fill="#1C1C1E")
+              for ox in [-130, -50, 30, 110]:
+                  d.rounded_rectangle([cx+ox-25, cy-22, cx+ox+25, cy+22], radius=6, fill="#333")
+                  d.ellipse([cx+ox-12, cy-14, cx+ox-4, cy-4], fill="#555")
+                  d.ellipse([cx+ox+4, cy-14, cx+ox+12, cy-4], fill="#555")
+                  d.rounded_rectangle([cx+ox-8, cy+2, cx+ox+8, cy+14], fill="#555", radius=3)
+              d.ellipse([cx+155, cy-18, cx+185, cy+18], fill="#0F6E56")
+              d.text((cx+161, cy-10), "ON", font=lf(BOLD, 18), fill="#E1F5EE")
+              d.line([(cx-200, cy), (cx-240, cy), (cx-240, cy+80)], fill="#555", width=8)
+              d.rounded_rectangle([cx-240, cy+70, cx-200, cy+120], radius=6, fill="#444")
+              d.rounded_rectangle([cx-80, cy+80, cx+80, cy+140], radius=14, fill=p["accent"])
+              d.text((cx-60, cy+95), "KILLS PHANTOM", font=lf(BOLD, 20), fill=p["dark"])
+              d.text((cx-38, cy+120), "POWER", font=lf(BOLD, 20), fill=p["dark"])
+
+          def draw_solar_panel(d, cx, cy, p):
+              d.rounded_rectangle([cx-180, cy-130, cx+180, cy+130], radius=10, fill="#1a1a2e")
+              d.rounded_rectangle([cx-168, cy-118, cx+168, cy+118], radius=8, fill="#0d1b4b")
+              for row in range(3):
+                  for col in range(4):
+                      px = cx - 150 + col * 78
+                      py = cy - 90 + row * 72
+                      d.rounded_rectangle([px, py, px+68, py+62], radius=4, fill="#1a3a6e")
+                      d.rounded_rectangle([px+4, py+4, px+64, py+58], radius=3, fill="#0a2456")
+                      d.line([(px+10, py+10), (px+25, py+10)], fill="#2a4a8e", width=2)
+              sun_x, sun_y = cx+220, cy-220
+              d.ellipse([sun_x-40, sun_y-40, sun_x+40, sun_y+40], fill="#EF9F27")
+              for angle in range(0, 360, 40):
+                  rad = math.radians(angle)
+                  d.line([(sun_x+int(48*math.cos(rad)), sun_y+int(48*math.sin(rad))),
+                          (sun_x+int(65*math.cos(rad)), sun_y+int(65*math.sin(rad)))], fill="#EF9F27", width=3)
+              d.line([(sun_x-30, sun_y+30), (cx+140, cy-100)], fill="#EF9F27", width=3)
+              d.rectangle([cx-15, cy+128, cx+15, cy+220], fill="#555")
+
+          def draw_shower(d, cx, cy, p):
+              d.rectangle([cx-8, cy-220, cx+8, cy-60], fill="#888")
+              d.rounded_rectangle([cx-60, cy-240, cx+60, cy-210], radius=10, fill="#999")
+              d.ellipse([cx-50, cy-80, cx+50, cy], fill="#777")
+              d.ellipse([cx-40, cy-70, cx+40, cy-10], fill="#999")
+              random.seed(42)
+              for _ in range(20):
+                  dx = random.randint(-80, 80)
+                  dy = random.randint(20, 200)
+                  d.ellipse([cx+dx-4, cy+dy-8, cx+dx+4, cy+dy+8], fill="#5DCAA5")
+
+          def draw_curtains(d, cx, cy, p):
+              d.rectangle([cx-160, cy-180, cx+160, cy+160], fill="#2C4A6E")
+              d.rectangle([cx-145, cy-165, cx+145, cy+145], fill="#B5D4F4")
+              sun_x, sun_y = cx, cy-80
+              d.ellipse([sun_x-50, sun_y-50, sun_x+50, sun_y+50], fill="#EF9F27")
+              for angle in range(0, 360, 45):
+                  rad = math.radians(angle)
+                  d.line([(sun_x+int(58*math.cos(rad)), sun_y+int(58*math.sin(rad))),
+                          (sun_x+int(75*math.cos(rad)), sun_y+int(75*math.sin(rad)))], fill="#EF9F27", width=3)
+              d.polygon([(cx-145,cy-165),(cx-50,cy-165),(cx-70,cy+145),(cx-145,cy+145)], fill="#0F6E56")
+              d.polygon([(cx+50,cy-165),(cx+145,cy-165),(cx+145,cy+145),(cx+70,cy+145)], fill="#0F6E56")
+              d.rectangle([cx-175, cy-190, cx+175, cy-175], fill="#888")
+              d.ellipse([cx-185, cy-198, cx-165, cy-168], fill="#999")
+              d.ellipse([cx+165, cy-198, cx+185, cy-168], fill="#999")
+
+          def draw_house(d, cx, cy, p):
+              d.rectangle([cx-160, cy-80, cx+160, cy+160], fill="#2C4A6E")
+              d.polygon([(cx-190,cy-80),(cx,cy-240),(cx+190,cy-80)], fill=p["accent"])
+              d.rounded_rectangle([cx-35, cy+40, cx+35, cy+160], radius=8, fill="#1a2d1a")
+              d.ellipse([cx+18, cy+95, cx+28, cy+105], fill="#EF9F27")
+              for wx in [-110, 60]:
+                  d.rounded_rectangle([cx+wx, cy-40, cx+wx+70, cy+20], radius=6, fill="#B5D4F4")
+                  d.line([(cx+wx+35, cy-40), (cx+wx+35, cy+20)], fill="#2C4A6E", width=3)
+                  d.line([(cx+wx, cy-10), (cx+wx+70, cy-10)], fill="#2C4A6E", width=3)
+
+          def detect_and_draw(d, slug, cx, cy, p):
+              s = slug.lower()
+              if any(k in s for k in ["water-heater","tankless","heat-pump-water"]):
+                  draw_water_heater(d, cx, cy, p)
+              elif any(k in s for k in ["led","bulb","lighting","light-switch"]):
+                  draw_lightbulb(d, cx, cy, p)
+              elif any(k in s for k in ["thermostat","hvac","heating","cooling","heat-pump","ceiling-fan","dehumidifier"]):
+                  draw_thermostat(d, cx, cy, p)
+              elif any(k in s for k in ["power-strip","phantom","vampire","plug","outlet","standby"]):
+                  draw_power_strip(d, cx, cy, p)
+              elif any(k in s for k in ["solar","panel","renewable"]):
+                  draw_solar_panel(d, cx, cy, p)
+              elif any(k in s for k in ["shower","showerhead","low-flow"]):
+                  draw_shower(d, cx, cy, p)
+              elif any(k in s for k in ["curtain","blind","window-treatment","shade","thermal"]):
+                  draw_curtains(d, cx, cy, p)
+              else:
+                  draw_house(d, cx, cy, p)
+
+          cloud_name    = os.environ["CLOUDINARY_CLOUD_NAME"]
+          api_key       = os.environ["CLOUDINARY_API_KEY"]
+          api_secret    = os.environ["CLOUDINARY_API_SECRET"]
           webhook_url_1 = os.environ["ZAPIER_WEBHOOK_URL"]
           webhook_url_2 = os.environ["ZAPIER_WEBHOOK_URL_2"]
           board_id      = "802977877252098630"
@@ -453,67 +589,53 @@ jobs:
               img = Image.new("RGB", (W, H), palette["bg"])
               d = ImageDraw.Draw(img)
 
-              # Background geometric decoration
-              if i == 1:
-                  # Radiating lines top right for pin 1
-                  for angle in range(0, 360, 20):
-                      rad = math.radians(angle)
-                      d.line([(W//2, 380), (W//2+int(600*math.cos(rad)), 380+int(600*math.sin(rad)))], fill=palette["dark"], width=12)
-                  # Large circle
-                  d.ellipse([W//2-220, 160, W//2+220, 600], fill=palette["dark"])
-                  d.ellipse([W//2-170, 210, W//2+170, 550], fill=palette["accent"])
-                  d.ellipse([W//2-120, 260, W//2+120, 500], fill=palette["bg"])
-              else:
-                  # Grid pattern for pin 2
-                  for x in range(0, W, 70):
-                      d.line([(x, 0), (x, H)], fill=palette["dark"], width=1)
-                  for y in range(0, H, 70):
-                      d.line([(0, y), (W, y)], fill=palette["dark"], width=1)
-                  # Lightning bolt shape
-                  bolt = [(W//2+50, 160), (W//2-50, 430), (W//2+15, 430), (W//2-50, 700), (W//2+90, 370), (W//2-15, 370)]
-                  d.polygon(bolt, fill=palette["dark"])
-                  bolt2 = [(W//2+40, 170), (W//2-40, 420), (W//2+12, 420), (W//2-40, 685), (W//2+80, 362), (W//2-12, 362)]
-                  d.polygon(bolt2, fill=palette["accent"])
+              # Subtle background grid
+              for x in range(0, W, 80):
+                  d.line([(x, 0), (x, H)], fill=palette["dark"], width=1)
+              for y in range(0, H, 80):
+                  d.line([(0, y), (W, y)], fill=palette["dark"], width=1)
 
               # Logo bar
               d.rectangle([0, 0, W, 92], fill=palette["dark"])
-              d.text((40, 26), "EcoThrift Home", font=lf(BOLD, 30), fill=palette["accent"])
+              d.text((40, 24), "EcoThrift Home", font=lf(BOLD, 30), fill=palette["accent"])
               url_w = d.textbbox((0,0), "ecothrifthome.com", font=lf(REG, 22))[2]
               d.text((W-url_w-30, 34), "ecothrifthome.com", font=lf(REG, 22), fill=palette["muted"])
 
-              # Eyebrow tag
+              # Topic illustration
+              detect_and_draw(d, slug, W//2, 380, palette)
+
+              # Eyebrow
               eyebrow = pin.get("eyebrow", "Energy Saving").upper()
               d.text((50, 730), eyebrow, font=lf(BOLD, 26), fill=palette["accent"])
 
               # Headline
-              lines = wrap_text(d, pin["headline"], lf(BOLD, 82), W-80)
-              y = 780
+              lines = wrap_text(d, pin["headline"], lf(BOLD, 80), W-80)
+              y = 776
               for line in lines:
-                  lw = d.textbbox((0,0), line, font=lf(BOLD, 82))[2]
-                  d.text(((W-lw)//2, y), line, font=lf(BOLD, 82), fill=palette["text"])
-                  y += 94
+                  lw = d.textbbox((0,0), line, font=lf(BOLD, 80))[2]
+                  d.text(((W-lw)//2, y), line, font=lf(BOLD, 80), fill=palette["text"])
+                  y += 90
 
-              # Accent divider
+              # Divider
               d.rounded_rectangle([50, y+12, W-50, y+18], radius=4, fill=palette["accent"])
               y += 48
 
               # Subheading
-              sub_lines = wrap_text(d, pin["subheading"], lf(REG, 34), W-100)
+              sub_lines = wrap_text(d, pin["subheading"], lf(REG, 32), W-100)
               for line in sub_lines:
-                  lw = d.textbbox((0,0), line, font=lf(REG, 34))[2]
-                  d.text(((W-lw)//2, y), line, font=lf(REG, 34), fill=palette["muted"])
-                  y += 48
+                  lw = d.textbbox((0,0), line, font=lf(REG, 32))[2]
+                  d.text(((W-lw)//2, y), line, font=lf(REG, 32), fill=palette["muted"])
+                  y += 44
 
-              # Savings stat box
-              stat_y = H - 310
-              d.rounded_rectangle([50, stat_y, W-50, stat_y+110], radius=16, fill=palette["dark"])
+              # Savings box
+              d.rounded_rectangle([50, H-310, W-50, H-200], radius=16, fill=palette["dark"])
               sv = f"Save up to ${savings}/yr"
               svw = d.textbbox((0,0), sv, font=lf(BOLD, 50))[2]
-              d.text(((W-svw)//2, stat_y+22), sv, font=lf(BOLD, 50), fill=palette["accent"])
+              d.text(((W-svw)//2, H-288), sv, font=lf(BOLD, 50), fill=palette["accent"])
 
-              # CTA button
+              # CTA
               d.rounded_rectangle([50, H-185, W-50, H-95], radius=14, fill=palette["accent"])
-              cta = "Read the Full Guide →"
+              cta = "Read the Full Guide"
               ctw = d.textbbox((0,0), cta, font=lf(BOLD, 36))[2]
               d.text(((W-ctw)//2, H-170), cta, font=lf(BOLD, 36), fill=palette["dark"])
 
@@ -537,7 +659,8 @@ jobs:
                   print(f"Cloudinary error: {upload_data}")
                   continue
 
-              # Fire Pabbly webhook
+              # Fire correct Pabbly webhook
+              webhook_url = webhook_url_1 if i == 1 else webhook_url_2
               payload = {
                   "title":       pin["headline"],
                   "description": pin["description"],
@@ -545,14 +668,12 @@ jobs:
                   "post_url":    post_url,
                   "board_id":    board_id
               }
-              webhook_url = webhook_url_1 if i == 1 else webhook_url_2
               resp = requests.post(webhook_url, json=payload)
               print(f"Pin {i} fired to webhook {i}: {resp.status_code} — {resp.text[:100]}")
 
-              # Wait 30 seconds between pins so Pabbly processes each one fully
               if i < len(pins):
-                  print("Waiting 30 seconds before next pin...")
-                  time.sleep(30)
+                  print("Waiting 60 seconds before next pin...")
+                  time.sleep(60)
 
           print("All 2 Pinterest pins posted successfully")
           PINEOF
