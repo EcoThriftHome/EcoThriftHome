@@ -375,7 +375,7 @@ jobs:
 
           title_match = re.search(r'<h1[^>]*>(.+?)</h1>', post_html, re.DOTALL)
           desc_match  = re.search(r'<meta name="description" content="([^"]+)"', post_html)
-          save_match  = re.search(r'Save up to \\$?([\\d,]+)', post_html)
+          save_match  = re.search(r'Save up to \$?([\d,]+)', post_html)
 
           title    = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else slug.replace("-", " ").title()
           desc     = desc_match.group(1) if desc_match else "Save money on energy at home."
