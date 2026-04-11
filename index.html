@@ -977,4 +977,12 @@
         `<div class="wq-rec"><div class="wq-rec-num">${i+1}</div><div><div class="wq-rec-title">${r.title}</div><div class="wq-rec-desc">${r.desc}</div><div class="wq-rec-save">${r.save}</div></div></div>`
       ).join('');
     }
-    function wq
+    Restart() {
+      wqCur = 0; wqTotals = [0,0,0,0]; wqSelected = null;
+      document.getElementById('wq-body').style.display = 'block';
+      document.getElementById('wq-results').style.display = 'none';
+      wqRender();
+    }
+  </script>
+</body>
+</html>
