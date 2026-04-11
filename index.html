@@ -209,14 +209,7 @@
           <p style="font-size:17px;line-height:1.65;color:#8b949e;max-width:520px;margin-bottom:40px;">
             Budget-first strategies to cut your electricity bills by <strong style="color:#c9d1d9;font-weight:600;">$300&ndash;$600 per year</strong> &mdash; using habits and affordable upgrades any homeowner or renter can start today.
           </p>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:52px;">
-            <button onclick="document.getElementById('blog-posts').scrollIntoView({behavior:'smooth'})" style="display:inline-flex;align-items:center;gap:8px;background:#0F6E56;color:#E1F5EE;padding:13px 24px;border-radius:10px;font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:inherit;">
-              Read the guides
-            </button>
-            <button onclick="document.getElementById('interactive-tools').scrollIntoView({behavior:'smooth'})" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:#c9d1d9;padding:13px 24px;border-radius:10px;font-size:15px;font-weight:600;border:1px solid #1e2a3a;cursor:pointer;font-family:inherit;">
-              Calculate my savings &rarr;
-            </button>
-          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:52px;"><button data-scrollto="blog-posts" style="display:inline-flex;align-items:center;gap:8px;background:#0F6E56;color:#E1F5EE;padding:13px 24px;border-radius:10px;font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:inherit;">Read the guides</button> <button data-scrollto="interactive-tools" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:#c9d1d9;padding:13px 24px;border-radius:10px;font-size:15px;font-weight:600;border:1px solid #1e2a3a;cursor:pointer;font-family:inherit;">Calculate my savings &#8594;</button></div>
           <div style="display:flex;align-items:center;gap:20px;">
             <div style="display:flex;">
               <div style="width:32px;height:32px;border-radius:50%;background:#0F6E56;border:2px solid #060d14;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;">JT</div>
@@ -785,6 +778,17 @@
 
   <script src="js/main.js"></script>
   <script>
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-scrollto]');
+      if (btn) {
+        var target = document.getElementById(btn.getAttribute('data-scrollto'));
+        if (target) { target.scrollIntoView({behavior: 'smooth'}); }
+      }
+    });
+    function scrollTo_(id) {
+      var el = document.querySelector(id);
+      if (el) { el.scrollIntoView({behavior: 'smooth'}); }
+    }
     function showTab(id) {
       var tabs = document.querySelectorAll('.widget-tab');
       var panels = document.querySelectorAll('.widget-panel');
