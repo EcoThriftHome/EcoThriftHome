@@ -868,119 +868,128 @@
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
   <script>
-    /* ── TAB SWITCHER ── */
     function showTab(id) {
-      document.querySelectorAll('.widget-tab').forEach((t,i) => t.classList.toggle('active', ['calc','counter','quiz'][i] === id));
-      document.querySelectorAll('.widget-panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('tab-' + id).classList.add('active');
-      if (id === 'counter') startCounter();
-      if (id === 'quiz') wqInit();
+      var tabs = document.querySelectorAll('.widget-tab');
+      var panels = document.querySelectorAll('.widget-panel');
+      var ids = ['calc','counter','quiz'];
+      tabs.forEach(function(t,i){ t.classList.toggle('active', ids[i]===id); });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById('tab-'+id).classList.add('active');
+      if(id==='counter') startCounter();
+      if(id==='quiz') wqInit();
     }
 
-    /* ── CALCULATOR ── */
     function runCalc() {
-      const bill = parseFloat(document.getElementById('wc-bill').value) || 120;
-      const size = parseFloat(document.getElementById('wc-size').value);
-      const heat = parseFloat(document.getElementById('wc-heat').value);
-      const ppl  = parseFloat(document.getElementById('wc-people').value);
-      const annual = bill * 12;
-      const m = size * ppl;
-      const led     = Math.round(annual * 0.15 * 0.78 * m);
-      const therm   = Math.round(annual * 0.43 * 0.12 * heat * m);
-      const phantom = Math.round(annual * 0.10 * 0.85 * m);
-      const water   = Math.round(annual * 0.14 * 0.18 * ppl);
-      const total   = led + therm + phantom + water;
-      document.getElementById('wc-led').textContent    = '$' + led.toLocaleString();
-      document.getElementById('wc-therm').textContent  = '$' + therm.toLocaleString();
-      document.getElementById('wc-phantom').textContent= '$' + phantom.toLocaleString();
-      document.getElementById('wc-water').textContent  = '$' + water.toLocaleString();
-      document.getElementById('wc-total').textContent  = '$' + total.toLocaleString();
-      const items = [['LED bulbs', led], ['Thermostat', therm], ['Phantom power', phantom], ['Water heating', water]];
-      const max = Math.max(...items.map(i => i[1]));
-      document.getElementById('wc-bars').innerHTML = items.map(([lbl, val]) =>
-        `<div class="wc-bar-row"><div class="wc-bar-lbl">${lbl}</div><div class="wc-bar-track"><div class="wc-bar-fill" style="width:${Math.round(val/max*100)}%"></div></div><div class="wc-bar-val">$${val}</div></div>`
-      ).join('');
+      var bill = parseFloat(document.getElementById('wc-bill').value)||120;
+      var size = parseFloat(document.getElementById('wc-size').value);
+      var heat = parseFloat(document.getElementById('wc-heat').value);
+      var ppl  = parseFloat(document.getElementById('wc-people').value);
+      var annual = bill*12;
+      var m = size*ppl;
+      var led     = Math.round(annual*0.15*0.78*m);
+      var therm   = Math.round(annual*0.43*0.12*heat*m);
+      var phantom = Math.round(annual*0.10*0.85*m);
+      var water   = Math.round(annual*0.14*0.18*ppl);
+      var total   = led+therm+phantom+water;
+      document.getElementById('wc-led').textContent    = '$'+led.toLocaleString();
+      document.getElementById('wc-therm').textContent  = '$'+therm.toLocaleString();
+      document.getElementById('wc-phantom').textContent= '$'+phantom.toLocaleString();
+      document.getElementById('wc-water').textContent  = '$'+water.toLocaleString();
+      document.getElementById('wc-total').textContent  = '$'+total.toLocaleString();
+      var items = [['LED bulbs',led],['Thermostat',therm],['Phantom power',phantom],['Water heating',water]];
+      var max = Math.max.apply(null, items.map(function(i){return i[1];}));
+      document.getElementById('wc-bars').innerHTML = items.map(function(item){
+        return '<div class="wc-bar-row"><div class="wc-bar-lbl">'+item[0]+'</div><div class="wc-bar-track"><div class="wc-bar-fill" style="width:'+Math.round(item[1]/max*100)+'%"></div></div><div class="wc-bar-val">$'+item[1]+'</div></div>';
+      }).join('');
       document.getElementById('wc-results').style.display = 'block';
     }
 
-    /* ── WASTE COUNTER ── */
-    let counterInterval = null;
+    var counterInterval = null;
     function startCounter() {
-      if (counterInterval) return;
-      const PPS = 150 / 365 / 24 / 3600;
-      const n = new Date();
-      let elapsed = n.getHours()*3600 + n.getMinutes()*60 + n.getSeconds();
+      if(counterInterval) return;
+      var PPS = 150/365/24/3600;
+      var n = new Date();
+      var elapsed = n.getHours()*3600+n.getMinutes()*60+n.getSeconds();
       function tick() {
         elapsed++;
-        const t = elapsed * PPS;
-        const d = Math.floor(t);
-        const c = Math.round((t - d) * 100);
-        document.getElementById('ww-count').innerHTML = '$' + d.toLocaleString() + '<span class="ww-cents">.' + String(c).padStart(2,'0') + '</span>';
+        var t = elapsed*PPS;
+        var d = Math.floor(t);
+        var c = Math.round((t-d)*100);
+        var cents = c < 10 ? '0'+c : ''+c;
+        document.getElementById('ww-count').innerHTML = '$'+d.toLocaleString()+'<span class="ww-cents">.'+cents+'</span>';
       }
       tick();
-      counterInterval = setInterval(tick, 1000);
+      counterInterval = setInterval(tick,1000);
     }
 
-    /* ── QUIZ ── */
-    const wqQs = [
-      { q: "What's your average monthly electricity bill?", opts: ["Under $80","$80–$120","$120–$200","Over $200"], s: [[0,0,0,0],[1,0,0,0],[2,1,0,0],[3,2,1,0]] },
-      { q: "What type of lighting do you mostly have?", opts: ["All LED already","Mix of LED and old bulbs","Mostly old incandescent","Fluorescent / not sure"], s: [[0,0,0,0],[2,0,1,0],[4,0,2,0],[2,0,1,0]] },
-      { q: "How do you control your home's temperature?", opts: ["Smart thermostat with schedules","Basic programmable thermostat","Manual thermostat","I rarely change it"], s: [[0,0,0,0],[0,3,0,0],[0,5,0,0],[0,6,0,0]] },
-      { q: "When done watching TV or using your computer, you...", opts: ["Use a smart power strip","Unplug everything manually","Leave it on standby","Leave it fully on"], s: [[0,0,0,0],[0,0,2,0],[0,0,4,0],[0,0,6,0]] },
-      { q: "How do you wash your clothes?", opts: ["Cold water, full loads","Mix of cold and hot","Mostly hot water","Hot water and small loads often"], s: [[0,0,0,0],[0,0,0,1],[0,0,0,3],[0,0,0,5]] }
+    var wqQs = [
+      {q:"What's your average monthly electricity bill?",opts:["Under $80","$80-$120","$120-$200","Over $200"],s:[[0,0,0,0],[1,0,0,0],[2,1,0,0],[3,2,1,0]]},
+      {q:"What type of lighting do you mostly have?",opts:["All LED already","Mix of LED and old bulbs","Mostly old incandescent","Fluorescent / not sure"],s:[[0,0,0,0],[2,0,1,0],[4,0,2,0],[2,0,1,0]]},
+      {q:"How do you control your home temperature?",opts:["Smart thermostat with schedules","Basic programmable thermostat","Manual thermostat","I rarely change it"],s:[[0,0,0,0],[0,3,0,0],[0,5,0,0],[0,6,0,0]]},
+      {q:"When done watching TV or using your computer, you...",opts:["Use a smart power strip","Unplug everything manually","Leave it on standby","Leave it fully on"],s:[[0,0,0,0],[0,0,2,0],[0,0,4,0],[0,0,6,0]]},
+      {q:"How do you wash your clothes?",opts:["Cold water, full loads","Mix of cold and hot","Mostly hot water","Hot water and small loads"],s:[[0,0,0,0],[0,0,0,1],[0,0,0,3],[0,0,0,5]]}
     ];
-    const wqRecs = [
-      { title: "Switch to LED bulbs throughout your home", desc: "The fastest-payback energy upgrade available — pays for itself in under 3 months.", save: "Saves up to $200/yr" },
-      { title: "Upgrade your thermostat habits", desc: "Proper scheduling alone saves $100–$180/yr without buying anything new.", save: "Saves up to $180/yr" },
-      { title: "Eliminate phantom power with a smart strip", desc: "Your devices drain electricity 24/7 even when off — a $25 fix stops it automatically.", save: "Saves up to $150/yr" },
-      { title: "Switch to cold water laundry", desc: "90% of washing machine energy goes to heating water. Cold works just as well.", save: "Saves up to $120/yr" }
+    var wqRecs = [
+      {title:"Switch to LED bulbs throughout your home",desc:"The fastest-payback energy upgrade available - pays for itself in under 3 months.",save:"Saves up to $200/yr"},
+      {title:"Upgrade your thermostat habits",desc:"Proper scheduling alone saves $100-$180/yr without buying anything new.",save:"Saves up to $180/yr"},
+      {title:"Eliminate phantom power with a smart strip",desc:"Your devices drain electricity 24/7 even when off - a $25 fix stops it automatically.",save:"Saves up to $150/yr"},
+      {title:"Switch to cold water laundry",desc:"90% of washing machine energy goes to heating water. Cold works just as well.",save:"Saves up to $120/yr"}
     ];
-    let wqCur = 0, wqTotals = [0,0,0,0], wqSelected = null, wqInited = false;
+    var wqCur=0, wqTotals=[0,0,0,0], wqSelected=null, wqInited=false;
+
     function wqInit() {
-      if (wqInited) return;
-      wqInited = true;
+      if(wqInited) return;
+      wqInited=true;
       wqRender();
     }
     function wqRender() {
-      const q = wqQs[wqCur];
-      const pct = Math.round(wqCur / wqQs.length * 100);
-      document.getElementById('wq-prog').style.width = pct + '%';
-      document.getElementById('wq-pct').textContent = pct + '%';
-      document.getElementById('wq-num').textContent = 'Question ' + (wqCur+1) + ' of ' + wqQs.length;
+      var q = wqQs[wqCur];
+      var pct = Math.round(wqCur/wqQs.length*100);
+      document.getElementById('wq-prog').style.width = pct+'%';
+      document.getElementById('wq-pct').textContent = pct+'%';
+      document.getElementById('wq-num').textContent = 'Question '+(wqCur+1)+' of '+wqQs.length;
       document.getElementById('wq-text').textContent = q.q;
-      wqSelected = null;
+      wqSelected=null;
       document.getElementById('wq-next').classList.remove('on');
-      document.getElementById('wq-opts').innerHTML = q.opts.map((o,i) =>
-        `<button class="wq-opt" onclick="selectOpt(${i})">${o}</button>`).join('');
+      var html = '';
+      for(var i=0;i<q.opts.length;i++){
+        html += '<button class="wq-opt" onclick="selectOpt('+i+')">'+q.opts[i]+'</button>';
+      }
+      document.getElementById('wq-opts').innerHTML = html;
     }
     function selectOpt(i) {
-      wqSelected = i;
-      document.querySelectorAll('.wq-opt').forEach((b,j) => b.classList.toggle('sel', j===i));
+      wqSelected=i;
+      var btns = document.querySelectorAll('.wq-opt');
+      for(var j=0;j<btns.length;j++){ btns[j].classList.toggle('sel',j===i); }
       document.getElementById('wq-next').classList.add('on');
     }
     function wqNext() {
-      if (wqSelected === null) return;
-      wqQs[wqCur].s[wqSelected].forEach((v,i) => wqTotals[i] += v);
+      if(wqSelected===null) return;
+      var scores = wqQs[wqCur].s[wqSelected];
+      for(var i=0;i<scores.length;i++){ wqTotals[i]+=scores[i]; }
       wqCur++;
-      if (wqCur >= wqQs.length) wqShow();
+      if(wqCur>=wqQs.length) wqShow();
       else wqRender();
     }
     function wqShow() {
-      document.getElementById('wq-prog').style.width = '100%';
-      document.getElementById('wq-pct').textContent = '100%';
-      document.getElementById('wq-body').style.display = 'none';
-      const res = document.getElementById('wq-results');
-      res.style.display = 'block';
-      const sorted = [...wqRecs.map((r,i) => ({...r, score: wqTotals[i]}))].sort((a,b) => b.score - a.score).slice(0,3);
-      document.getElementById('wq-res-intro').innerHTML = 'Based on your answers, here are your <strong>top 3 energy saving opportunities</strong> ranked by impact:';
-      document.getElementById('wq-rec-list').innerHTML = sorted.map((r,i) =>
-        `<div class="wq-rec"><div class="wq-rec-num">${i+1}</div><div><div class="wq-rec-title">${r.title}</div><div class="wq-rec-desc">${r.desc}</div><div class="wq-rec-save">${r.save}</div></div></div>`
-      ).join('');
+      document.getElementById('wq-prog').style.width='100%';
+      document.getElementById('wq-pct').textContent='100%';
+      document.getElementById('wq-body').style.display='none';
+      document.getElementById('wq-results').style.display='block';
+      var indexed = [];
+      for(var i=0;i<wqRecs.length;i++){ indexed.push({r:wqRecs[i],score:wqTotals[i]}); }
+      indexed.sort(function(a,b){return b.score-a.score;});
+      var html='<p style="font-size:15px;color:#8b949e;margin-bottom:1.25rem;">Based on your answers, here are your <strong style="color:#9FE1CB;">top 3 energy saving opportunities</strong>:</p>';
+      for(var i=0;i<3;i++){
+        var rec=indexed[i].r;
+        html+='<div class="wq-rec"><div class="wq-rec-num">'+(i+1)+'</div><div><div class="wq-rec-title">'+rec.title+'</div><div class="wq-rec-desc">'+rec.desc+'</div><div class="wq-rec-save">'+rec.save+'</div></div></div>';
+      }
+      document.getElementById('wq-rec-list').innerHTML=html;
     }
-    Restart() {
-      wqCur = 0; wqTotals = [0,0,0,0]; wqSelected = null;
-      document.getElementById('wq-body').style.display = 'block';
-      document.getElementById('wq-results').style.display = 'none';
+    function wqRestart() {
+      wqCur=0; wqTotals=[0,0,0,0]; wqSelected=null;
+      document.getElementById('wq-body').style.display='block';
+      document.getElementById('wq-results').style.display='none';
       wqRender();
     }
   </script>
