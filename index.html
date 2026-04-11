@@ -47,10 +47,66 @@
   <link rel="stylesheet" href="css/style.css">
 
   <style>
+    /* ── DARK THEME OVERRIDES ── */
+    body { background: #0d1117; color: #e6edf3; }
+    .site-header { background: #0a0f16 !important; border-bottom: 1px solid #1e2a3a; }
+    .logo-name, .logo-tagline { color: #e6edf3 !important; }
+    .main-nav a { color: #9FE1CB !important; }
+    .main-nav a:hover { color: #5DCAA5 !important; }
+    .trust-bar { background: #0a1628 !important; border-top: 1px solid #1e2a3a; border-bottom: 1px solid #1e2a3a; }
+    .trust-list li { color: #9FE1CB !important; }
+    .blog-section, .habits-section { background: #0d1117; }
+    .section-header h2 { color: #e6edf3 !important; }
+    .section-header p { color: #8b949e !important; }
+    .post-card { background: #161b22 !important; border: 1px solid #21262d !important; }
+    .post-card:hover { border-color: #0F6E56 !important; transform: translateY(-2px); }
+    .post-card h3 { color: #e6edf3 !important; }
+    .post-card p { color: #8b949e !important; }
+    .post-meta time, .post-meta .post-category { color: #8b949e !important; }
+    .post-category { background: #1e2a3a !important; color: #9FE1CB !important; }
+    .read-time { color: #8b949e !important; }
+    .read-more { color: #5DCAA5 !important; }
+    .savings-badge { background: #0F6E56 !important; color: #E1F5EE !important; }
+    .products-section { background: #0a1628; }
+    .product-card { background: #161b22 !important; border: 1px solid #21262d !important; }
+    .product-card h3 { color: #e6edf3 !important; }
+    .product-card p { color: #8b949e !important; }
+    .product-savings { color: #5DCAA5 !important; }
+    .habits-section { background: #161b22; }
+    .habit-card { background: #0d1117 !important; border: 1px solid #21262d !important; }
+    .habit-card h3 { color: #e6edf3 !important; }
+    .habit-card p { color: #8b949e !important; }
+    .habit-icon { color: #5DCAA5; }
+    .faq-section { background: #0a1628; }
+    .faq-question { background: #161b22 !important; color: #e6edf3 !important; border: 1px solid #21262d !important; }
+    .faq-question:hover { background: #1e2a3a !important; border-color: #0F6E56 !important; }
+    .faq-answer { background: #0d1117 !important; border: 1px solid #21262d !important; color: #8b949e !important; }
+    .faq-answer p { color: #8b949e !important; }
+    .faq-answer strong { color: #9FE1CB !important; }
+    .faq-answer a { color: #5DCAA5 !important; }
+    .newsletter-section { background: #0F6E56 !important; }
+    .site-footer { background: #0a0f16 !important; border-top: 1px solid #1e2a3a; }
+    .footer-nav h3, .footer-social h3 { color: #9FE1CB !important; }
+    .footer-nav a { color: #8b949e !important; }
+    .footer-nav a:hover { color: #5DCAA5 !important; }
+    .footer-brand p { color: #8b949e !important; }
+    .footer-bottom { border-top: 1px solid #1e2a3a !important; }
+    .affiliate-disclosure, .copyright { color: #8b949e !important; }
+    .hero { background: linear-gradient(135deg, #0a1628 0%, #0d1f35 50%, #0a2a20 100%) !important; }
+    .hero h1 { color: #e6edf3 !important; }
+    .hero-subtitle { color: #8b949e !important; }
+    .stat-number { color: #5DCAA5 !important; }
+    .stat-label { color: #8b949e !important; }
+    .hero-badge { background: #1e2a3a !important; color: #9FE1CB !important; border: 1px solid #0F6E56 !important; }
+    .affiliate-note { color: #8b949e !important; }
+    .affiliate-note a { color: #5DCAA5 !important; }
+
     /* ── WIDGET OVERRIDES ── */
     .interactive-section {
       padding: 5rem 0;
-      background: #f8faf8;
+      background: #0a1628;
+      border-top: 1px solid #1e2a3a;
+      border-bottom: 1px solid #1e2a3a;
     }
     .interactive-section .container {
       max-width: 900px;
@@ -78,25 +134,25 @@
     }
     .widget-tab:not(:last-child) { border-right: 2px solid #0F6E56; }
     .widget-tab.active { background: #0F6E56; color: #fff; }
-    .widget-tab:hover:not(.active) { background: #E1F5EE; }
+    .widget-tab:hover:not(.active) { background: #0a2a20; }
     .widget-panel { display: none; }
     .widget-panel.active { display: block; }
 
     /* ── CALCULATOR ── */
     .wc-header { margin-bottom: 1.5rem; }
-    .wc-header h3 { font-size: 22px; font-weight: 700; color: #0F6E56; margin: 0 0 6px; }
-    .wc-header p { font-size: 15px; color: #5F5E5A; margin: 0; }
+    .wc-header h3 { font-size: 22px; font-weight: 700; color: #5DCAA5; margin: 0 0 6px; }
+    .wc-header p { font-size: 15px; color: #8b949e; margin: 0; }
     .wc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 1.5rem; }
-    .wc-field label { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 6px; }
-    .wc-field select, .wc-field input[type=number] { width: 100%; padding: 10px 12px; border: 1.5px solid #D3D1C7; border-radius: 8px; font-size: 15px; font-family: inherit; background: #fff; box-sizing: border-box; }
-    .wc-field select:focus, .wc-field input:focus { outline: none; border-color: #0F6E56; }
+    .wc-field label { display: block; font-size: 13px; font-weight: 600; color: #9FE1CB; margin-bottom: 6px; }
+    .wc-field select, .wc-field input[type=number] { width: 100%; padding: 10px 12px; border: 1.5px solid #21262d; border-radius: 8px; font-size: 15px; font-family: inherit; background: #161b22; color: #e6edf3; box-sizing: border-box; }
+    .wc-field select:focus, .wc-field input:focus { outline: none; border-color: #5DCAA5; } .wc-field select option { background: #161b22; color: #e6edf3; }
     .wc-bill-row { display: flex; align-items: center; gap: 8px; }
     .wc-sym { font-size: 16px; color: #5F5E5A; font-weight: 600; }
     .wc-btn { width: 100%; padding: 14px; background: #0F6E56; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 1.5rem; font-family: inherit; transition: background 0.2s; }
     .wc-btn:hover { background: #085041; }
     .wc-results { display: none; }
     .wc-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1rem; }
-    .wc-card { background: #fff; border: 1.5px solid #E1F5EE; border-radius: 10px; padding: 14px 10px; text-align: center; }
+    .wc-card { background: #161b22; border: 1.5px solid #21262d; border-radius: 10px; padding: 14px 10px; text-align: center; }
     .wc-card-icon { font-size: 22px; margin-bottom: 4px; }
     .wc-card-amt { font-size: 22px; font-weight: 700; color: #0F6E56; }
     .wc-card-lbl { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.3; }
@@ -105,13 +161,13 @@
     .wc-total-amt { font-size: 36px; font-weight: 800; color: #fff; }
     .wc-bars { display: flex; flex-direction: column; gap: 8px; }
     .wc-bar-row { display: flex; align-items: center; gap: 10px; }
-    .wc-bar-lbl { font-size: 13px; color: #5F5E5A; width: 150px; flex-shrink: 0; }
-    .wc-bar-track { flex: 1; background: #E1F5EE; border-radius: 4px; height: 10px; overflow: hidden; }
+    .wc-bar-lbl { font-size: 13px; color: #8b949e; width: 150px; flex-shrink: 0; }
+    .wc-bar-track { flex: 1; background: #1e2a3a; border-radius: 4px; height: 10px; overflow: hidden; }
     .wc-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #5DCAA5, #0F6E56); transition: width 0.7s cubic-bezier(.4,0,.2,1); }
     .wc-bar-val { font-size: 13px; font-weight: 700; color: #0F6E56; width: 45px; text-align: right; }
 
     /* ── WASTE COUNTER ── */
-    .ww-intro { font-size: 15px; color: #5F5E5A; margin-bottom: 1.5rem; }
+    .ww-intro { font-size: 15px; color: #8b949e; margin-bottom: 1.5rem; }
     .ww-main { background: linear-gradient(135deg, #0F6E56 0%, #085041 100%); border-radius: 16px; padding: 2.5rem 2rem; text-align: center; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
     .ww-main::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(93,202,165,0.15); border-radius: 50%; }
     .ww-main-top { font-size: 12px; color: #9FE1CB; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
@@ -119,40 +175,40 @@
     .ww-cents { font-size: 30px; color: #5DCAA5; }
     .ww-main-bot { font-size: 13px; color: #9FE1CB; font-style: italic; }
     .ww-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 1.5rem; }
-    .ww-stat { background: #fff; border: 1.5px solid #E1F5EE; border-radius: 10px; padding: 14px; text-align: center; }
+    .ww-stat { background: #161b22; border: 1.5px solid #21262d; border-radius: 10px; padding: 14px; text-align: center; }
     .ww-stat-num { font-size: 22px; font-weight: 700; color: #0F6E56; font-variant-numeric: tabular-nums; }
     .ww-stat-lbl { font-size: 12px; color: #888; margin-top: 3px; }
-    .ww-culprits-title { font-size: 13px; font-weight: 700; color: #444; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .ww-culprits-title { font-size: 13px; font-weight: 700; color: #9FE1CB; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
     .ww-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-    .ww-row-name { font-size: 13px; color: #5F5E5A; width: 170px; flex-shrink: 0; }
-    .ww-row-track { flex: 1; background: #E1F5EE; border-radius: 4px; height: 8px; }
+    .ww-row-name { font-size: 13px; color: #8b949e; width: 170px; flex-shrink: 0; }
+    .ww-row-track { flex: 1; background: #1e2a3a; border-radius: 4px; height: 8px; }
     .ww-row-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #5DCAA5, #0F6E56); }
     .ww-row-cost { font-size: 12px; font-weight: 700; color: #0F6E56; width: 50px; text-align: right; }
 
     /* ── QUIZ ── */
-    .wq-intro { font-size: 15px; color: #5F5E5A; margin-bottom: 1.5rem; }
+    .wq-intro { font-size: 15px; color: #8b949e; margin-bottom: 1.5rem; }
     .wq-prog-wrap { margin-bottom: 1.5rem; }
-    .wq-prog-top { display: flex; justify-content: space-between; font-size: 13px; color: #888; margin-bottom: 6px; }
-    .wq-prog-track { background: #E1F5EE; border-radius: 4px; height: 8px; }
+    .wq-prog-top { display: flex; justify-content: space-between; font-size: 13px; color: #8b949e; margin-bottom: 6px; }
+    .wq-prog-track { background: #1e2a3a; border-radius: 4px; height: 8px; }
     .wq-prog-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #5DCAA5, #0F6E56); transition: width 0.4s ease; }
-    .wq-text { font-size: 19px; font-weight: 700; color: #1a1a1a; margin-bottom: 1.25rem; line-height: 1.4; }
+    .wq-text { font-size: 19px; font-weight: 700; color: #e6edf3; margin-bottom: 1.25rem; line-height: 1.4; }
     .wq-opts { display: flex; flex-direction: column; gap: 10px; }
-    .wq-opt { text-align: left; padding: 14px 18px; background: #fff; border: 1.5px solid #D3D1C7; border-radius: 10px; font-size: 15px; color: #333; cursor: pointer; transition: all 0.15s; font-family: inherit; }
-    .wq-opt:hover { border-color: #0F6E56; background: #f0faf6; }
-    .wq-opt.sel { border-color: #0F6E56; background: #E1F5EE; color: #085041; font-weight: 600; }
+    .wq-opt { text-align: left; padding: 14px 18px; background: #161b22; border: 1.5px solid #21262d; border-radius: 10px; font-size: 15px; color: #e6edf3; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .wq-opt:hover { border-color: #5DCAA5; background: #0a2a20; }
+    .wq-opt.sel { border-color: #5DCAA5; background: #0a2a20; color: #9FE1CB; font-weight: 600; }
     .wq-next { margin-top: 1.25rem; width: 100%; padding: 13px; background: #0F6E56; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; opacity: 0.35; pointer-events: none; transition: opacity 0.2s; }
     .wq-next.on { opacity: 1; pointer-events: all; }
     .wq-next.on:hover { background: #085041; }
     .wq-results { display: none; }
-    .wq-res-intro { font-size: 15px; color: #5F5E5A; margin-bottom: 1.25rem; }
+    .wq-res-intro { font-size: 15px; color: #8b949e; margin-bottom: 1.25rem; }
     .wq-res-intro strong { color: #0F6E56; }
-    .wq-rec { background: #fff; border: 1.5px solid #E1F5EE; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 14px; }
+    .wq-rec { background: #161b22; border: 1.5px solid #21262d; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 14px; }
     .wq-rec-num { width: 32px; height: 32px; border-radius: 50%; background: #0F6E56; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
-    .wq-rec-title { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
-    .wq-rec-desc { font-size: 13px; color: #5F5E5A; margin-bottom: 5px; }
+    .wq-rec-title { font-size: 15px; font-weight: 700; color: #e6edf3; margin-bottom: 4px; }
+    .wq-rec-desc { font-size: 13px; color: #8b949e; margin-bottom: 5px; }
     .wq-rec-save { font-size: 13px; color: #0F6E56; font-weight: 700; }
-    .wq-restart { margin-top: 1rem; width: 100%; padding: 12px; background: transparent; color: #888; border: 1.5px solid #D3D1C7; border-radius: 10px; font-size: 14px; cursor: pointer; font-family: inherit; }
-    .wq-restart:hover { background: #f5f5f5; }
+    .wq-restart { margin-top: 1rem; width: 100%; padding: 12px; background: transparent; color: #8b949e; border: 1.5px solid #21262d; border-radius: 10px; font-size: 14px; cursor: pointer; font-family: inherit; }
+    .wq-restart:hover { background: #161b22; }
 
     @media (max-width: 600px) {
       .wc-grid { grid-template-columns: 1fr; }
@@ -799,7 +855,7 @@
             <a href="https://pinterest.com/ecothrifthome" rel="noopener noreferrer" target="_blank" aria-label="EcoThrift Home on Pinterest"><i class="fab fa-pinterest" aria-hidden="true"></i></a>
           </div>
           <div class="footer-contact">
-            <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:hello@ecothrifthome.com">hello@ecothrifthome.com</a></p>
+            <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="/cdn-cgi/l/email-protection#157d7079797a5570767a617d677c73617d7a78703b767a78"><span class="__cf_email__" data-cfemail="771f121b1b1837121418031f051e11031f181a125914181a">[email&#160;protected]</span></a></p>
           </div>
         </div>
       </div>
@@ -810,7 +866,7 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
   <script>
     /* ── TAB SWITCHER ── */
     function showTab(id) {
@@ -879,7 +935,7 @@
       { title: "Eliminate phantom power with a smart strip", desc: "Your devices drain electricity 24/7 even when off — a $25 fix stops it automatically.", save: "Saves up to $150/yr" },
       { title: "Switch to cold water laundry", desc: "90% of washing machine energy goes to heating water. Cold works just as well.", save: "Saves up to $120/yr" }
     ];
-    let wqCur = 0, wqTotals = [0,0,0,0], wqSel = null, wqInited = false;
+    let wqCur = 0, wqTotals = [0,0,0,0], wqSelected = null, wqInited = false;
     function wqInit() {
       if (wqInited) return;
       wqInited = true;
@@ -892,19 +948,19 @@
       document.getElementById('wq-pct').textContent = pct + '%';
       document.getElementById('wq-num').textContent = 'Question ' + (wqCur+1) + ' of ' + wqQs.length;
       document.getElementById('wq-text').textContent = q.q;
-      wqSel = null;
+      wqSelected = null;
       document.getElementById('wq-next').classList.remove('on');
       document.getElementById('wq-opts').innerHTML = q.opts.map((o,i) =>
-        `<button class="wq-opt" onclick="wqSel(${i})">${o}</button>`).join('');
+        `<button class="wq-opt" onclick="selectOpt(${i})">${o}</button>`).join('');
     }
-    function wqSel(i) {
-      wqSel = i;
+    function selectOpt(i) {
+      wqSelected = i;
       document.querySelectorAll('.wq-opt').forEach((b,j) => b.classList.toggle('sel', j===i));
       document.getElementById('wq-next').classList.add('on');
     }
     function wqNext() {
-      if (wqSel === null) return;
-      wqQs[wqCur].s[wqSel].forEach((v,i) => wqTotals[i] += v);
+      if (wqSelected === null) return;
+      wqQs[wqCur].s[wqSelected].forEach((v,i) => wqTotals[i] += v);
       wqCur++;
       if (wqCur >= wqQs.length) wqShow();
       else wqRender();
@@ -921,12 +977,4 @@
         `<div class="wq-rec"><div class="wq-rec-num">${i+1}</div><div><div class="wq-rec-title">${r.title}</div><div class="wq-rec-desc">${r.desc}</div><div class="wq-rec-save">${r.save}</div></div></div>`
       ).join('');
     }
-    function wqRestart() {
-      wqCur = 0; wqTotals = [0,0,0,0]; wqSel = null;
-      document.getElementById('wq-body').style.display = 'block';
-      document.getElementById('wq-results').style.display = 'none';
-      wqRender();
-    }
-  </script>
-</body>
-</html>
+    function wq
