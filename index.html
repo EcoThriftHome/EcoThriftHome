@@ -790,15 +790,20 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Scroll handler - runs before main.js so errors there don't affect it
+    try {
+      document.addEventListener('click', function(e) {
+        var btn = e.target.closest('[data-scrollto]');
+        if (btn) {
+          var target = document.getElementById(btn.getAttribute('data-scrollto'));
+          if (target) { target.scrollIntoView({behavior: 'smooth'}); }
+        }
+      });
+    } catch(err) {}
+  </script>
+  <script src="js/main.js"></script>
   <script>
-    document.addEventListener('click', function(e) {
-      var btn = e.target.closest('[data-scrollto]');
-      if (btn) {
-        var target = document.getElementById(btn.getAttribute('data-scrollto'));
-        if (target) { target.scrollIntoView({behavior: 'smooth'}); }
-      }
-    });
     function scrollTo_(id) {
       var el = document.querySelector(id);
       if (el) { el.scrollIntoView({behavior: 'smooth'}); }
