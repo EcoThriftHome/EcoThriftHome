@@ -1,7 +1,10 @@
+document.addEventListener('click', function(e) {
+  var a = e.target.closest('a[href^="#"]');
+  if (a) { e.preventDefault(); var t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({behavior:'smooth'}); }
+});
 /* ============================================================
    EcoThrift Home — Main JavaScript
    ============================================================ */
-
 /* ===== NAV TOGGLE ===== */
 (function () {
   const toggle = document.querySelector('.nav-toggle');
