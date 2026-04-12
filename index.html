@@ -892,7 +892,7 @@
       if(wqCur>=wqQs.length)wqShow();
       else wqRender();
     }
-    Restart() {
+    function wqRestart() {
       wqCur=0;wqTotals=[0,0,0,0];wqSelected=null;
       document.getElementById('wq-body').style.display='block';
       document.getElementById('wq-results').style.display='none';
