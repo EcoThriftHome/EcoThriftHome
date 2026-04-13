@@ -12,7 +12,7 @@
 # done: sense energy monitor review save money tracking electricity
 # done: thermal curtains and cellular shades cut heating cooling bills
 # done: heat pump water heater vs traditional water heater savings
-how to do a DIY home energy audit room by room
+# done: how to do a DIY home energy audit room by room
 attic insulation save 40 percent on heating costs
 cold water laundry washing save 90 percent on washing energy
 air sealing crawl space and basement to cut heating bills
