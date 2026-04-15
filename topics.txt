@@ -13,7 +13,7 @@
 # done: thermal curtains and cellular shades cut heating cooling bills
 # done: heat pump water heater vs traditional water heater savings
 # done: how to do a DIY home energy audit room by room
-attic insulation save 40 percent on heating costs
+# done: attic insulation save 40 percent on heating costs
 cold water laundry washing save 90 percent on washing energy
 air sealing crawl space and basement to cut heating bills
 smart plug energy monitoring track vampire power by appliance
