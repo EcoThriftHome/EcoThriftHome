@@ -1,0 +1,70 @@
+name: Fix Price Schema
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CLAUDE_PAT }}
+
+      - name: Fix invalid price schema in all blog posts
+        run: |
+          python3 << 'PYEOF'
+          import re, os, glob
+
+          blog_dir = "blog"
+          fixed_count = 0
+          file_count = 0
+
+          price_pattern = re.compile(
+              r'<span itemprop="price">[\$~]?([\d,\.]+)[^<]*</span>'
+          )
+
+          html_files = glob.glob(os.path.join(blog_dir, "*.html"))
+          print(f"Found {len(html_files)} blog post files")
+
+          for filepath in html_files:
+              with open(filepath, "r", encoding="utf-8") as f:
+                  content = f.read()
+
+              original = content
+              matches = price_pattern.findall(content)
+
+              if not matches:
+                  continue
+
+              def fix_price(m):
+                  raw = m.group(1).replace(",", "").strip()
+                  try:
+                      num = float(raw)
+                      num_str = str(int(num)) if num == int(num) else str(num)
+                  except ValueError:
+                      num_str = raw
+                  return f'<meta itemprop="price" content="{num_str}">'
+
+              new_content = price_pattern.sub(fix_price, content)
+
+              if new_content != original:
+                  with open(filepath, "w", encoding="utf-8") as f:
+                      f.write(new_content)
+                  fixes = len(matches)
+                  fixed_count += fixes
+                  file_count += 1
+                  print(f"  Fixed {fixes} price(s) in: {os.path.basename(filepath)}")
+
+          print(f"Done. Fixed {fixed_count} price schema issues across {file_count} files.")
+          PYEOF
+
+      - name: Commit fixes
+        run: |
+          git config user.email "claude-bot@ecothrifthome.com"
+          git config user.name "Claude Bot"
+          git add blog/
+          git diff --staged --quiet || git commit -m "Fix: correct price schema in all blog posts"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
