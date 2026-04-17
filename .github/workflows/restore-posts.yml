@@ -1,0 +1,46 @@
+name: Restore Blog Posts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CLAUDE_PAT }}
+          fetch-depth: 0
+
+      - name: Restore all blog posts to pre-internal-linking state
+        run: |
+          # Find the commit just before the internal linking commit
+          LINKING_COMMIT=$(git log --oneline | grep "SEO: add contextual internal links" | head -1 | awk '{print $1}')
+          
+          if [ -z "$LINKING_COMMIT" ]; then
+            echo "Could not find internal linking commit - looking at recent commits:"
+            git log --oneline -10
+            exit 1
+          fi
+          
+          echo "Found linking commit: $LINKING_COMMIT"
+          
+          # Get the commit before it
+          PREV_COMMIT=$(git log --oneline | grep -A1 "SEO: add contextual internal links" | tail -1 | awk '{print $1}')
+          echo "Restoring to commit before: $PREV_COMMIT"
+          
+          # Restore all blog post files from the previous commit
+          git checkout $PREV_COMMIT -- blog/
+          
+          echo "Blog posts restored. Checking files..."
+          ls blog/*.html | wc -l
+
+      - name: Commit restoration
+        run: |
+          git config user.email "claude-bot@ecothrifthome.com"
+          git config user.name "Claude Bot"
+          git add blog/
+          git diff --staged --quiet || git commit -m "Restore: revert blog posts to pre-internal-linking state"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
