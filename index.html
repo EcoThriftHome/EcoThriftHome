@@ -259,76 +259,6 @@
         </ul>
       </div>
     </div>
-    <section id="interactive-tools" class="interactive-section" aria-labelledby="tools-heading">
-      <div class="container">
-        <header class="section-header" style="margin-bottom:2rem;">
-          <h2 id="tools-heading">Free Energy-Saving Tools</h2>
-          <p>Find out where your money is going and what to fix first.</p>
-        </header>
-        <div class="widget-tabs" role="tablist">
-          <button class="widget-tab active" role="tab" onclick="showTab('calc')">&#128176; Savings Calculator</button>
-          <button class="widget-tab" role="tab" onclick="showTab('counter')">&#9889; Waste Counter</button>
-          <button class="widget-tab" role="tab" onclick="showTab('quiz')">&#128269; Energy Quiz</button>
-        </div>
-        <div id="tab-calc" class="widget-panel active">
-          <div class="wc-header"><h3>Personalized savings calculator</h3><p>Answer 4 quick questions and get your custom savings breakdown.</p></div>
-          <div class="wc-grid">
-            <div class="wc-field"><label for="wc-bill">Monthly electricity bill</label><div class="wc-bill-row"><span class="wc-sym">$</span><input type="number" id="wc-bill" value="120" min="20" max="500" step="1" style="flex:1;"></div></div>
-            <div class="wc-field"><label for="wc-size">Home size</label><select id="wc-size"><option value="0.7">Small (under 1,000 sq ft)</option><option value="1" selected>Medium (1,000-2,000 sq ft)</option><option value="1.4">Large (2,000-3,000 sq ft)</option><option value="1.8">Very large (3,000+ sq ft)</option></select></div>
-            <div class="wc-field"><label for="wc-heat">Primary heating type</label><select id="wc-heat"><option value="1.2">Electric resistance</option><option value="1" selected>Gas furnace</option><option value="0.8">Heat pump</option><option value="0.6">Mild climate / other</option></select></div>
-            <div class="wc-field"><label for="wc-people">People in home</label><select id="wc-people"><option value="0.8">1 person</option><option value="1" selected>2 people</option><option value="1.2">3-4 people</option><option value="1.4">5+ people</option></select></div>
-          </div>
-          <button class="wc-btn" onclick="runCalc()">Calculate My Savings</button>
-          <div class="wc-results" id="wc-results">
-            <div class="wc-cards">
-              <div class="wc-card"><div class="wc-card-icon">&#128161;</div><div class="wc-card-amt" id="wc-led">$0</div><div class="wc-card-lbl">LED bulb switch</div></div>
-              <div class="wc-card"><div class="wc-card-icon">&#127777;</div><div class="wc-card-amt" id="wc-therm">$0</div><div class="wc-card-lbl">Thermostat habits</div></div>
-              <div class="wc-card"><div class="wc-card-icon">&#128268;</div><div class="wc-card-amt" id="wc-phantom">$0</div><div class="wc-card-lbl">Phantom power</div></div>
-              <div class="wc-card"><div class="wc-card-icon">&#128704;</div><div class="wc-card-amt" id="wc-water">$0</div><div class="wc-card-lbl">Water heating</div></div>
-            </div>
-            <div class="wc-total"><span class="wc-total-lbl">Total estimated annual savings</span><span class="wc-total-amt" id="wc-total">$0</span></div>
-            <div class="wc-bars" id="wc-bars"></div>
-          </div>
-        </div>
-        <div id="tab-counter" class="widget-panel">
-          <p class="ww-intro">This is how much the average U.S. home wastes on standby power right now, ticking up even while you sleep.</p>
-          <div class="ww-main">
-            <div class="ww-main-top">Phantom power wasted in your home so far today</div>
-            <div class="ww-display" id="ww-count">$0<span class="ww-cents">.00</span></div>
-            <div class="ww-main-bot">Based on $150/year average standby waste (Lawrence Berkeley National Lab)</div>
-          </div>
-          <div class="ww-stats">
-            <div class="ww-stat"><div class="ww-stat-num">$0.03</div><div class="ww-stat-lbl">per minute</div></div>
-            <div class="ww-stat"><div class="ww-stat-num">$1.71</div><div class="ww-stat-lbl">per hour</div></div>
-            <div class="ww-stat"><div class="ww-stat-num">$150</div><div class="ww-stat-lbl">per year</div></div>
-          </div>
-          <div class="ww-culprits-title">Biggest phantom power culprits</div>
-          <div class="ww-row"><div class="ww-row-name">Cable / satellite box</div><div class="ww-row-track"><div class="ww-row-fill" style="width:100%"></div></div><div class="ww-row-cost">$43/yr</div></div>
-          <div class="ww-row"><div class="ww-row-name">Desktop computer</div><div class="ww-row-track"><div class="ww-row-fill" style="width:65%"></div></div><div class="ww-row-cost">$28/yr</div></div>
-          <div class="ww-row"><div class="ww-row-name">TV (standby)</div><div class="ww-row-track"><div class="ww-row-fill" style="width:51%"></div></div><div class="ww-row-cost">$22/yr</div></div>
-          <div class="ww-row"><div class="ww-row-name">Game console</div><div class="ww-row-track"><div class="ww-row-fill" style="width:44%"></div></div><div class="ww-row-cost">$19/yr</div></div>
-          <div class="ww-row"><div class="ww-row-name">Microwave clock</div><div class="ww-row-track"><div class="ww-row-fill" style="width:28%"></div></div><div class="ww-row-cost">$12/yr</div></div>
-          <div class="ww-row"><div class="ww-row-name">Phone chargers</div><div class="ww-row-track"><div class="ww-row-fill" style="width:21%"></div></div><div class="ww-row-cost">$9/yr</div></div>
-        </div>
-        <div id="tab-quiz" class="widget-panel">
-          <p class="wq-intro">5 quick questions to find your biggest energy wasters and your top 3 personalised fixes.</p>
-          <div id="wq-body">
-            <div class="wq-prog-wrap">
-              <div class="wq-prog-top"><span id="wq-num">Question 1 of 5</span><span id="wq-pct">0%</span></div>
-              <div class="wq-prog-track"><div class="wq-prog-fill" id="wq-prog" style="width:0%"></div></div>
-            </div>
-            <div class="wq-text" id="wq-text"></div>
-            <div class="wq-opts" id="wq-opts"></div>
-            <button class="wq-next" id="wq-next" onclick="wqNext()">Next &rarr;</button>
-          </div>
-          <div class="wq-results" id="wq-results">
-            <div id="wq-res-intro"></div>
-            <div id="wq-rec-list"></div>
-            <button class="wq-restart" onclick="wqRestart()">Start over</button>
-          </div>
-        </div>
-      </div>
-    </section>
     <section id="blog-posts" class="blog-section" aria-labelledby="blog-heading">
       <div class="container">
         <header class="section-header">
@@ -593,51 +523,77 @@
               </div>
             </a>
           </article>
-
-          <!-- Post: diy-home-energy-audit-room-by-room -->
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/diy-home-energy-audit-room-by-room.html" class="post-card-link" aria-label="Read: How to Do a DIY Home Energy Audit Room by Room">
-              <div class="post-card-img" aria-hidden="true">
-                <span class="post-icon">⚡</span>
-                <div class="savings-badge">Save up to $100/yr</div>
-              </div>
-              <div class="post-card-body">
-                <div class="post-meta">
-                  <span class="post-category">Energy Auditing</span>
-                  <time datetime="2026-04-13" itemprop="datePublished">April 13, 2026</time>
-                </div>
-                <h3 itemprop="headline">How to Do a DIY Home Energy Audit Room by Room</h3>
-                <p itemprop="description">Learn how to do a thorough DIY home energy audit room by room. Find air leaks, inefficient appliances, and hidden energy drains—no professional required.</p>
-                <div class="post-footer">
-                  <span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 10 min read</span>
-                  <span class="read-more" aria-hidden="true">Read Guide →</span>
-                </div>
-              </div>
-            </a>
-          </article>
-
-          <!-- Post: attic-insulation-save-40-percent-heating-costs -->
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/attic-insulation-save-40-percent-heating-costs.html" class="post-card-link" aria-label="Read: Attic Insulation: How It Can Save You 40% on Heating Costs">
-              <div class="post-card-img" aria-hidden="true">
-                <span class="post-icon">🌡️</span>
-                <div class="savings-badge">Save up to $100/yr</div>
-              </div>
-              <div class="post-card-body">
-                <div class="post-meta">
-                  <span class="post-category">Insulation</span>
-                  <time datetime="2026-04-15" itemprop="datePublished">April 15, 2026</time>
-                </div>
-                <h3 itemprop="headline">Attic Insulation: How It Can Save You 40% on Heating Costs</h3>
-                <p itemprop="description">Learn how proper attic insulation can cut your heating bills by up to 40%. Evidence-based R-value guide, cost breakdown, payback period, and product picks.</p>
-                <div class="post-footer">
-                  <span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span>
-                  <span class="read-more" aria-hidden="true">Read Guide →</span>
-                </div>
-              </div>
-            </a>
-          </article>
    </div><!-- /.posts-grid -->
+      </div>
+    </section>
+    <section id="interactive-tools" class="interactive-section" aria-labelledby="tools-heading">
+      <div class="container">
+        <header class="section-header" style="margin-bottom:2rem;">
+          <h2 id="tools-heading">Free Energy-Saving Tools</h2>
+          <p>Find out where your money is going and what to fix first.</p>
+        </header>
+        <div class="widget-tabs" role="tablist">
+          <button class="widget-tab active" role="tab" onclick="showTab('calc')">&#128176; Savings Calculator</button>
+          <button class="widget-tab" role="tab" onclick="showTab('counter')">&#9889; Waste Counter</button>
+          <button class="widget-tab" role="tab" onclick="showTab('quiz')">&#128269; Energy Quiz</button>
+        </div>
+        <div id="tab-calc" class="widget-panel active">
+          <div class="wc-header"><h3>Personalized savings calculator</h3><p>Answer 4 quick questions and get your custom savings breakdown.</p></div>
+          <div class="wc-grid">
+            <div class="wc-field"><label for="wc-bill">Monthly electricity bill</label><div class="wc-bill-row"><span class="wc-sym">$</span><input type="number" id="wc-bill" value="120" min="20" max="500" step="1" style="flex:1;"></div></div>
+            <div class="wc-field"><label for="wc-size">Home size</label><select id="wc-size"><option value="0.7">Small (under 1,000 sq ft)</option><option value="1" selected>Medium (1,000-2,000 sq ft)</option><option value="1.4">Large (2,000-3,000 sq ft)</option><option value="1.8">Very large (3,000+ sq ft)</option></select></div>
+            <div class="wc-field"><label for="wc-heat">Primary heating type</label><select id="wc-heat"><option value="1.2">Electric resistance</option><option value="1" selected>Gas furnace</option><option value="0.8">Heat pump</option><option value="0.6">Mild climate / other</option></select></div>
+            <div class="wc-field"><label for="wc-people">People in home</label><select id="wc-people"><option value="0.8">1 person</option><option value="1" selected>2 people</option><option value="1.2">3-4 people</option><option value="1.4">5+ people</option></select></div>
+          </div>
+          <button class="wc-btn" onclick="runCalc()">Calculate My Savings</button>
+          <div class="wc-results" id="wc-results">
+            <div class="wc-cards">
+              <div class="wc-card"><div class="wc-card-icon">&#128161;</div><div class="wc-card-amt" id="wc-led">$0</div><div class="wc-card-lbl">LED bulb switch</div></div>
+              <div class="wc-card"><div class="wc-card-icon">&#127777;</div><div class="wc-card-amt" id="wc-therm">$0</div><div class="wc-card-lbl">Thermostat habits</div></div>
+              <div class="wc-card"><div class="wc-card-icon">&#128268;</div><div class="wc-card-amt" id="wc-phantom">$0</div><div class="wc-card-lbl">Phantom power</div></div>
+              <div class="wc-card"><div class="wc-card-icon">&#128704;</div><div class="wc-card-amt" id="wc-water">$0</div><div class="wc-card-lbl">Water heating</div></div>
+            </div>
+            <div class="wc-total"><span class="wc-total-lbl">Total estimated annual savings</span><span class="wc-total-amt" id="wc-total">$0</span></div>
+            <div class="wc-bars" id="wc-bars"></div>
+          </div>
+        </div>
+        <div id="tab-counter" class="widget-panel">
+          <p class="ww-intro">This is how much the average U.S. home wastes on standby power right now, ticking up even while you sleep.</p>
+          <div class="ww-main">
+            <div class="ww-main-top">Phantom power wasted in your home so far today</div>
+            <div class="ww-display" id="ww-count">$0<span class="ww-cents">.00</span></div>
+            <div class="ww-main-bot">Based on $150/year average standby waste (Lawrence Berkeley National Lab)</div>
+          </div>
+          <div class="ww-stats">
+            <div class="ww-stat"><div class="ww-stat-num">$0.03</div><div class="ww-stat-lbl">per minute</div></div>
+            <div class="ww-stat"><div class="ww-stat-num">$1.71</div><div class="ww-stat-lbl">per hour</div></div>
+            <div class="ww-stat"><div class="ww-stat-num">$150</div><div class="ww-stat-lbl">per year</div></div>
+          </div>
+          <div class="ww-culprits-title">Biggest phantom power culprits</div>
+          <div class="ww-row"><div class="ww-row-name">Cable / satellite box</div><div class="ww-row-track"><div class="ww-row-fill" style="width:100%"></div></div><div class="ww-row-cost">$43/yr</div></div>
+          <div class="ww-row"><div class="ww-row-name">Desktop computer</div><div class="ww-row-track"><div class="ww-row-fill" style="width:65%"></div></div><div class="ww-row-cost">$28/yr</div></div>
+          <div class="ww-row"><div class="ww-row-name">TV (standby)</div><div class="ww-row-track"><div class="ww-row-fill" style="width:51%"></div></div><div class="ww-row-cost">$22/yr</div></div>
+          <div class="ww-row"><div class="ww-row-name">Game console</div><div class="ww-row-track"><div class="ww-row-fill" style="width:44%"></div></div><div class="ww-row-cost">$19/yr</div></div>
+          <div class="ww-row"><div class="ww-row-name">Microwave clock</div><div class="ww-row-track"><div class="ww-row-fill" style="width:28%"></div></div><div class="ww-row-cost">$12/yr</div></div>
+          <div class="ww-row"><div class="ww-row-name">Phone chargers</div><div class="ww-row-track"><div class="ww-row-fill" style="width:21%"></div></div><div class="ww-row-cost">$9/yr</div></div>
+        </div>
+        <div id="tab-quiz" class="widget-panel">
+          <p class="wq-intro">5 quick questions to find your biggest energy wasters and your top 3 personalised fixes.</p>
+          <div id="wq-body">
+            <div class="wq-prog-wrap">
+              <div class="wq-prog-top"><span id="wq-num">Question 1 of 5</span><span id="wq-pct">0%</span></div>
+              <div class="wq-prog-track"><div class="wq-prog-fill" id="wq-prog" style="width:0%"></div></div>
+            </div>
+            <div class="wq-text" id="wq-text"></div>
+            <div class="wq-opts" id="wq-opts"></div>
+            <button class="wq-next" id="wq-next" onclick="wqNext()">Next &rarr;</button>
+          </div>
+          <div class="wq-results" id="wq-results">
+            <div id="wq-res-intro"></div>
+            <div id="wq-rec-list"></div>
+            <button class="wq-restart" onclick="wqRestart()">Start over</button>
+          </div>
+        </div>
       </div>
     </section>
     <section id="top-products" class="products-section" aria-labelledby="products-heading">
