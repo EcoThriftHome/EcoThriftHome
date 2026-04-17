@@ -15,86 +15,77 @@ jobs:
         run: |
           pip install anthropic --quiet
           python3 << 'PYEOF'
-          import os, re, json, time
+          import os, re, time
           import anthropic
 
           client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-          # Full post map — slug, title, key topics
           POST_MAP = [
-            {"slug":"led-bulb-upgrade-save-200-per-year.html","title":"The $30 LED Upgrade That Cuts Your Lighting Bill by 80%","topics":["LED","bulbs","lighting","electricity","energy saving"]},
-            {"slug":"smart-thermostat-habits-save-180-per-year.html","title":"Smart Thermostat Habits That Save $180/Year","topics":["thermostat","heating","cooling","HVAC","temperature"]},
-            {"slug":"stop-vampire-power-save-150-per-year.html","title":"The Vampire Power Problem: How to Stop Paying for Electricity You're Not Using","topics":["vampire power","phantom load","standby","electronics","power strips"]},
-            {"slug":"smart-power-strips-stop-phantom-power.html","title":"Smart Power Strips: Stop Phantom Power and Save Up to $100/Year","topics":["power strip","phantom power","standby","electronics"]},
-            {"slug":"weatherstripping-door-seals-stop-drafts.html","title":"Weatherstripping & Door Seals: The Cheapest Way to Stop Drafts","topics":["drafts","air sealing","doors","windows","weatherstripping"]},
-            {"slug":"low-flow-showerheads-save-water-heating.html","title":"Low-Flow Showerheads: The $30 Upgrade That Trims Your Water Heating Bill","topics":["showerhead","water heating","bathroom","water usage"]},
-            {"slug":"energy-efficient-window-treatments-curtains.html","title":"Energy Efficient Window Treatments & Curtains: Save Up to $340/Year","topics":["curtains","windows","blinds","heat loss","insulation"]},
-            {"slug":"unplug-phone-charger-save-energy-money.html","title":"Does Unplugging Phone Chargers Actually Save Money?","topics":["charger","phantom power","standby","electronics","plugs"]},
-            {"slug":"cold-water-laundry-washing-savings.html","title":"Cold Water Laundry: Save $120/Year Without Buying Anything","topics":["laundry","washing machine","appliances","water heating"]},
-            {"slug":"ceiling-fans-vs-air-conditioning-costs.html","title":"Ceiling Fans vs Air Conditioning: The Real Cost Comparison","topics":["ceiling fan","AC","air conditioning","cooling","summer"]},
-            {"slug":"programmable-vs-smart-thermostat-comparison.html","title":"Programmable vs Smart Thermostat: Which One Actually Saves More Money?","topics":["thermostat","smart thermostat","heating","cooling","HVAC"]},
-            {"slug":"diy-home-energy-audit-step-by-step.html","title":"How to Do a DIY Home Energy Audit (Step-by-Step Guide)","topics":["energy audit","air leaks","insulation","drafts","home efficiency"]},
-            {"slug":"solar-phone-chargers-small-devices.html","title":"Solar Phone Chargers for Small Devices: Do They Actually Save Money?","topics":["solar","charger","renewable energy","off grid"]},
-            {"slug":"best-power-usage-monitors-track-electricity.html","title":"Best Power Usage Monitors to Track Electricity (2026)","topics":["energy monitor","electricity tracking","power meter","home energy"]},
-            {"slug":"best-smart-power-strips-2025.html","title":"Best Smart Power Strips in 2025: Ranked and Reviewed","topics":["power strip","smart outlet","phantom power","electronics"]},
-            {"slug":"insulate-water-heater-save-money.html","title":"How to Insulate Your Water Heater and Save Up to $45/Year","topics":["water heater","insulation","hot water","energy saving"]},
-            {"slug":"sense-energy-monitor-review-save-money-tracking-electricity.html","title":"Sense Energy Monitor Review: Can It Really Save You Money?","topics":["energy monitor","electricity tracking","home energy","smart home"]},
-            {"slug":"thermal-curtains-cellular-shades-cut-heating-cooling-bills.html","title":"Thermal Curtains & Cellular Shades: Cut Heating & Cooling Bills by 25%","topics":["curtains","cellular shades","windows","insulation","heating","cooling"]},
-            {"slug":"heat-pump-water-heater-vs-traditional-savings.html","title":"Heat Pump Water Heater vs Traditional: Real Savings Breakdown","topics":["heat pump","water heater","hot water","energy efficient appliances"]},
-            {"slug":"mini-split-vs-window-ac-vs-central-air-cost-comparison.html","title":"Mini Split vs Window AC vs Central Air: Which Saves the Most Money?","topics":["mini split","window AC","central air","HVAC","cooling","heating"]},
+            {"slug":"led-bulb-upgrade-save-200-per-year.html","title":"The $30 LED Upgrade That Cuts Your Lighting Bill by 80%","topics":["LED","bulbs","lighting","electricity"]},
+            {"slug":"smart-thermostat-habits-save-180-per-year.html","title":"Smart Thermostat Habits That Save $180/Year","topics":["thermostat","heating","cooling","HVAC"]},
+            {"slug":"stop-vampire-power-save-150-per-year.html","title":"The Vampire Power Problem","topics":["vampire power","phantom load","standby","electronics"]},
+            {"slug":"smart-power-strips-stop-phantom-power.html","title":"Smart Power Strips: Stop Phantom Power","topics":["power strip","phantom power","standby"]},
+            {"slug":"weatherstripping-door-seals-stop-drafts.html","title":"Weatherstripping and Door Seals","topics":["drafts","air sealing","doors","windows"]},
+            {"slug":"low-flow-showerheads-save-water-heating.html","title":"Low-Flow Showerheads","topics":["showerhead","water heating","bathroom"]},
+            {"slug":"energy-efficient-window-treatments-curtains.html","title":"Energy Efficient Window Treatments and Curtains","topics":["curtains","windows","blinds","heat loss"]},
+            {"slug":"unplug-phone-charger-save-energy-money.html","title":"Does Unplugging Phone Chargers Save Money?","topics":["charger","phantom power","standby","plugs"]},
+            {"slug":"cold-water-laundry-washing-savings.html","title":"Cold Water Laundry: Save $120/Year","topics":["laundry","washing machine","appliances","water heating"]},
+            {"slug":"ceiling-fans-vs-air-conditioning-costs.html","title":"Ceiling Fans vs Air Conditioning","topics":["ceiling fan","AC","air conditioning","cooling"]},
+            {"slug":"programmable-vs-smart-thermostat-comparison.html","title":"Programmable vs Smart Thermostat","topics":["thermostat","smart thermostat","heating","cooling"]},
+            {"slug":"diy-home-energy-audit-step-by-step.html","title":"How to Do a DIY Home Energy Audit","topics":["energy audit","air leaks","insulation","drafts"]},
+            {"slug":"solar-phone-chargers-small-devices.html","title":"Solar Phone Chargers for Small Devices","topics":["solar","charger","renewable energy"]},
+            {"slug":"best-power-usage-monitors-track-electricity.html","title":"Best Power Usage Monitors to Track Electricity","topics":["energy monitor","electricity tracking","power meter"]},
+            {"slug":"best-smart-power-strips-2025.html","title":"Best Smart Power Strips in 2025: Ranked and Reviewed","topics":["power strip","smart outlet","phantom power"]},
+            {"slug":"insulate-water-heater-save-money.html","title":"How to Insulate Your Water Heater","topics":["water heater","insulation","hot water"]},
+            {"slug":"sense-energy-monitor-review-save-money-tracking-electricity.html","title":"Sense Energy Monitor Review","topics":["energy monitor","electricity tracking","smart home"]},
+            {"slug":"thermal-curtains-cellular-shades-cut-heating-cooling-bills.html","title":"Thermal Curtains and Cellular Shades","topics":["curtains","cellular shades","windows","insulation","heating","cooling"]},
+            {"slug":"heat-pump-water-heater-vs-traditional-savings.html","title":"Heat Pump Water Heater vs Traditional","topics":["heat pump","water heater","hot water","energy efficient"]},
+            {"slug":"mini-split-vs-window-ac-vs-central-air-cost-comparison.html","title":"Mini Split vs Window AC vs Central Air","topics":["mini split","window AC","central air","HVAC","cooling"]},
           ]
 
           blog_dir = "blog"
-          html_files = [p["slug"] for p in POST_MAP]
           total_fixed = 0
 
           for post in POST_MAP:
               filepath = os.path.join(blog_dir, post["slug"])
               if not os.path.exists(filepath):
-                  print(f"Skipping (not found): {post['slug']}")
+                  print("Skipping (not found): " + post["slug"])
                   continue
 
-              with open(filepath, "r", encoding="utf-8") as f:
-                  content = f.read()
+              with open(filepath, "r", encoding="utf-8") as fh:
+                  content = fh.read()
 
-              # Build list of OTHER posts to potentially link to
               other_posts = [p for p in POST_MAP if p["slug"] != post["slug"]]
-              other_posts_str = "\n".join([
-                  f'- slug: {p["slug"]}, title: "{p["title"]}", topics: {", ".join(p["topics"])}'
+              other_list = "\n".join([
+                  "- slug: " + p["slug"] + ', title: "' + p["title"] + '", topics: ' + ", ".join(p["topics"])
                   for p in other_posts
               ])
 
-              # Extract just the article body to keep tokens down
               article_match = re.search(r'<article[^>]*>(.*?)</article>', content, re.DOTALL)
               if not article_match:
-                  print(f"No article tag found in {post['slug']}, skipping")
+                  print("No article tag in " + post["slug"] + ", skipping")
                   continue
 
               article_body = article_match.group(1)
 
-              prompt = f"""You are helping add internal links to a blog post on EcoThrift Home (ecothrifthome.com).
-
-Current post: "{post['title']}"
-
-Other posts available to link to:
-{other_posts_str}
-
-RULES:
-1. Only add links where they make genuine contextual sense — a reader would naturally want to know more
-2. Maximum 4 internal links per post
-3. Never link to the same post twice
-4. Never add a link inside an existing <a> tag
-5. Never add a link inside a heading tag (h1, h2, h3)
-6. Never add a link inside a product-rec div
-7. Use natural anchor text that fits the sentence — do NOT use "click here" or "read more"
-8. Link format MUST be exactly: <a href="/blog/SLUG">anchor text</a>
-9. If no links make genuine sense, return the article body unchanged
-10. Only modify the article body text, not headings or product cards
-
-Here is the article body HTML:
-{article_body[:8000]}
-
-Return ONLY the modified article body HTML with links added. No explanation, no markdown, just the HTML."""
+              prompt = (
+                  'You are helping add internal links to a blog post on EcoThrift Home.\n\n'
+                  'Current post: "' + post["title"] + '"\n\n'
+                  'Other posts available to link to:\n' + other_list + '\n\n'
+                  'RULES:\n'
+                  '1. Only add links where they make genuine contextual sense\n'
+                  '2. Maximum 4 internal links per post\n'
+                  '3. Never link to the same post twice\n'
+                  '4. Never add a link inside an existing <a> tag\n'
+                  '5. Never add a link inside h1, h2, or h3 tags\n'
+                  '6. Never add a link inside a product-rec div\n'
+                  '7. Use natural anchor text — never "click here" or "read more"\n'
+                  '8. Link format must be exactly: <a href="/blog/SLUG">anchor text</a>\n'
+                  '9. If no links make genuine sense, return the article body unchanged\n'
+                  '10. Only modify the article body, not headings or product cards\n\n'
+                  'Here is the article body HTML:\n' + article_body[:8000] + '\n\n'
+                  'Return ONLY the modified article body HTML. No explanation, no markdown fences.'
+              )
 
               try:
                   message = client.messages.create(
@@ -102,36 +93,32 @@ Return ONLY the modified article body HTML with links added. No explanation, no 
                       max_tokens=8000,
                       messages=[{"role": "user", "content": prompt}]
                   )
-                  new_article_body = message.content[0].text.strip()
+                  new_body = message.content[0].text.strip()
 
-                  # Clean up any markdown fences
-                  if new_article_body.startswith("```"):
-                      new_article_body = re.sub(r'^```[a-z]*\n?', '', new_article_body)
-                      new_article_body = re.sub(r'\n?```$', '', new_article_body)
-                      new_article_body = new_article_body.strip()
+                  if new_body.startswith("```"):
+                      new_body = re.sub(r'^```[a-z]*\n?', '', new_body)
+                      new_body = re.sub(r'\n?```$', '', new_body)
+                      new_body = new_body.strip()
 
-                  # Count links added
-                  original_links = len(re.findall(r'href="/blog/', article_body))
-                  new_links = len(re.findall(r'href="/blog/', new_article_body))
-                  links_added = max(0, new_links - original_links)
+                  orig_links = len(re.findall(r'href="/blog/', article_body))
+                  new_links  = len(re.findall(r'href="/blog/', new_body))
+                  added = max(0, new_links - orig_links)
 
-                  if links_added > 0 and new_article_body != article_body:
-                      # Replace article body in full content
-                      new_content = content.replace(article_body, new_article_body, 1)
-                      with open(filepath, "w", encoding="utf-8") as f:
-                          f.write(new_content)
-                      total_fixed += links_added
-                      print(f"Added {links_added} internal link(s) to: {post['slug']}")
+                  if added > 0 and new_body != article_body:
+                      new_content = content.replace(article_body, new_body, 1)
+                      with open(filepath, "w", encoding="utf-8") as fh:
+                          fh.write(new_content)
+                      total_fixed += added
+                      print("Added " + str(added) + " link(s) to: " + post["slug"])
                   else:
-                      print(f"No links needed: {post['slug']}")
+                      print("No links needed: " + post["slug"])
 
               except Exception as e:
-                  print(f"Error processing {post['slug']}: {e}")
+                  print("Error on " + post["slug"] + ": " + str(e))
 
-              # Rate limit — wait between API calls
               time.sleep(3)
 
-          print(f"\nDone. Added {total_fixed} internal links across all posts.")
+          print("Done. Total internal links added: " + str(total_fixed))
           PYEOF
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
