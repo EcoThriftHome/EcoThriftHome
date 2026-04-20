@@ -15,7 +15,7 @@
 # done: how to do a DIY home energy audit room by room
 # done: attic insulation save 40 percent on heating costs
 # done: cold water laundry washing save 90 percent on washing energy
-air sealing crawl space and basement to cut heating bills
+# done: air sealing crawl space and basement to cut heating bills
 smart plug energy monitoring track vampire power by appliance
 ceiling fan direction summer vs winter save on AC heating
 tankless water heater vs tank water heater cost savings
