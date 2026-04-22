@@ -16,7 +16,7 @@
 # done: attic insulation save 40 percent on heating costs
 # done: cold water laundry washing save 90 percent on washing energy
 # done: air sealing crawl space and basement to cut heating bills
-smart plug energy monitoring track vampire power by appliance
+# done: smart plug energy monitoring track vampire power by appliance
 ceiling fan direction summer vs winter save on AC heating
 tankless water heater vs tank water heater cost savings
 ENERGY STAR appliances worth the cost refrigerator savings
