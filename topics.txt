@@ -18,7 +18,7 @@
 # done: air sealing crawl space and basement to cut heating bills
 # done: smart plug energy monitoring track vampire power by appliance
 # done: ceiling fan direction summer vs winter save on AC heating
-tankless water heater vs tank water heater cost savings
+# done: tankless water heater vs tank water heater cost savings
 ENERGY STAR appliances worth the cost refrigerator savings
 solar outdoor lighting replace electric pathway lights
 pipe insulation hot water pipes reduce water heating costs
