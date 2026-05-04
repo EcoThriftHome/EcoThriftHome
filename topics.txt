@@ -21,7 +21,7 @@
 # done: tankless water heater vs tank water heater cost savings
 # done: ENERGY STAR appliances worth the cost refrigerator savings
 # done: solar outdoor lighting replace electric pathway lights
-pipe insulation hot water pipes reduce water heating costs
+# done: pipe insulation hot water pipes reduce water heating costs
 programmable power strip home office save on standby power
 refrigerator coil cleaning save 15 percent on fridge energy
 dishwasher energy saving tips skip pre-rinse air dry
