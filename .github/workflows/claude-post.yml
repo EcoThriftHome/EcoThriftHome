@@ -2,7 +2,7 @@ name: Auto Blog Post
 
 on:
   schedule:
-    - cron: '0 14 * * 1,3,5'
+    - cron: '0 14 * * 1,3,5,6'
   workflow_dispatch:
     inputs:
       filename:
@@ -387,10 +387,11 @@ jobs:
           client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
           pin_prompt = (
-              "Write 2 Pinterest pins for this EcoThrift Home blog post.\n"
+              "Write 3 Pinterest pins for this EcoThrift Home blog post.\n"
               f"Title: {title}\nDescription: {desc}\nSavings: ${savings}/yr\nURL: {post_url}\n\n"
               "Pin 1: Lead with the savings amount, money-focused angle\n"
-              "Pin 2: Lead with how-it-works, educational angle\n\n"
+              "Pin 2: Lead with how-it-works, educational angle\n"
+              "Pin 3: Lead with a surprising fact or myth-busting angle\n\n"
               "Each pin needs: headline (under 8 words), subheading (under 10 words), description (2-3 sentences + hashtags), eyebrow (2-3 word category label)\n\n"
               'Return ONLY valid JSON, no explanation:\n'
               '[{"headline":"...","subheading":"...","description":"...","eyebrow":"..."},{"headline":"...","subheading":"...","description":"...","eyebrow":"..."}]'
@@ -419,6 +420,7 @@ jobs:
           PALETTES = [
               {"bg": "#0F6E56", "accent": "#5DCAA5", "dark": "#085041", "text": "#E1F5EE", "muted": "#9FE1CB"},
               {"bg": "#1C1C1E", "accent": "#EF9F27", "dark": "#2C2C2A", "text": "#F1EFE8", "muted": "#888780"},
+              {"bg": "#060d14", "accent": "#9FE1CB", "dark": "#0d1f2d", "text": "#ffffff", "muted": "#5DCAA5"},
           ]
 
           def wrap_text(draw, text, font, max_width):
@@ -662,7 +664,7 @@ jobs:
                   continue
 
               # Fire correct Pabbly webhook
-              webhook_url = webhook_url_1 if i == 1 else webhook_url_2
+              webhook_url = webhook_url_1 if i % 2 == 1 else webhook_url_2
               payload = {
                   "title":       pin["headline"],
                   "description": pin["description"],
@@ -677,7 +679,7 @@ jobs:
                   print("Waiting 60 seconds before next pin...")
                   time.sleep(60)
 
-          print("All 2 Pinterest pins posted successfully")
+          print("All 3 Pinterest pins posted successfully")
           PINEOF
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
