@@ -163,6 +163,60 @@
     .wq-intro{font-size:15px;color:#8b949e;margin-bottom:1.5rem;}
     @media(max-width:760px){.hero-grid{grid-template-columns:1fr!important;}.hero-card{display:none!important;}}
     @media(max-width:600px){.wc-grid{grid-template-columns:1fr;}.wc-cards{grid-template-columns:repeat(2,1fr);}.ww-stats{grid-template-columns:repeat(3,1fr);}.widget-tab{font-size:12px;padding:12px 6px;}}
+
+    /* ── Latest Posts Section ── */
+    .latest-section{padding:4rem 0 2rem;background:#060d14;}
+    .latest-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+    .latest-label{display:flex;align-items:center;gap:10px;}
+    .latest-dot{width:10px;height:10px;border-radius:50%;background:#5DCAA5;animation:pulse 2s infinite;}
+    .latest-title{font-size:22px;font-weight:800;color:#ffffff;}
+    .latest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;}
+    .latest-card{background:#0d1f2d;border:1px solid #1e2a3a;border-radius:14px;overflow:hidden;transition:border-color 0.2s,transform 0.2s;position:relative;}
+    .latest-card:hover{border-color:#5DCAA5;transform:translateY(-3px);}
+    .latest-badge{position:absolute;top:10px;left:10px;background:#5DCAA5;color:#060d14;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:0.06em;text-transform:uppercase;z-index:2;}
+
+    /* ── Category Tabs ── */
+    .cat-tabs-wrap{padding:0.5rem 0 1.5rem;background:#060d14;border-bottom:1px solid #1e2a3a;position:sticky;top:0;z-index:50;}
+    .cat-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+    .cat-tabs::-webkit-scrollbar{display:none;}
+    .cat-tab{flex-shrink:0;padding:8px 18px;border-radius:100px;border:1px solid #1e2a3a;background:transparent;color:#8b949e;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.18s;white-space:nowrap;}
+    .cat-tab:hover{border-color:#5DCAA5;color:#5DCAA5;}
+    .cat-tab.active{background:#5DCAA5;border-color:#5DCAA5;color:#060d14;}
+    .cat-count{display:inline-block;background:rgba(0,0,0,0.15);border-radius:10px;padding:1px 7px;margin-left:5px;font-size:11px;}
+    .cat-tab.active .cat-count{background:rgba(0,0,0,0.2);}
+
+    /* ── Filtered posts grid ── */
+    .filtered-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;}
+    .filtered-grid .post-card{display:block;}
+    .filtered-grid .post-card[hidden]{display:none!important;}
+
+    /* ── No results ── */
+    .no-results{text-align:center;padding:3rem;color:#8b949e;display:none;}
+    .no-results.visible{display:block;}
+
+    @media(max-width:600px){
+      .latest-grid{grid-template-columns:1fr;}
+      .filtered-grid{grid-template-columns:1fr;}
+    }
+
+    .latest-section{padding:3rem 0 1.5rem;background:#060d14;}
+    .latest-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+    .latest-dot{width:9px;height:9px;border-radius:50%;background:#5DCAA5;animation:pulse 2s infinite;margin-right:10px;display:inline-block;}
+    .latest-title{font-size:22px;font-weight:800;color:#ffffff;display:inline;}
+    .latest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.1rem;margin-bottom:1rem;}
+    .latest-badge{position:absolute;top:10px;left:10px;background:#5DCAA5;color:#060d14;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:0.07em;text-transform:uppercase;z-index:2;}
+    .cat-tabs-wrap{background:#060d14;border-top:1px solid #1e2a3a;border-bottom:1px solid #1e2a3a;position:sticky;top:0;z-index:50;padding:0.75rem 0;}
+    .cat-tabs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;}
+    .cat-tabs::-webkit-scrollbar{display:none;}
+    .cat-tab{flex-shrink:0;padding:7px 16px;border-radius:100px;border:1px solid #1e2a3a;background:transparent;color:#8b949e;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.18s;white-space:nowrap;}
+    .cat-tab:hover{border-color:#5DCAA5;color:#5DCAA5;}
+    .cat-tab.active{background:#5DCAA5;border-color:#5DCAA5;color:#060d14;}
+    .cat-count{background:rgba(0,0,0,0.15);border-radius:10px;padding:1px 6px;margin-left:4px;font-size:11px;}
+    .filtered-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;}
+    .filtered-grid .post-card[hidden]{display:none!important;}
+    .no-results{text-align:center;padding:3rem;color:#8b949e;display:none;}
+    .no-results.visible{display:block;}
+    @media(max-width:600px){.latest-grid,.filtered-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
@@ -259,225 +313,14 @@
         </ul>
       </div>
     </div>
-    <section id="blog-posts" class="blog-section" aria-labelledby="blog-heading">
+    <section class="latest-section" aria-labelledby="latest-heading">
       <div class="container">
-        <header class="section-header">
-          <h2 id="blog-heading">Latest Energy-Saving Guides</h2>
-          <p>In-depth, actionable blog posts to help you cut energy costs &mdash; with specific product recommendations and real savings estimates.</p>
-        </header>
-        <div class="posts-grid" role="list">
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/led-bulb-upgrade-save-200-per-year.html" class="post-card-link" aria-label="Read: The $30 LED Upgrade That Cuts Your Lighting Bill by 80%">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">💡</span><div class="savings-badge">Save up to $200/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Lighting</span><time datetime="2025-03-01" itemprop="datePublished">March 1, 2025</time></div>
-                <h3 itemprop="headline">The $30 LED Upgrade That Cuts Your Lighting Bill by 80%</h3>
-                <p itemprop="description">Switching to LED bulbs is the single highest-ROI energy upgrade you can make. Here's exactly which bulbs to buy, room by room, and how much you'll save.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 8 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card featured" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/smart-thermostat-habits-save-180-per-year.html" class="post-card-link" aria-label="Read: Smart Thermostat Habits That Save $180/Year">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌡️</span><div class="savings-badge featured-badge">Save up to $180/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Heating &amp; Cooling</span><time datetime="2025-03-08" itemprop="datePublished">March 8, 2025</time></div>
-                <h3 itemprop="headline">Smart Thermostat Habits That Save $180/Year (Even Without Upgrading)</h3>
-                <p itemprop="description">Your thermostat is your biggest energy lever. Learn the exact temperature schedules that save the most money, plus which $60 smart thermostat pays for itself in under a year.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 10 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/stop-vampire-power-save-150-per-year.html" class="post-card-link" aria-label="Read: The Vampire Power Problem">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🧛</span><div class="savings-badge">Save up to $150/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Phantom Load</span><time datetime="2025-03-15" itemprop="datePublished">March 15, 2025</time></div>
-                <h3 itemprop="headline">The Vampire Power Problem: How to Stop Paying for Electricity You're Not Using</h3>
-                <p itemprop="description">The average home wastes $150/year on devices that are "off" but still drawing power. Here's how to find and kill vampire power in under 30 minutes.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 7 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/smart-power-strips-stop-phantom-power.html" class="post-card-link" aria-label="Read: Smart Power Strips">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🔌</span><div class="savings-badge">Save up to $100/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Power &amp; Standby</span><time datetime="2025-04-03" itemprop="datePublished">April 3, 2025</time></div>
-                <h3 itemprop="headline">Smart Power Strips: Stop Phantom Power and Save Up to $100/Year</h3>
-                <p itemprop="description">Your electronics are silently draining money 24/7 — even when you think they're off. A $25 smart power strip cuts that waste automatically, with zero effort on your part.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 6 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/weatherstripping-door-seals-stop-drafts.html" class="post-card-link" aria-label="Read: Weatherstripping &amp; Door Seals">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌬️</span><div class="savings-badge">Save up to $150/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Air Sealing</span><time datetime="2026-04-03" itemprop="datePublished">April 3, 2026</time></div>
-                <h3 itemprop="headline">Weatherstripping &amp; Door Seals: The Cheapest Way to Stop Drafts and Lower Your Energy Bill</h3>
-                <p itemprop="description">Learn how to find, choose, and install weatherstripping and door seals to stop drafts, lower heating and cooling costs, and keep your home comfortable year-round.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 5 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/low-flow-showerheads-save-water-heating.html" class="post-card-link" aria-label="Read: Low-Flow Showerheads">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🚿</span><div class="savings-badge">Save up to $140/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Water Heating</span><time datetime="2026-04-03" itemprop="datePublished">April 3, 2026</time></div>
-                <h3 itemprop="headline">Low-Flow Showerheads: The $30 Upgrade That Trims Your Water Heating Bill All Year</h3>
-                <p itemprop="description">Low-flow showerheads cut water heating costs by 25–50%. We break down the data, top product picks, and how fast you'll recoup your investment.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 6 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-
-          <div id="hidden-posts" style="display:none;contents;">
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/energy-efficient-window-treatments-curtains.html" class="post-card-link" aria-label="Read: Energy Efficient Window Treatments">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🪟</span><div class="savings-badge">Save up to $340/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Windows &amp; Insulation</span><time datetime="2026-04-04" itemprop="datePublished">April 4, 2026</time></div>
-                <h3 itemprop="headline">Energy Efficient Window Treatments &amp; Curtains: Save Up to $340/Year Without Replacing a Single Window</h3>
-                <p itemprop="description">Evidence-based guide to energy efficient window treatments and curtains. Learn which blinds, cellular shades, and thermal curtains actually cut heating and cooling costs.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/unplug-phone-charger-save-energy-money.html" class="post-card-link" aria-label="Read: Does Unplugging Phone Chargers Save Money?">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">⚡</span><div class="savings-badge">Save up to $100/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Phantom Load</span><time datetime="2026-04-04" itemprop="datePublished">April 4, 2026</time></div>
-                <h3 itemprop="headline">Does Unplugging Phone Chargers Actually Save Money? The Real Numbers</h3>
-                <p itemprop="description">We ran the numbers on phantom charger drain. Here's exactly how much energy your idle phone charger uses, what it costs you per year, and whether unplugging is worth the habit.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 7 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/cold-water-laundry-washing-savings.html" class="post-card-link" aria-label="Read: Cold Water Laundry">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🫧</span><div class="savings-badge">Save up to $120/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Laundry &amp; Appliances</span><time datetime="2026-04-04" itemprop="datePublished">April 4, 2026</time></div>
-                <h3 itemprop="headline">Cold Water Laundry: Save $120/Year Without Buying Anything</h3>
-                <p itemprop="description">Switching to cold water washing can save the average household $100–$120 per year on energy bills. Here's the evidence, the math, and exactly how to do it.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 8 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/ceiling-fans-vs-air-conditioning-costs.html" class="post-card-link" aria-label="Read: Ceiling Fans vs Air Conditioning">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌀</span><div class="savings-badge">Save up to $100/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Cooling &amp; HVAC</span><time datetime="2026-04-04" itemprop="datePublished">April 4, 2026</time></div>
-                <h3 itemprop="headline">Ceiling Fans vs Air Conditioning: The Real Cost Comparison</h3>
-                <p itemprop="description">Ceiling fans cost as little as $0.01/hour to run vs. $0.36/hour for central AC. Learn exactly how much you can save by using ceiling fans strategically alongside your air conditioner.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/programmable-vs-smart-thermostat-comparison.html" class="post-card-link" aria-label="Read: Programmable vs Smart Thermostat">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌡️</span><div class="savings-badge">Save up to $180/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Heating &amp; Cooling</span><time datetime="2026-04-06" itemprop="datePublished">April 6, 2026</time></div>
-                <h3 itemprop="headline">Programmable vs Smart Thermostat: Which One Actually Saves More Money?</h3>
-                <p itemprop="description">A data-driven comparison of programmable vs smart thermostats. We break down real savings, upfront costs, and which thermostat is the right fit for your home and budget.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/diy-home-energy-audit-step-by-step.html" class="post-card-link" aria-label="Read: DIY Home Energy Audit">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🔍</span><div class="savings-badge">Save up to $600/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Energy Auditing</span><time datetime="2026-04-09" itemprop="datePublished">April 9, 2026</time></div>
-                <h3 itemprop="headline">How to Do a DIY Home Energy Audit (Step-by-Step Guide)</h3>
-                <p itemprop="description">Learn how to do a DIY home energy audit in one afternoon. Find air leaks, insulation gaps, and energy hogs — then fix them to save up to $600 a year.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/solar-phone-chargers-small-devices.html" class="post-card-link" aria-label="Read: Solar Phone Chargers">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">☀️</span><div class="savings-badge">Save up to $100/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Solar &amp; Renewables</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
-                <h3 itemprop="headline">Solar Phone Chargers for Small Devices: Do They Actually Save Money?</h3>
-                <p itemprop="description">Solar phone chargers sound great in theory — but do they actually save money? We crunch the real numbers on solar charging for phones, tablets, and small devices.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/best-power-usage-monitors-track-electricity.html" class="post-card-link" aria-label="Read: Best Power Usage Monitors">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">📊</span><div class="savings-badge">Save up to $100/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Energy Monitoring</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
-                <h3 itemprop="headline">Best Power Usage Monitors to Track Electricity (2026): Know Exactly What's Costing You</h3>
-                <p itemprop="description">The best plug-in and whole-home electricity monitors reviewed with real data. Find out which power usage monitor pays for itself fastest and cuts your bill.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/best-smart-power-strips-2025.html" class="post-card-link" aria-label="Read: Best Smart Power Strips 2025">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🔌</span><div class="savings-badge">Save up to $200/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Power &amp; Standby</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
-                <h3 itemprop="headline">Best Smart Power Strips in 2025: 4 Options Ranked for Energy Savings</h3>
-                <p itemprop="description">We tested and ranked the 4 best smart power strips for eliminating phantom power. Find out which one saves the most energy for your home office, entertainment center, or bedroom setup.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/insulate-water-heater-save-money.html" class="post-card-link" aria-label="Read: Insulate Your Water Heater">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🛢️</span><div class="savings-badge">Save up to $45/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Water Heating</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
-                <h3 itemprop="headline">How to Insulate Your Water Heater and Save Up to $45/Year</h3>
-                <p itemprop="description">A water heater blanket costs $30 and takes 30 minutes to install. Learn the evidence-based steps to insulate your tank water heater and cut standby heat loss by up to 45%.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 8 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/sense-energy-monitor-review-save-money-tracking-electricity.html" class="post-card-link" aria-label="Read: Sense Energy Monitor Review">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">⚡</span><div class="savings-badge">Save up to $100/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Product Reviews</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
-                <h3 itemprop="headline">Sense Energy Monitor Review: Can It Really Save You Money Tracking Electricity?</h3>
-                <p itemprop="description">An honest, data-driven Sense Energy Monitor review. We break down what it tracks, what it costs, and exactly how much money real homeowners save on electricity bills.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/thermal-curtains-cellular-shades-cut-heating-cooling-bills.html" class="post-card-link" aria-label="Read: Thermal Curtains and Cellular Shades">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🪟</span><div class="savings-badge">Save up to $100/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Windows &amp; Insulation</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
-                <h3 itemprop="headline">Thermal Curtains &amp; Cellular Shades: Cut Your Heating &amp; Cooling Bills by Up to 25%</h3>
-                <p itemprop="description">Learn how thermal curtains and cellular shades reduce heat loss and solar gain to cut your heating and cooling bills by up to 25%. Evidence-based tips, product picks, and real savings data.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 8 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
-            <a href="blog/heat-pump-water-heater-vs-traditional-savings.html" class="post-card-link" aria-label="Read: Heat Pump Water Heater vs Traditional">
-              <div class="post-card-img" aria-hidden="true"><span class="post-icon">💧</span><div class="savings-badge">Save up to $300/yr</div></div>
-              <div class="post-card-body">
-                <div class="post-meta"><span class="post-category">Water Heating</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
-                <h3 itemprop="headline">Heat Pump Water Heater vs Traditional: The Real Savings Breakdown</h3>
-                <p itemprop="description">A data-driven comparison of heat pump water heaters vs traditional electric and gas models. See exactly how much you can save per year, payback periods, and which homes benefit most.</p>
-                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
-              </div>
-            </a>
-          </article>
-          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">
+        <div class="latest-header">
+          <div><span class="latest-dot"></span><h2 class="latest-title" id="latest-heading">Latest Guides</h2></div>
+          <a href="#blog-posts" style="font-size:13px;color:#5DCAA5;font-weight:600;text-decoration:none;">View all ↓</a>
+        </div>
+        <div class="latest-grid">
+          <article class="post-card" data-category="Heating & Cooling" style="position:relative;" role="listitem" itemscope itemtype="https://schema.org/Article">
             <a href="blog/mini-split-vs-window-ac-vs-central-air-cost-comparison.html" class="post-card-link" aria-label="Read: Mini Split vs Window AC vs Central Air: Which Saves the Most Money?">
               <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌡️</span><div class="savings-badge">Save up to $411/yr</div></div>
               <div class="post-card-body">
@@ -488,17 +331,305 @@
               </div>
             </a>
           </article>
-          </div>
-        </div><!-- /.posts-grid -->
-        <div id="load-more-wrap" style="text-align:center;margin-top:3rem;padding:2rem 0;border-top:1px solid #1e2a3a;">
-          <p style="font-size:13px;color:#8b949e;margin-bottom:1.25rem;letter-spacing:0.05em;text-transform:uppercase;font-weight:600;">More energy-saving guides</p>
-          <button id="load-more-btn" onclick="loadMorePosts()" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#0F6E56,#1D9E75);color:#E1F5EE;border:none;padding:16px 40px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;box-shadow:0 4px 24px rgba(93,202,165,0.15);">
-            <i class="fas fa-chevron-down"></i> Load more guides &nbsp;<span style="background:rgba(255,255,255,0.15);border-radius:20px;padding:2px 10px;font-size:13px;" id="remaining-count">14</span>
-          </button>
-          <p id="all-loaded-msg" style="display:none;color:#8b949e;font-size:14px;margin-top:1rem;">You've seen all 20 guides — <a href="#main-content" style="color:#5DCAA5;">back to top ↑</a></p>
+          <article class="post-card" data-category="Solar" style="position:relative;" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/solar-phone-chargers-small-devices.html" class="post-card-link" aria-label="Read: Solar Phone Chargers">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">☀️</span><div class="savings-badge">Save up to $100/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Solar &amp; Renewables</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">Solar Phone Chargers for Small Devices: Do They Actually Save Money?</h3>
+                <p itemprop="description">Solar phone chargers sound great in theory — but do they actually save money? We crunch the real numbers on solar charging for phones, tablets, and small devices.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Smart Home" style="position:relative;" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/best-power-usage-monitors-track-electricity.html" class="post-card-link" aria-label="Read: Best Power Usage Monitors">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">📊</span><div class="savings-badge">Save up to $100/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Energy Monitoring</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">Best Power Usage Monitors to Track Electricity (2026): Know Exactly What's Costing You</h3>
+                <p itemprop="description">The best plug-in and whole-home electricity monitors reviewed with real data. Find out which power usage monitor pays for itself fastest and cuts your bill.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Power & Standby" style="position:relative;" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/best-smart-power-strips-2025.html" class="post-card-link" aria-label="Read: Best Smart Power Strips 2025">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🔌</span><div class="savings-badge">Save up to $200/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Power &amp; Standby</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">Best Smart Power Strips in 2025: 4 Options Ranked for Energy Savings</h3>
+                <p itemprop="description">We tested and ranked the 4 best smart power strips for eliminating phantom power. Find out which one saves the most energy for your home office, entertainment center, or bedroom setup.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Water Heating" style="position:relative;" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/insulate-water-heater-save-money.html" class="post-card-link" aria-label="Read: Insulate Your Water Heater">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🛢️</span><div class="savings-badge">Save up to $45/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Water Heating</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">How to Insulate Your Water Heater and Save Up to $45/Year</h3>
+                <p itemprop="description">A water heater blanket costs $30 and takes 30 minutes to install. Learn the evidence-based steps to insulate your tank water heater and cut standby heat loss by up to 45%.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 8 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
         </div>
       </div>
     </section>
+
+    <div class="cat-tabs-wrap">
+      <div class="container">
+        <div class="cat-tabs" role="tablist">
+          <button class="cat-tab active" onclick="filterPosts(this,'all')">All <span class="cat-count">20</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Heating & Cooling')">Heating & Cooling <span class="cat-count">4</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Water Heating')">Water Heating <span class="cat-count">3</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Lighting')">Lighting <span class="cat-count">1</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Air Sealing')">Air Sealing <span class="cat-count">1</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Windows & Insulation')">Windows & Insulation <span class="cat-count">2</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Phantom Load')">Phantom Load <span class="cat-count">2</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Power & Standby')">Power & Standby <span class="cat-count">2</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Smart Home')">Smart Home <span class="cat-count">2</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Appliances')">Appliances <span class="cat-count">1</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Solar')">Solar <span class="cat-count">1</span></button>
+          <button class="cat-tab" onclick="filterPosts(this,'Home Auditing')">Home Auditing <span class="cat-count">1</span></button>
+        </div>
+      </div>
+    </div>
+
+    <section id="blog-posts" class="blog-section" aria-labelledby="blog-heading">
+      <div class="container">
+        <header class="section-header">
+          <h2 id="blog-heading">All Energy-Saving Guides</h2>
+          <p>In-depth, actionable guides with product picks and real savings estimates.</p>
+        </header>
+        <div class="filtered-grid" id="posts-grid" role="list">
+          <article class="post-card" data-category="Heating & Cooling" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/mini-split-vs-window-ac-vs-central-air-cost-comparison.html" class="post-card-link" aria-label="Read: Mini Split vs Window AC vs Central Air: Which Saves the Most Money?">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌡️</span><div class="savings-badge">Save up to $411/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Heating &amp; Cooling</span><time datetime="2026-04-11" itemprop="datePublished">April 11, 2026</time></div>
+                <h3 itemprop="headline">Mini Split vs Window AC vs Central Air: Which Saves the Most Money? (2026)</h3>
+                <p itemprop="description">Three cooling systems, three very different price tags and energy bills. We ran the real 10-year math — including federal tax credits — so you don't have to.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 11 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Solar" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/solar-phone-chargers-small-devices.html" class="post-card-link" aria-label="Read: Solar Phone Chargers">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">☀️</span><div class="savings-badge">Save up to $100/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Solar &amp; Renewables</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">Solar Phone Chargers for Small Devices: Do They Actually Save Money?</h3>
+                <p itemprop="description">Solar phone chargers sound great in theory — but do they actually save money? We crunch the real numbers on solar charging for phones, tablets, and small devices.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Smart Home" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/best-power-usage-monitors-track-electricity.html" class="post-card-link" aria-label="Read: Best Power Usage Monitors">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">📊</span><div class="savings-badge">Save up to $100/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Energy Monitoring</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">Best Power Usage Monitors to Track Electricity (2026): Know Exactly What's Costing You</h3>
+                <p itemprop="description">The best plug-in and whole-home electricity monitors reviewed with real data. Find out which power usage monitor pays for itself fastest and cuts your bill.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Power & Standby" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/best-smart-power-strips-2025.html" class="post-card-link" aria-label="Read: Best Smart Power Strips 2025">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🔌</span><div class="savings-badge">Save up to $200/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Power &amp; Standby</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">Best Smart Power Strips in 2025: 4 Options Ranked for Energy Savings</h3>
+                <p itemprop="description">We tested and ranked the 4 best smart power strips for eliminating phantom power. Find out which one saves the most energy for your home office, entertainment center, or bedroom setup.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Water Heating" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/insulate-water-heater-save-money.html" class="post-card-link" aria-label="Read: Insulate Your Water Heater">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🛢️</span><div class="savings-badge">Save up to $45/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Water Heating</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">How to Insulate Your Water Heater and Save Up to $45/Year</h3>
+                <p itemprop="description">A water heater blanket costs $30 and takes 30 minutes to install. Learn the evidence-based steps to insulate your tank water heater and cut standby heat loss by up to 45%.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 8 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Smart Home" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/sense-energy-monitor-review-save-money-tracking-electricity.html" class="post-card-link" aria-label="Read: Sense Energy Monitor Review">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">⚡</span><div class="savings-badge">Save up to $100/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Product Reviews</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">Sense Energy Monitor Review: Can It Really Save You Money Tracking Electricity?</h3>
+                <p itemprop="description">An honest, data-driven Sense Energy Monitor review. We break down what it tracks, what it costs, and exactly how much money real homeowners save on electricity bills.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Windows & Insulation" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/thermal-curtains-cellular-shades-cut-heating-cooling-bills.html" class="post-card-link" aria-label="Read: Thermal Curtains and Cellular Shades">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🪟</span><div class="savings-badge">Save up to $100/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Windows &amp; Insulation</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">Thermal Curtains &amp; Cellular Shades: Cut Your Heating &amp; Cooling Bills by Up to 25%</h3>
+                <p itemprop="description">Learn how thermal curtains and cellular shades reduce heat loss and solar gain to cut your heating and cooling bills by up to 25%. Evidence-based tips, product picks, and real savings data.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 8 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Water Heating" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/heat-pump-water-heater-vs-traditional-savings.html" class="post-card-link" aria-label="Read: Heat Pump Water Heater vs Traditional">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">💧</span><div class="savings-badge">Save up to $300/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Water Heating</span><time datetime="2026-04-10" itemprop="datePublished">April 10, 2026</time></div>
+                <h3 itemprop="headline">Heat Pump Water Heater vs Traditional: The Real Savings Breakdown</h3>
+                <p itemprop="description">A data-driven comparison of heat pump water heaters vs traditional electric and gas models. See exactly how much you can save per year, payback periods, and which homes benefit most.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Home Auditing" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/diy-home-energy-audit-step-by-step.html" class="post-card-link" aria-label="Read: DIY Home Energy Audit">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🔍</span><div class="savings-badge">Save up to $600/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Energy Auditing</span><time datetime="2026-04-09" itemprop="datePublished">April 9, 2026</time></div>
+                <h3 itemprop="headline">How to Do a DIY Home Energy Audit (Step-by-Step Guide)</h3>
+                <p itemprop="description">Learn how to do a DIY home energy audit in one afternoon. Find air leaks, insulation gaps, and energy hogs — then fix them to save up to $600 a year.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Heating & Cooling" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/programmable-vs-smart-thermostat-comparison.html" class="post-card-link" aria-label="Read: Programmable vs Smart Thermostat">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌡️</span><div class="savings-badge">Save up to $180/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Heating &amp; Cooling</span><time datetime="2026-04-06" itemprop="datePublished">April 6, 2026</time></div>
+                <h3 itemprop="headline">Programmable vs Smart Thermostat: Which One Actually Saves More Money?</h3>
+                <p itemprop="description">A data-driven comparison of programmable vs smart thermostats. We break down real savings, upfront costs, and which thermostat is the right fit for your home and budget.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Windows & Insulation" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/energy-efficient-window-treatments-curtains.html" class="post-card-link" aria-label="Read: Energy Efficient Window Treatments">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🪟</span><div class="savings-badge">Save up to $340/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Windows &amp; Insulation</span><time datetime="2026-04-04" itemprop="datePublished">April 4, 2026</time></div>
+                <h3 itemprop="headline">Energy Efficient Window Treatments &amp; Curtains: Save Up to $340/Year Without Replacing a Single Window</h3>
+                <p itemprop="description">Evidence-based guide to energy efficient window treatments and curtains. Learn which blinds, cellular shades, and thermal curtains actually cut heating and cooling costs.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Phantom Load" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/unplug-phone-charger-save-energy-money.html" class="post-card-link" aria-label="Read: Does Unplugging Phone Chargers Save Money?">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">⚡</span><div class="savings-badge">Save up to $100/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Phantom Load</span><time datetime="2026-04-04" itemprop="datePublished">April 4, 2026</time></div>
+                <h3 itemprop="headline">Does Unplugging Phone Chargers Actually Save Money? The Real Numbers</h3>
+                <p itemprop="description">We ran the numbers on phantom charger drain. Here's exactly how much energy your idle phone charger uses, what it costs you per year, and whether unplugging is worth the habit.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 7 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Appliances" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/cold-water-laundry-washing-savings.html" class="post-card-link" aria-label="Read: Cold Water Laundry">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🫧</span><div class="savings-badge">Save up to $120/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Laundry &amp; Appliances</span><time datetime="2026-04-04" itemprop="datePublished">April 4, 2026</time></div>
+                <h3 itemprop="headline">Cold Water Laundry: Save $120/Year Without Buying Anything</h3>
+                <p itemprop="description">Switching to cold water washing can save the average household $100–$120 per year on energy bills. Here's the evidence, the math, and exactly how to do it.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 8 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Heating & Cooling" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/ceiling-fans-vs-air-conditioning-costs.html" class="post-card-link" aria-label="Read: Ceiling Fans vs Air Conditioning">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌀</span><div class="savings-badge">Save up to $100/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Cooling &amp; HVAC</span><time datetime="2026-04-04" itemprop="datePublished">April 4, 2026</time></div>
+                <h3 itemprop="headline">Ceiling Fans vs Air Conditioning: The Real Cost Comparison</h3>
+                <p itemprop="description">Ceiling fans cost as little as $0.01/hour to run vs. $0.36/hour for central AC. Learn exactly how much you can save by using ceiling fans strategically alongside your air conditioner.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 9 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Air Sealing" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/weatherstripping-door-seals-stop-drafts.html" class="post-card-link" aria-label="Read: Weatherstripping &amp; Door Seals">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌬️</span><div class="savings-badge">Save up to $150/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Air Sealing</span><time datetime="2026-04-03" itemprop="datePublished">April 3, 2026</time></div>
+                <h3 itemprop="headline">Weatherstripping &amp; Door Seals: The Cheapest Way to Stop Drafts and Lower Your Energy Bill</h3>
+                <p itemprop="description">Learn how to find, choose, and install weatherstripping and door seals to stop drafts, lower heating and cooling costs, and keep your home comfortable year-round.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 5 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Water Heating" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/low-flow-showerheads-save-water-heating.html" class="post-card-link" aria-label="Read: Low-Flow Showerheads">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🚿</span><div class="savings-badge">Save up to $140/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Water Heating</span><time datetime="2026-04-03" itemprop="datePublished">April 3, 2026</time></div>
+                <h3 itemprop="headline">Low-Flow Showerheads: The $30 Upgrade That Trims Your Water Heating Bill All Year</h3>
+                <p itemprop="description">Low-flow showerheads cut water heating costs by 25–50%. We break down the data, top product picks, and how fast you'll recoup your investment.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 6 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Power & Standby" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/smart-power-strips-stop-phantom-power.html" class="post-card-link" aria-label="Read: Smart Power Strips">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🔌</span><div class="savings-badge">Save up to $100/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Power &amp; Standby</span><time datetime="2025-04-03" itemprop="datePublished">April 3, 2025</time></div>
+                <h3 itemprop="headline">Smart Power Strips: Stop Phantom Power and Save Up to $100/Year</h3>
+                <p itemprop="description">Your electronics are silently draining money 24/7 — even when you think they're off. A $25 smart power strip cuts that waste automatically, with zero effort on your part.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 6 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Phantom Load" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/stop-vampire-power-save-150-per-year.html" class="post-card-link" aria-label="Read: The Vampire Power Problem">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🧛</span><div class="savings-badge">Save up to $150/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Phantom Load</span><time datetime="2025-03-15" itemprop="datePublished">March 15, 2025</time></div>
+                <h3 itemprop="headline">The Vampire Power Problem: How to Stop Paying for Electricity You're Not Using</h3>
+                <p itemprop="description">The average home wastes $150/year on devices that are "off" but still drawing power. Here's how to find and kill vampire power in under 30 minutes.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 7 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card featured" data-category="Heating & Cooling" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/smart-thermostat-habits-save-180-per-year.html" class="post-card-link" aria-label="Read: Smart Thermostat Habits That Save $180/Year">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">🌡️</span><div class="savings-badge featured-badge">Save up to $180/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Heating &amp; Cooling</span><time datetime="2025-03-08" itemprop="datePublished">March 8, 2025</time></div>
+                <h3 itemprop="headline">Smart Thermostat Habits That Save $180/Year (Even Without Upgrading)</h3>
+                <p itemprop="description">Your thermostat is your biggest energy lever. Learn the exact temperature schedules that save the most money, plus which $60 smart thermostat pays for itself in under a year.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 10 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+          <article class="post-card" data-category="Lighting" role="listitem" itemscope itemtype="https://schema.org/Article">
+            <a href="blog/led-bulb-upgrade-save-200-per-year.html" class="post-card-link" aria-label="Read: The $30 LED Upgrade That Cuts Your Lighting Bill by 80%">
+              <div class="post-card-img" aria-hidden="true"><span class="post-icon">💡</span><div class="savings-badge">Save up to $200/yr</div></div>
+              <div class="post-card-body">
+                <div class="post-meta"><span class="post-category">Lighting</span><time datetime="2025-03-01" itemprop="datePublished">March 1, 2025</time></div>
+                <h3 itemprop="headline">The $30 LED Upgrade That Cuts Your Lighting Bill by 80%</h3>
+                <p itemprop="description">Switching to LED bulbs is the single highest-ROI energy upgrade you can make. Here's exactly which bulbs to buy, room by room, and how much you'll save.</p>
+                <div class="post-footer"><span class="read-time"><i class="far fa-clock" aria-hidden="true"></i> 8 min read</span><span class="read-more" aria-hidden="true">Read Guide →</span></div>
+              </div>
+            </a>
+          </article>
+        </div>
+        <p class="no-results" id="no-results">No posts in this category yet — check back soon!</p>
+      </div>
+    </section>
+
     <section id="interactive-tools" class="interactive-section" aria-labelledby="tools-heading">
       <div class="container">
         <header class="section-header" style="margin-bottom:2rem;">
@@ -887,6 +1018,53 @@
       btn.style.display = 'none';
       msg.style.display = 'block';
     }
+
+    function filterPosts(btn, category) {
+      // Update active tab
+      document.querySelectorAll('.cat-tab').forEach(function(t) {
+        t.classList.remove('active');
+      });
+      btn.classList.add('active');
+
+      // Filter cards
+      var cards = document.querySelectorAll('#posts-grid .post-card');
+      var visible = 0;
+      cards.forEach(function(card) {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.removeAttribute('hidden');
+          visible++;
+        } else {
+          card.setAttribute('hidden', '');
+        }
+      });
+
+      // Show/hide no results
+      var noResults = document.getElementById('no-results');
+      if (noResults) {
+        noResults.classList.toggle('visible', visible === 0);
+      }
+
+      // Smooth scroll to grid
+      var grid = document.getElementById('blog-posts');
+      if (grid) { grid.scrollIntoView({behavior: 'smooth', block: 'start'}); }
+    }
+
+
+    function filterPosts(btn, cat) {
+      document.querySelectorAll('.cat-tab').forEach(function(t){t.classList.remove('active');});
+      btn.classList.add('active');
+      var cards = document.querySelectorAll('#posts-grid .post-card');
+      var n = 0;
+      cards.forEach(function(c){
+        var show = cat === 'all' || c.getAttribute('data-category') === cat;
+        if(show){ c.removeAttribute('hidden'); n++; }
+        else { c.setAttribute('hidden',''); }
+      });
+      var nr = document.getElementById('no-results');
+      if(nr) nr.classList.toggle('visible', n===0);
+      document.getElementById('blog-posts').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
     function wqRestart() {
       wqCur=0;wqTotals=[0,0,0,0];wqSelected=null;
       document.getElementById('wq-body').style.display='block';
