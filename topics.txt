@@ -24,7 +24,7 @@
 # done: pipe insulation hot water pipes reduce water heating costs
 # done: programmable power strip home office save on standby power
 # done: refrigerator coil cleaning save 15 percent on fridge energy
-dishwasher energy saving tips skip pre-rinse air dry
+# done: dishwasher energy saving tips skip pre-rinse air dry
 window film and solar shades reduce heat gain save on AC
 motion sensor light switches eliminate wasted lighting
 water heater temperature setting 120 degrees save money
