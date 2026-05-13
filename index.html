@@ -121,7 +121,7 @@
     .wc-bars{display:flex;flex-direction:column;gap:8px;}
     .wc-bar-row{display:flex;align-items:center;gap:10px;}
     .wc-bar-lbl{font-size:13px;color:#8b949e;width:150px;flex-shrink:0;}
-    .wc-bar-track{flex:1;background:#1e2a3a;border-radius:4px;height:10px;overflow:hidden;}
+    .wc-bar-track{flex:1;background:#1e2a3a;border-radius:4px;height:10px;overflow:visible;}
     .wc-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#5DCAA5,#0F6E56);transition:width 0.7s cubic-bezier(.4,0,.2,1);}
     .wc-bar-val{font-size:13px;font-weight:700;color:#5DCAA5;width:45px;text-align:right;}
     .ww-intro{font-size:15px;color:#8b949e;margin-bottom:1.5rem;}
@@ -175,17 +175,8 @@
     .latest-card:hover{border-color:#5DCAA5;transform:translateY(-3px);}
     .latest-badge{position:absolute;top:10px;left:10px;background:#5DCAA5;color:#060d14;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:0.06em;text-transform:uppercase;z-index:2;}
 
-    /* ── Category Tabs ── */
-    .cat-tabs-wrap{padding:0.6rem 0 0.8rem;background:#060d14;border-bottom:1px solid #1e2a3a;position:sticky;top:0;z-index:50;overflow:hidden;}
-    .cat-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;padding-right:24px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-    .cat-tabs::-webkit-scrollbar{display:none;}
-    .cat-tabs-wrap{position:relative;}
-    .cat-tabs-wrap::after{content:"";position:absolute;right:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,transparent,#060d14);pointer-events:none;z-index:1;}
-    .cat-tab{flex-shrink:0;padding:8px 18px;border-radius:100px;border:1px solid #1e2a3a;background:transparent;color:#8b949e;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.18s;white-space:nowrap;}
-    .cat-tab:hover{border-color:#5DCAA5;color:#5DCAA5;}
-    .cat-tab.active{background:#5DCAA5;border-color:#5DCAA5;color:#060d14;}
-    .cat-count{display:inline-block;background:rgba(0,0,0,0.15);border-radius:10px;padding:1px 7px;margin-left:5px;font-size:11px;}
-    .cat-tab.active .cat-count{background:rgba(0,0,0,0.2);}
+    
+    .cat-tab.active 
 
     /* ── Filtered posts grid ── */
     .filtered-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;}
@@ -207,20 +198,32 @@
     .latest-title{font-size:22px;font-weight:800;color:#ffffff;display:inline;}
     .latest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.1rem;margin-bottom:1rem;}
     .latest-badge{position:absolute;top:10px;left:10px;background:#5DCAA5;color:#060d14;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:0.07em;text-transform:uppercase;z-index:2;}
-    .cat-tabs-wrap{background:#060d14;border-top:1px solid #1e2a3a;border-bottom:1px solid #1e2a3a;position:sticky;top:0;z-index:50;padding:0.75rem 0;}
-    .cat-tabs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;}
-    .cat-tabs::-webkit-scrollbar{display:none;}
-    .cat-tabs-wrap{position:relative;}
-    .cat-tabs-wrap::after{content:"";position:absolute;right:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,transparent,#060d14);pointer-events:none;z-index:1;}
-    .cat-tab{flex-shrink:0;padding:7px 16px;border-radius:100px;border:1px solid #1e2a3a;background:transparent;color:#8b949e;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.18s;white-space:nowrap;}
-    .cat-tab:hover{border-color:#5DCAA5;color:#5DCAA5;}
-    .cat-tab.active{background:#5DCAA5;border-color:#5DCAA5;color:#060d14;}
-    .cat-count{background:rgba(0,0,0,0.15);border-radius:10px;padding:1px 6px;margin-left:4px;font-size:11px;}
+    
+    
+    
+    
+    
+    
+    
+    
+    
     .filtered-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;}
     .filtered-grid .post-card[hidden]{display:none!important;}
     .no-results{text-align:center;padding:3rem;color:#8b949e;display:none;}
     .no-results.visible{display:block;}
     @media(max-width:600px){.latest-grid,.filtered-grid{grid-template-columns:1fr;}}
+
+    /* ── Category Tabs ── */
+    .cat-tabs-wrap{background:#060d14;border-top:1px solid #1e2a3a;border-bottom:1px solid #1e2a3a;position:sticky;top:0;z-index:50;}
+    .cat-tabs{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:scroll;overflow-y:visible;padding:10px 20px 10px 20px;scrollbar-width:thin;scrollbar-color:#1e2a3a transparent;-webkit-overflow-scrolling:touch;box-sizing:border-box;}
+    .cat-tabs::-webkit-scrollbar{height:3px;}
+    .cat-tabs::-webkit-scrollbar-track{background:transparent;}
+    .cat-tabs::-webkit-scrollbar-thumb{background:#1e2a3a;border-radius:10px;}
+    .cat-tab{flex:0 0 auto;padding:8px 16px;border-radius:100px;border:1px solid #1e2a3a;background:transparent;color:#8b949e;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.18s;white-space:nowrap;display:inline-block;}
+    .cat-tab:hover{border-color:#5DCAA5;color:#5DCAA5;}
+    .cat-tab.active{background:#5DCAA5;border-color:#5DCAA5;color:#060d14;}
+    .cat-count{background:rgba(0,0,0,0.15);border-radius:10px;padding:1px 6px;margin-left:4px;font-size:11px;}
+    .cat-tab.active .cat-count{background:rgba(0,0,0,0.2);}
   </style>
 </head>
 <body>
@@ -373,8 +376,7 @@
     </section>
 
     <div class="cat-tabs-wrap">
-      <div class="container">
-        <div class="cat-tabs" role="tablist">
+      <div class="cat-tabs" role="tablist">
           <button class="cat-tab active" onclick="filterPosts(this,'all')">All <span class="cat-count">33</span></button>
           <button class="cat-tab" onclick="filterPosts(this,'Heating & Cooling')">Heating & Cooling <span class="cat-count">5</span></button>
           <button class="cat-tab" onclick="filterPosts(this,'Water Heating')">Water Heating <span class="cat-count">5</span></button>
@@ -387,7 +389,6 @@
           <button class="cat-tab" onclick="filterPosts(this,'Appliances')">Appliances <span class="cat-count">5</span></button>
           <button class="cat-tab" onclick="filterPosts(this,'Solar')">Solar <span class="cat-count">2</span></button>
           <button class="cat-tab" onclick="filterPosts(this,'Home Auditing')">Home Auditing <span class="cat-count">2</span></button>
-        </div>
       </div>
     </div>
 
