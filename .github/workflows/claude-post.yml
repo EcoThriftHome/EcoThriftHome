@@ -323,7 +323,7 @@ jobs:
 
           new_card = (
               '\n          <!-- Post: ' + slug + ' -->\n'
-              '          <article class="post-card" role="listitem" itemscope itemtype="https://schema.org/Article">\n'
+              '          <article class="post-card" data-category="' + category + '" role="listitem" itemscope itemtype="https://schema.org/Article">\n'
               '            <a href="blog/' + filename + '" class="post-card-link" aria-label="Read: ' + title + '">\n'
               '              <div class="post-card-img" aria-hidden="true">\n'
               '                <span class="post-icon">' + emoji + '</span>\n'
@@ -348,13 +348,39 @@ jobs:
           with open("index.html") as f:
               index = f.read()
 
+          insertion_point = '        </div>\n        <p class="no-results"'
           updated = index.replace(
-              '   </div><!-- /.posts-grid -->',
-              new_card + '   </div><!-- /.posts-grid -->'
+              insertion_point,
+              new_card + '\n' + insertion_point
           )
 
           with open("index.html", "w") as f:
               f.write(updated)
+
+
+          # Update latest-grid: prepend new card with latest-badge, keep only 4
+          import re as re2
+          latest_card = new_card.replace(
+              'class="post-card" data-category',
+              'class="post-card" data-category'
+          ).replace(
+              '<a href=',
+              '<span class="latest-badge">New</span>\n              <a href=',
+              1
+          )
+          latest_grid_match = re2.search(
+              r'<div class="latest-grid">(.*?)</div>\s*</div>\s*</section>',
+              updated, re2.DOTALL
+          )
+          if latest_grid_match:
+              existing_latest = re2.findall(r'<article.*?</article>', latest_grid_match.group(1), re2.DOTALL)
+              kept = existing_latest[:3]  # keep 3, new one = 4 total
+              new_latest_inner = '\n          '.join([latest_card] + kept)
+              updated = updated.replace(
+                  latest_grid_match.group(0),
+                  f'<div class="latest-grid">\n          {new_latest_inner}\n        </div>\n      </div>\n    </section>'
+              )
+              print("Latest guides section updated")
 
           print(f"Homepage updated with card for: {filename}")
           PYEOF
