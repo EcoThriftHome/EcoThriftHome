@@ -176,9 +176,11 @@
     .latest-badge{position:absolute;top:10px;left:10px;background:#5DCAA5;color:#060d14;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:0.06em;text-transform:uppercase;z-index:2;}
 
     /* ── Category Tabs ── */
-    .cat-tabs-wrap{padding:0.5rem 0 1.5rem;background:#060d14;border-bottom:1px solid #1e2a3a;position:sticky;top:0;z-index:50;}
-    .cat-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+    .cat-tabs-wrap{padding:0.6rem 0 0.8rem;background:#060d14;border-bottom:1px solid #1e2a3a;position:sticky;top:0;z-index:50;overflow:hidden;}
+    .cat-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;padding-right:24px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
     .cat-tabs::-webkit-scrollbar{display:none;}
+    .cat-tabs-wrap{position:relative;}
+    .cat-tabs-wrap::after{content:"";position:absolute;right:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,transparent,#060d14);pointer-events:none;z-index:1;}
     .cat-tab{flex-shrink:0;padding:8px 18px;border-radius:100px;border:1px solid #1e2a3a;background:transparent;color:#8b949e;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.18s;white-space:nowrap;}
     .cat-tab:hover{border-color:#5DCAA5;color:#5DCAA5;}
     .cat-tab.active{background:#5DCAA5;border-color:#5DCAA5;color:#060d14;}
@@ -208,6 +210,8 @@
     .cat-tabs-wrap{background:#060d14;border-top:1px solid #1e2a3a;border-bottom:1px solid #1e2a3a;position:sticky;top:0;z-index:50;padding:0.75rem 0;}
     .cat-tabs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;}
     .cat-tabs::-webkit-scrollbar{display:none;}
+    .cat-tabs-wrap{position:relative;}
+    .cat-tabs-wrap::after{content:"";position:absolute;right:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,transparent,#060d14);pointer-events:none;z-index:1;}
     .cat-tab{flex-shrink:0;padding:7px 16px;border-radius:100px;border:1px solid #1e2a3a;background:transparent;color:#8b949e;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.18s;white-space:nowrap;}
     .cat-tab:hover{border-color:#5DCAA5;color:#5DCAA5;}
     .cat-tab.active{background:#5DCAA5;border-color:#5DCAA5;color:#060d14;}
