@@ -28,7 +28,7 @@
 # done: window film and solar shades reduce heat gain save on AC
 # done: motion sensor light switches eliminate wasted lighting
 # done: water heater temperature setting 120 degrees save money
-insulating electrical outlets and switch plates stop drafts
+# done: insulating electrical outlets and switch plates stop drafts
 dehumidifier vs air conditioner which saves more energy
 washing machine cold water cycle savings per year
 HVAC filter replacement schedule save on heating cooling
