@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Energy Calculators — Free Tools | EcoThrift Home</title>
+  <meta name="description" content="Free home energy calculators for appliances, heating & cooling, solar savings, water heating, lighting, and your home energy score. Find out exactly what's costing you money.">
+  <link rel="canonical" href="https://ecothrifthome.com/calculator.html">
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"EcoThrift Home Energy Calculators","url":"https://ecothrifthome.com/calculator.html","description":"Free home energy calculators for appliances, HVAC, solar, water heating, lighting, and home energy score.","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"EcoThrift Home","url":"https://ecothrifthome.com"}}
+  </script>
+
+  <!-- Fonts & Icons (same as main site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+  <!-- Site stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMP2LEKHG1"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VMP2LEKHG1');</script>
+
+  <style>
+  /* ── Calculator page styles — extend, never override, site.css ── */
+
+  /* Page hero */
+  .calc-page-hero {
+    background: linear-gradient(135deg, var(--green-800) 0%, var(--green-600) 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .calc-page-hero .breadcrumb { margin-bottom: 1rem; }
+  .calc-page-hero .breadcrumb a,
+  .calc-page-hero .breadcrumb span { color: rgba(255,255,255,.75); font-size: .8125rem; text-decoration: none; }
+  .calc-page-hero .breadcrumb .sep { margin: 0 .375rem; }
+  .calc-page-hero h1 { color: #fff; font-size: clamp(1.625rem, 4vw, 2.5rem); margin-bottom: .75rem; }
+  .calc-page-hero .hero-sub { color: rgba(255,255,255,.85); font-size: 1.0625rem; font-weight: 400; max-width: 580px; margin-bottom: 1.5rem; }
+  .calc-hero-badges { display: flex; gap: .625rem; flex-wrap: wrap; }
+  .calc-hero-badge {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 600;
+    padding: .3rem .75rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+  }
+
+  /* Tab nav */
+  .calc-tabs-wrap {
+    background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky;
+    top: 61px;
+    z-index: 50;
+    box-shadow: var(--shadow-sm);
+  }
+  .calc-tab-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  .calc-tab-nav::-webkit-scrollbar { display: none; }
+  .calc-tab-btn {
+    font-family: var(--font-sans);
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: .875rem 1.125rem;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    transition: color var(--transition), border-color var(--transition);
+    margin-bottom: -1px;
+  }
+  .calc-tab-btn:hover { color: var(--gray-700); }
+  .calc-tab-btn.active { color: var(--green-700); border-bottom-color: var(--green-600); }
+
+  /* Main content area */
+  .calc-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+  @media (min-width: 640px)  { .calc-content { padding: 2rem 1.5rem 4rem; } }
+  @media (min-width: 1024px) { .calc-content { padding: 2.5rem 2rem 5rem; } }
+
+  /* Panel animation */
+  .calc-panel { display: none; }
+  .calc-panel.active { display: block; animation: panelIn .2s ease; }
+  @keyframes panelIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+  /* Two-column layout */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 768px) { .calc-grid { grid-template-columns: 1fr; } }
+
+  /* Input card */
+  .calc-input-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+  }
+  .calc-input-card h2 {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .calc-input-card h2 .icon { font-size: 1.1rem; }
+
+  /* Form fields */
+  .calc-field { margin-bottom: 1.125rem; }
+  .calc-field label {
+    display: block;
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: .375rem;
+  }
+  .calc-field input[type=number],
+  .calc-field select {
+    width: 100%;
+    background: #fff;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    padding: .625rem .875rem;
+    font-family: var(--font-sans);
+    font-size: .9375rem;
+    color: var(--gray-800);
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .calc-field input[type=number]:focus,
+  .calc-field select:focus {
+    border-color: var(--green-500);
+    box-shadow: 0 0 0 3px rgba(34,197,94,.12);
+  }
+  .calc-field .field-hint {
+    font-size: .75rem;
+    color: var(--gray-500);
+    margin-top: .3rem;
+  }
+  .calc-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+
+  /* Range slider */
+  .range-wrap { position: relative; padding-top: 1.25rem; }
+  .range-val {
+    position: absolute;
+    right: 0; top: 0;
+    font-size: .8125rem;
+    font-weight: 700;
+    color: var(--green-700);
+    background: var(--green-50);
+    border: 1px solid var(--green-200);
+    border-radius: 4px;
+    padding: .1rem .4rem;
+    line-height: 1.4;
+  }
+  .calc-field input[type=range] {
+    width: 100%;
+    accent-color: var(--green-600);
+    cursor: pointer;
+    height: 4px;
+  }
+
+  /* Calculate button */
+  .calc-submit {
+    width: 100%;
+    background: var(--green-600);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: .9375rem;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius);
+    padding: .875rem;
+    cursor: pointer;
+    margin-top: .5rem;
+    transition: background var(--transition), transform .1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+  }
+  .calc-submit:hover { background: var(--green-700); }
+  .calc-submit:active { transform: scale(.98); }
+
+  /* Results card */
+  .calc-results-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow);
+  }
+
+  /* Empty state */
+  .results-empty {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--gray-400);
+  }
+  .results-empty-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+  .results-empty p { font-size: .875rem; color: var(--gray-500); }
+
+  /* Result main number */
+  .result-main {
+    text-align: center;
+    padding: 1.25rem 0 1.5rem;
+    border-bottom: 1px solid var(--gray-100);
+    margin-bottom: 1.25rem;
+  }
+  .result-main-label {
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--gray-500);
+    margin-bottom: .375rem;
+  }
+  .result-main-val {
+    font-size: 3.25rem;
+    font-weight: 800;
+    color: var(--green-700);
+    line-height: 1;
+    animation: numIn .35s ease;
+  }
+  @keyframes numIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  .result-main-unit { font-size: 1.125rem; font-weight: 400; color: var(--gray-500); margin-left: .25rem; }
+
+  /* Result rows */
+  .result-rows { display: flex; flex-direction: column; gap: .5rem; }
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .625rem .875rem;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius-sm);
+    font-size: .875rem;
+  }
+  .result-row-label { color: var(--gray-600); }
+  .result-row-val { font-weight: 600; color: var(--gray-800); }
+  .result-row-val.good  { color: var(--green-700); }
+  .result-row-val.warn  { color: var(--amber-500); }
+  .result-row-val.bad   { color: #dc2626; }
+
+  /* Result tip box */
+  .result-tip {
+    margin-top: 1.125rem;
+    padding: .875rem 1rem;
+    background: var(--green-50);
+    border: 1px solid var(--green-200);
+    border-radius: var(--radius);
+    font-size: .8125rem;
+    color: var(--green-800);
+    line-height: 1.6;
+  }
+  .result-tip strong { color: var(--green-700); }
+
+  /* Bulb comparison bars */
+  .bulb-comparison { display: flex; flex-direction: column; gap: .75rem; margin-top: .5rem; }
+  .bulb-row { display: flex; flex-direction: column; gap: .3rem; }
+  .bulb-row-header { display: flex; justify-content: space-between; font-size: .8125rem; }
+  .bulb-name { color: var(--gray-600); }
+  .bulb-cost { font-weight: 600; color: var(--gray-800); }
+  .bulb-bar-bg { height: 8px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+  .bulb-bar-fill { height: 100%; border-radius: 4px; transition: width .5s ease; }
+
+  /* Solar payback chart */
+  .payback-chart { margin-top: 1rem; }
+  .payback-row {
+    display: flex;
+    align-items: center;
+    gap: .625rem;
+    margin-bottom: .4rem;
+    font-size: .75rem;
+  }
+  .payback-yr { color: var(--gray-500); width: 42px; flex-shrink: 0; }
+  .payback-bar-bg { flex: 1; height: 6px; background: var(--gray-100); border-radius: 3px; overflow: hidden; }
+  .payback-bar-fill { height: 100%; border-radius: 3px; transition: width .5s ease; }
+  .payback-bar-fill.recovering { background: var(--amber-500); }
+  .payback-bar-fill.profit     { background: var(--green-500); }
+  .payback-amount { color: var(--gray-600); width: 58px; text-align: right; flex-shrink: 0; font-weight: 500; }
+
+  /* Energy score ring */
+  .score-display { text-align: center; padding: 1.5rem 1rem 1rem; }
+  .score-ring-wrap { position: relative; display: inline-block; margin-bottom: 1rem; }
+  .score-ring { transform: rotate(-90deg); }
+  .score-ring-bg  { fill: none; stroke: var(--gray-100); stroke-width: 9; }
+  .score-ring-arc { fill: none; stroke-width: 9; stroke-linecap: round; transition: stroke-dashoffset .65s ease, stroke .4s; }
+  .score-number {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.25rem; font-weight: 800; line-height: 1;
+  }
+  .score-grade { font-size: 1.125rem; font-weight: 700; margin-bottom: .375rem; }
+  .score-desc { font-size: .8125rem; color: var(--gray-600); max-width: 260px; margin: 0 auto; }
+
+  .score-tips { display: flex; flex-direction: column; gap: .625rem; margin-top: 1.25rem; }
+  .score-tip-item {
+    display: flex; gap: .75rem; align-items: flex-start;
+    padding: .75rem .875rem;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+  }
+  .score-tip-num {
+    font-size: .75rem; font-weight: 800;
+    color: var(--green-700);
+    background: var(--green-100);
+    border-radius: 50%;
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .score-tip-text { font-size: .8125rem; color: var(--gray-700); line-height: 1.55; }
+  .score-tip-text strong { color: var(--gray-900); }
+
+  /* FAQ section */
+  .calc-faq { max-width: 720px; margin: 3rem auto 0; }
+  .calc-faq h2 { font-size: 1.375rem; margin-bottom: 1.25rem; color: var(--gray-900); }
+  .faq-item { border-bottom: 1px solid var(--gray-200); }
+  .faq-q {
+    font-size: .9375rem; font-weight: 600; color: var(--gray-800);
+    cursor: pointer; padding: 1.125rem 0;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    user-select: none;
+  }
+  .faq-q::after { content: '+'; color: var(--green-600); font-size: 1.375rem; flex-shrink: 0; font-weight: 400; }
+  .faq-item.open .faq-q::after { content: '−'; }
+  .faq-a {
+    font-size: .875rem; color: var(--gray-600); line-height: 1.75;
+    max-height: 0; overflow: hidden;
+    transition: max-height .3s ease, padding .3s;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding-bottom: 1.125rem; }
+
+  /* Results card title */
+  .results-title {
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--gray-500);
+    margin-bottom: 0;
+    padding-bottom: .875rem;
+    border-bottom: 1px solid var(--gray-100);
+    margin-bottom: .25rem;
+  }
+
+  .divider { height: 1px; background: var(--gray-100); margin: 1rem 0; }
+  .section-label {
+    font-size: .6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--gray-400);
+    margin-bottom: .5rem;
+    margin-top: 1rem;
+  }
+  </style>
+</head>
+<body>
+
+<!-- ── Header (exact match to site) ── -->
+<header class="site-header" role="banner">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="logo" aria-label="EcoThrift Home - Homepage">
+        <span class="logo-icon" aria-hidden="true">🌿</span>
+        <div class="logo-text">
+          <span class="logo-name">EcoThrift Home</span>
+          <span class="logo-tagline">Save Energy. Save Money.</span>
+        </div>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="main-nav" class="main-nav" role="navigation" aria-label="Main navigation">
+        <ul role="list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/#blog-posts">Blog Posts</a></li>
+          <li><a href="/calculator.html" aria-current="page">Energy Calculator</a></li>
+          <li><a href="/#top-products">Top Products</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ── Page Hero ── -->
+<div class="calc-page-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <span aria-current="page">Energy Calculators</span>
+    </nav>
+    <h1>Home Energy Calculators</h1>
+    <p class="hero-sub">Six free tools to find out exactly what your home costs to run — and where you can save the most.</p>
+    <div class="calc-hero-badges">
+      <span class="calc-hero-badge"><i class="fas fa-bolt"></i> 6 Calculators</span>
+      <span class="calc-hero-badge"><i class="fas fa-lock-open"></i> Free, No Signup</span>
+      <span class="calc-hero-badge"><i class="fas fa-database"></i> Based on DOE & ENERGY STAR Data</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Tab Nav ── -->
+<div class="calc-tabs-wrap">
+  <nav class="calc-tab-nav" role="tablist" aria-label="Calculator tabs">
+    <button class="calc-tab-btn active" onclick="switchTab('appliance', this)" role="tab" aria-selected="true">🔌 Appliances</button>
+    <button class="calc-tab-btn" onclick="switchTab('hvac', this)" role="tab">🌡️ Heating &amp; Cooling</button>
+    <button class="calc-tab-btn" onclick="switchTab('solar', this)" role="tab">☀️ Solar Savings</button>
+    <button class="calc-tab-btn" onclick="switchTab('water', this)" role="tab">🚿 Water Heating</button>
+    <button class="calc-tab-btn" onclick="switchTab('lighting', this)" role="tab">💡 Lighting</button>
+    <button class="calc-tab-btn" onclick="switchTab('score', this)" role="tab">📊 Energy Score</button>
+  </nav>
+</div>
+
+<!-- ── Calculator Content ── -->
+<div class="calc-content">
+
+  <!-- TAB 1: APPLIANCES -->
+  <div class="calc-panel active" id="tab-appliance">
+    <div class="calc-grid">
+      <div class="calc-input-card">
+        <h2><span class="icon">🔌</span> Appliance Cost Calculator</h2>
+
+        <div class="calc-field">
+          <label for="a-appliance">Select appliance</label>
+          <select id="a-appliance" onchange="toggleCustomWatts()">
+            <optgroup label="Kitchen">
+              <option value="1200">Refrigerator (full size)</option>
+              <option value="350">Refrigerator (mini)</option>
+              <option value="1200">Dishwasher</option>
+              <option value="1000">Microwave</option>
+              <option value="1500">Electric oven / range</option>
+              <option value="800">Coffee maker</option>
+              <option value="700">Toaster oven</option>
+            </optgroup>
+            <optgroup label="Laundry">
+              <option value="500">Washing machine (cold)</option>
+              <option value="900">Washing machine (hot)</option>
+              <option value="5000">Electric dryer</option>
+              <option value="300">Iron</option>
+            </optgroup>
+            <optgroup label="Heating & Cooling">
+              <option value="1500">Window AC unit</option>
+              <option value="3500">Central AC (per ton)</option>
+              <option value="1500">Space heater</option>
+              <option value="700">Ceiling fan</option>
+              <option value="480">Dehumidifier</option>
+            </optgroup>
+            <optgroup label="Entertainment & Office">
+              <option value="120">LED TV (55")</option>
+              <option value="350">Plasma TV (50")</option>
+              <option value="150">Desktop computer</option>
+              <option value="45">Laptop</option>
+              <option value="10">Phone charger</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option value="4500">Electric water heater</option>
+              <option value="1440">Pool pump</option>
+              <option value="1800">Hot tub</option>
+              <option value="custom">Custom wattage ↓</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="calc-field" id="a-custom-field" style="display:none">
+          <label for="a-custom-watts">Custom wattage (W)</label>
+          <input type="number" id="a-custom-watts" value="200" min="1" max="20000">
+        </div>
+
+        <div class="calc-field">
+          <label>Hours used per day</label>
+          <div class="range-wrap">
+            <span class="range-val" id="a-hours-val">4 hrs</span>
+            <input type="range" id="a-hours" min="0.25" max="24" step="0.25" value="4"
+              oninput="document.getElementById('a-hours-val').textContent=this.value+' hrs'">
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label>Days used per week</label>
+          <div class="range-wrap">
+            <span class="range-val" id="a-days-val">7 days</span>
+            <input type="range" id="a-days" min="1" max="7" step="1" value="7"
+              oninput="document.getElementById('a-days-val').textContent=this.value+' days'">
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label for="a-rate">Electricity rate (¢/kWh)</label>
+          <input type="number" id="a-rate" value="13" min="1" max="60" step="0.1">
+          <p class="field-hint">US average is 13¢. Check your utility bill for your exact rate.</p>
+        </div>
+
+        <button class="calc-submit" onclick="calcAppliance()">
+          <i class="fas fa-calculator" aria-hidden="true"></i> Calculate Cost
+        </button>
+      </div>
+
+      <div class="calc-results-card" id="a-results">
+        <div class="results-empty">
+          <div class="results-empty-icon">🔌</div>
+          <p>Select an appliance and hit Calculate to see your exact cost breakdown.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: HVAC -->
+  <div class="calc-panel" id="tab-hvac">
+    <div class="calc-grid">
+      <div class="calc-input-card">
+        <h2><span class="icon">🌡️</span> Heating &amp; Cooling Calculator</h2>
+
+        <div class="calc-field">
+          <label for="h-system">System type</label>
+          <select id="h-system">
+            <option value="central_ac">Central Air Conditioning</option>
+            <option value="heat_pump">Heat Pump (cooling mode)</option>
+            <option value="furnace_gas">Gas Furnace</option>
+            <option value="furnace_elec">Electric Furnace</option>
+            <option value="window_ac">Window AC Units</option>
+            <option value="boiler">Hot Water Boiler</option>
+          </select>
+        </div>
+
+        <div class="calc-field-row">
+          <div class="calc-field">
+            <label for="h-sqft">Home size (sq ft)</label>
+            <input type="number" id="h-sqft" value="1800" min="200" max="10000">
+          </div>
+          <div class="calc-field">
+            <label for="h-age">System age (years)</label>
+            <input type="number" id="h-age" value="8" min="0" max="40">
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label>Hours run per day (avg during season)</label>
+          <div class="range-wrap">
+            <span class="range-val" id="h-hours-val">8 hrs</span>
+            <input type="range" id="h-hours" min="1" max="24" value="8"
+              oninput="document.getElementById('h-hours-val').textContent=this.value+' hrs'">
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label>Season length (months per year)</label>
+          <div class="range-wrap">
+            <span class="range-val" id="h-months-val">4 mo</span>
+            <input type="range" id="h-months" min="1" max="12" value="4"
+              oninput="document.getElementById('h-months-val').textContent=this.value+' mo'">
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label for="h-rate">Electricity rate (¢/kWh)</label>
+          <input type="number" id="h-rate" value="13" min="1" max="60" step="0.1">
+        </div>
+
+        <button class="calc-submit" onclick="calcHVAC()">
+          <i class="fas fa-calculator" aria-hidden="true"></i> Calculate Cost
+        </button>
+      </div>
+
+      <div class="calc-results-card" id="h-results">
+        <div class="results-empty">
+          <div class="results-empty-icon">🌡️</div>
+          <p>Enter your system details to see seasonal and annual heating or cooling costs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: SOLAR -->
+  <div class="calc-panel" id="tab-solar">
+    <div class="calc-grid">
+      <div class="calc-input-card">
+        <h2><span class="icon">☀️</span> Solar Savings Calculator</h2>
+
+        <div class="calc-field">
+          <label for="s-bill">Monthly electricity bill ($)</label>
+          <input type="number" id="s-bill" value="150" min="10" max="2000">
+        </div>
+
+        <div class="calc-field">
+          <label for="s-sun">Your region / peak sun hours</label>
+          <select id="s-sun">
+            <option value="6.0">Arizona / California (6.0 hrs/day)</option>
+            <option value="5.5">Texas / Nevada / Florida (5.5 hrs/day)</option>
+            <option value="5.0" selected>Southeast / Mid-Atlantic (5.0 hrs/day)</option>
+            <option value="4.5">Midwest / Mountain States (4.5 hrs/day)</option>
+            <option value="4.0">Northwest / Northeast (4.0 hrs/day)</option>
+            <option value="3.5">Alaska / Pacific NW (3.5 hrs/day)</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label for="s-roof">Usable roof space (sq ft)</label>
+          <input type="number" id="s-roof" value="400" min="50" max="5000">
+          <p class="field-hint">South or west-facing, unshaded roof area.</p>
+        </div>
+
+        <div class="calc-field">
+          <label for="s-rate">Electricity rate (¢/kWh)</label>
+          <input type="number" id="s-rate" value="13" min="1" max="60" step="0.1">
+        </div>
+
+        <div class="calc-field">
+          <label for="s-credit">Federal tax credit eligible?</label>
+          <select id="s-credit">
+            <option value="0.30">Yes — claim 30% federal tax credit</option>
+            <option value="0">No / not sure</option>
+          </select>
+        </div>
+
+        <button class="calc-submit" onclick="calcSolar()">
+          <i class="fas fa-calculator" aria-hidden="true"></i> Calculate Solar Savings
+        </button>
+      </div>
+
+      <div class="calc-results-card" id="s-results">
+        <div class="results-empty">
+          <div class="results-empty-icon">☀️</div>
+          <p>Enter your bill and roof details to see estimated solar savings and payback period.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: WATER HEATING -->
+  <div class="calc-panel" id="tab-water">
+    <div class="calc-grid">
+      <div class="calc-input-card">
+        <h2><span class="icon">🚿</span> Water Heating Calculator</h2>
+
+        <div class="calc-field">
+          <label for="w-type">Water heater type</label>
+          <select id="w-type">
+            <option value="elec_tank">Electric Tank (standard)</option>
+            <option value="gas_tank">Gas Tank (standard)</option>
+            <option value="elec_tankless">Electric Tankless</option>
+            <option value="gas_tankless">Gas Tankless</option>
+            <option value="heat_pump_wh">Heat Pump Water Heater</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label>People in household</label>
+          <div class="range-wrap">
+            <span class="range-val" id="w-people-val">3 people</span>
+            <input type="range" id="w-people" min="1" max="8" value="3"
+              oninput="document.getElementById('w-people-val').textContent=this.value+' people'">
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label>Average shower length (minutes)</label>
+          <div class="range-wrap">
+            <span class="range-val" id="w-shower-val">8 min</span>
+            <input type="range" id="w-shower" min="3" max="30" value="8"
+              oninput="document.getElementById('w-shower-val').textContent=this.value+' min'">
+          </div>
+        </div>
+
+        <div class="calc-field-row">
+          <div class="calc-field">
+            <label for="w-erate">Electricity rate (¢/kWh)</label>
+            <input type="number" id="w-erate" value="13" min="1" max="60" step="0.1">
+          </div>
+          <div class="calc-field">
+            <label for="w-grate">Gas rate ($/therm)</label>
+            <input type="number" id="w-grate" value="1.20" min="0.1" max="10" step="0.01">
+          </div>
+        </div>
+
+        <button class="calc-submit" onclick="calcWater()">
+          <i class="fas fa-calculator" aria-hidden="true"></i> Calculate Water Heating Cost
+        </button>
+      </div>
+
+      <div class="calc-results-card" id="w-results">
+        <div class="results-empty">
+          <div class="results-empty-icon">🚿</div>
+          <p>Enter your household details to see water heating costs and compare alternatives.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: LIGHTING -->
+  <div class="calc-panel" id="tab-lighting">
+    <div class="calc-grid">
+      <div class="calc-input-card">
+        <h2><span class="icon">💡</span> Lighting Cost Calculator</h2>
+
+        <div class="calc-field">
+          <label>Number of light bulbs in your home</label>
+          <div class="range-wrap">
+            <span class="range-val" id="l-bulbs-val">25 bulbs</span>
+            <input type="range" id="l-bulbs" min="1" max="100" value="25"
+              oninput="document.getElementById('l-bulbs-val').textContent=this.value+' bulbs'">
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label>Average hours on per day (per bulb)</label>
+          <div class="range-wrap">
+            <span class="range-val" id="l-hours-val">5 hrs</span>
+            <input type="range" id="l-hours" min="1" max="24" value="5"
+              oninput="document.getElementById('l-hours-val').textContent=this.value+' hrs'">
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label for="l-current">What bulbs do you currently have?</label>
+          <select id="l-current">
+            <option value="60">Incandescent (60W equivalent)</option>
+            <option value="15">CFL (15W)</option>
+            <option value="10" selected>LED (10W — standard)</option>
+            <option value="8">LED (8W — high efficiency)</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label for="l-rate">Electricity rate (¢/kWh)</label>
+          <input type="number" id="l-rate" value="13" min="1" max="60" step="0.1">
+        </div>
+
+        <button class="calc-submit" onclick="calcLighting()">
+          <i class="fas fa-calculator" aria-hidden="true"></i> Compare Bulb Costs
+        </button>
+      </div>
+
+      <div class="calc-results-card" id="l-results">
+        <div class="results-empty">
+          <div class="results-empty-icon">💡</div>
+          <p>Enter your lighting details to compare the annual cost of every bulb type side by side.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6: ENERGY SCORE -->
+  <div class="calc-panel" id="tab-score">
+    <div class="calc-grid">
+      <div class="calc-input-card">
+        <h2><span class="icon">📊</span> Home Energy Score</h2>
+
+        <div class="calc-field">
+          <label for="q1">Home age / insulation quality</label>
+          <select id="q1">
+            <option value="5">Built after 2000 — well insulated</option>
+            <option value="10" selected>Built 1980–2000 — average insulation</option>
+            <option value="20">Built before 1980 — poor insulation</option>
+            <option value="30">Old home, no upgrades — very drafty</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="q2">Thermostat type</label>
+          <select id="q2">
+            <option value="0">Smart / programmable — properly set up</option>
+            <option value="5">Programmable but not set up</option>
+            <option value="10" selected>Manual thermostat</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="q3">Water heater type</label>
+          <select id="q3">
+            <option value="0">Heat pump water heater</option>
+            <option value="5">Tankless (gas or electric)</option>
+            <option value="10">Standard tank (gas)</option>
+            <option value="15" selected>Standard tank (electric)</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="q4">Lighting</label>
+          <select id="q4">
+            <option value="0">All LED throughout</option>
+            <option value="8" selected>Mostly LED, some older bulbs</option>
+            <option value="18">Mix of LED and incandescent</option>
+            <option value="30">Mostly incandescent</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="q5">Window quality</label>
+          <select id="q5">
+            <option value="0">Double or triple pane — all sealed</option>
+            <option value="8" selected>Double pane — some minor drafts</option>
+            <option value="18">Single pane or older windows</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="q6">Air sealing (drafts around doors / outlets)</label>
+          <select id="q6">
+            <option value="0">No drafts — professionally sealed</option>
+            <option value="8" selected>Minor drafts — mostly sealed</option>
+            <option value="18">Noticeable drafts around doors / outlets</option>
+            <option value="28">Very drafty throughout</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="q7">HVAC system age</label>
+          <select id="q7">
+            <option value="0">Under 5 years old</option>
+            <option value="8" selected>5–15 years old</option>
+            <option value="18">Over 15 years old</option>
+            <option value="25">Over 20 years — no recent maintenance</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="q8">Solar panels installed?</label>
+          <select id="q8">
+            <option value="-15">Yes — cover most of my usage</option>
+            <option value="-5">Yes — partial coverage</option>
+            <option value="0" selected>No solar</option>
+          </select>
+        </div>
+
+        <button class="calc-submit" onclick="calcScore()">
+          <i class="fas fa-calculator" aria-hidden="true"></i> Get My Energy Score
+        </button>
+      </div>
+
+      <div class="calc-results-card" id="sc-results">
+        <div class="results-empty">
+          <div class="results-empty-icon">📊</div>
+          <p>Answer the 8 questions to get your home's energy efficiency score and top savings opportunities.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="calc-faq">
+    <h2>Common Questions</h2>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I find my electricity rate?</div>
+      <div class="faq-a">Your electricity rate (in cents per kWh) is printed on your monthly utility bill. Look for "rate," "price per kWh," or divide your total bill by total kWh used. The US average is about 13¢/kWh, but it ranges from roughly 10¢ in parts of the South to 25¢+ in Hawaii and the Northeast.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How accurate are these calculators?</div>
+      <div class="faq-a">These calculators use standard wattage figures and efficiency ratings from the US Department of Energy and the EPA ENERGY STAR database. Real-world results vary based on your specific appliance model, usage habits, and local rates. Treat results as solid estimates — accurate enough to prioritize where to focus your energy-saving efforts.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What's a good home energy score?</div>
+      <div class="faq-a">Our scoring mirrors the DOE Home Energy Score scale of 1–10. A score of 7–10 means your home is highly efficient. 4–6 is average. 1–3 indicates significant savings potential. Most American homes score between 3 and 6, meaning most households have real room to improve.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is solar worth it for my home?</div>
+      <div class="faq-a">Solar is generally worth it if you own your home, have a south or west-facing roof with minimal shade, and a monthly bill over $100. The federal 30% tax credit significantly shortens payback periods. Most installs pay back in 6–10 years and panels last 25+ years — meaning 15+ years of essentially free electricity.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What's the single biggest energy cost in most homes?</div>
+      <div class="faq-a">Heating and cooling accounts for roughly 43% of the average home's energy bill — more than all other uses combined. Water heating (18%) and appliances and lighting (30%) round out the biggest categories. Fixing HVAC efficiency, insulation, and air sealing delivers the largest dollar savings for most households.</div>
+    </div>
+  </div>
+
+</div><!-- /calc-content -->
+
+<!-- ── Footer (exact match to site) ── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo footer-logo" aria-label="EcoThrift Home">
+          <span aria-hidden="true">🌿</span>
+          <div><span class="logo-name">EcoThrift Home</span><span class="logo-tagline">Save Energy. Save Money.</span></div>
+        </a>
+        <p>Evidence-based, budget-first energy saving tips for every home.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <h3>Explore</h3>
+        <ul role="list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/#blog-posts">Blog Posts</a></li>
+          <li><a href="/calculator.html">Energy Calculators</a></li>
+          <li><a href="/#top-products">Top Products</a></li>
+          <li><a href="/#faq">FAQs</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-nav" aria-label="Company navigation">
+        <h3>Company</h3>
+        <ul role="list">
+          <li><a href="about.html">About EcoThrift</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="about.html#affiliate-disclosure">Affiliate Disclosure</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </nav>
+      <div class="footer-social">
+        <h3>Follow Along</h3>
+        <div class="social-links">
+          <a href="https://pinterest.com/ecothrifthome" rel="noopener noreferrer" target="_blank" aria-label="Pinterest"><i class="fab fa-pinterest" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="affiliate-disclosure"><strong>Affiliate Disclosure:</strong> EcoThrift Home is a participant in the Amazon Services LLC Associates Program. As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.</p>
+      <p class="copyright">&copy; <span id="current-year"></span> EcoThrift Home. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+// ── Tab switching ──────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.calc-tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
+}
+
+// ── Custom watts toggle ────────────────────────────────────────────────────
+function toggleCustomWatts() {
+  const sel = document.getElementById('a-appliance');
+  document.getElementById('a-custom-field').style.display = sel.value === 'custom' ? 'block' : 'none';
+}
+
+// ── Helper ─────────────────────────────────────────────────────────────────
+function fmt(n, decimals=0) { return n.toLocaleString(undefined, {minimumFractionDigits:decimals, maximumFractionDigits:decimals}); }
+
+// ── 1. APPLIANCES ──────────────────────────────────────────────────────────
+function calcAppliance() {
+  const sel   = document.getElementById('a-appliance');
+  let watts   = sel.value === 'custom' ? (parseFloat(document.getElementById('a-custom-watts').value)||200) : parseFloat(sel.value);
+  const hours = parseFloat(document.getElementById('a-hours').value);
+  const days  = parseFloat(document.getElementById('a-days').value);
+  const rate  = parseFloat(document.getElementById('a-rate').value) / 100;
+  const name  = sel.value === 'custom' ? 'Custom Appliance' : sel.options[sel.selectedIndex].text;
+
+  const kwhDay   = (watts/1000) * hours * (days/7);
+  const kwhMonth = kwhDay * 30.44;
+  const kwhYear  = kwhDay * 365;
+  const cDay     = kwhDay * rate;
+  const cMonth   = kwhMonth * rate;
+  const cYear    = kwhYear * rate;
+
+  let tip = '';
+  if (watts > 3000)      tip = `<strong>High-draw appliance:</strong> At ${watts}W this is one of your biggest energy users. Running it during off-peak hours can reduce costs if your utility offers time-of-use pricing.`;
+  else if (watts > 1000) tip = `<strong>Moderate draw:</strong> Cutting daily use by 1 hour saves $${fmt(rate*(watts/1000)*365,0)} per year on this appliance alone.`;
+  else                   tip = `<strong>Efficient appliance:</strong> At ${watts}W this is a low draw. For the biggest savings, focus on high-wattage appliances like AC, dryers, and water heaters.`;
+
+  document.getElementById('a-results').innerHTML = `
+    <p class="results-title">Results — ${name}</p>
+    <div class="result-main">
+      <div class="result-main-label">Annual Cost</div>
+      <div class="result-main-val">$${fmt(cYear)}<span class="result-main-unit">/yr</span></div>
+    </div>
+    <div class="result-rows">
+      <div class="result-row"><span class="result-row-label">Daily cost</span><span class="result-row-val">$${fmt(cDay,3)}</span></div>
+      <div class="result-row"><span class="result-row-label">Monthly cost</span><span class="result-row-val warn">$${fmt(cMonth,2)}/mo</span></div>
+      <div class="result-row"><span class="result-row-label">Annual cost</span><span class="result-row-val bad">$${fmt(cYear,2)}/yr</span></div>
+      <div class="result-row"><span class="result-row-label">kWh used per month</span><span class="result-row-val">${fmt(kwhMonth,1)} kWh</span></div>
+      <div class="result-row"><span class="result-row-label">Wattage</span><span class="result-row-val">${watts}W</span></div>
+    </div>
+    <div class="result-tip">${tip}</div>`;
+}
+
+// ── 2. HVAC ────────────────────────────────────────────────────────────────
+function calcHVAC() {
+  const system = document.getElementById('h-system').value;
+  const sqft   = parseFloat(document.getElementById('h-sqft').value);
+  const age    = parseFloat(document.getElementById('h-age').value);
+  const hours  = parseFloat(document.getElementById('h-hours').value);
+  const months = parseFloat(document.getElementById('h-months').value);
+  const rate   = parseFloat(document.getElementById('h-rate').value) / 100;
+
+  const systems = {
+    central_ac:   { wpsf:0.55, fuel:'elec', label:'Central AC' },
+    heat_pump:    { wpsf:0.40, fuel:'elec', label:'Heat Pump' },
+    furnace_gas:  { wpsf:0.08, fuel:'gas',  label:'Gas Furnace' },
+    furnace_elec: { wpsf:0.55, fuel:'elec', label:'Electric Furnace' },
+    window_ac:    { wpsf:0.65, fuel:'elec', label:'Window AC Units' },
+    boiler:       { wpsf:0.10, fuel:'gas',  label:'Hot Water Boiler' },
+  };
+  const sys       = systems[system];
+  const ageFactor = 1 + Math.max(0, age - 10) * 0.015;
+  const watts     = sqft * sys.wpsf * ageFactor * 1000;
+  const kwhSeason = (watts/1000) * hours * (months * 30);
+  const cost      = sys.fuel === 'elec' ? kwhSeason * rate : kwhSeason * 0.03412 * 1.20;
+  const costMonth = cost / months;
+  const upgradeS  = age > 15 ? cost*0.30 : age > 10 ? cost*0.18 : 0;
+
+  const ageTip = age > 15
+    ? `<strong>Replacement recommended:</strong> A ${age}-year-old system runs at significantly reduced efficiency. Upgrading could save ~$${fmt(upgradeS,0)}/year.`
+    : age > 10
+    ? `<strong>Schedule a tune-up:</strong> At ${age} years, a professional service can restore 10–15% efficiency. Estimated upgrade savings: $${fmt(upgradeS,0)}/year.`
+    : `<strong>System looks healthy:</strong> Keep up annual filter changes and maintenance. Setting back your thermostat 7–10°F for 8 hrs/day saves up to 10% on this bill.`;
+
+  document.getElementById('h-results').innerHTML = `
+    <p class="results-title">Results — ${sys.label}</p>
+    <div class="result-main">
+      <div class="result-main-label">Seasonal Cost</div>
+      <div class="result-main-val">$${fmt(cost)}<span class="result-main-unit">/season</span></div>
+    </div>
+    <div class="result-rows">
+      <div class="result-row"><span class="result-row-label">Monthly cost (in-season)</span><span class="result-row-val warn">$${fmt(costMonth,0)}/mo</span></div>
+      <div class="result-row"><span class="result-row-label">Full season total</span><span class="result-row-val bad">$${fmt(cost,0)}</span></div>
+      <div class="result-row"><span class="result-row-label">Est. kWh per season</span><span class="result-row-val">${fmt(kwhSeason,0)} kWh</span></div>
+      <div class="result-row"><span class="result-row-label">Age efficiency penalty</span><span class="result-row-val ${age>15?'bad':age>10?'warn':'good'}">${age>15?'+'+fmt((ageFactor-1)*100,0)+'% from age':age>10?'Minor loss':'No penalty'}</span></div>
+      ${upgradeS>50?`<div class="result-row"><span class="result-row-label">Potential upgrade savings</span><span class="result-row-val good">$${fmt(upgradeS,0)}/yr</span></div>`:''}
+    </div>
+    <div class="result-tip">${ageTip}</div>`;
+}
+
+// ── 3. SOLAR ───────────────────────────────────────────────────────────────
+function calcSolar() {
+  const bill      = parseFloat(document.getElementById('s-bill').value);
+  const sunHours  = parseFloat(document.getElementById('s-sun').value);
+  const roofSqft  = parseFloat(document.getElementById('s-roof').value);
+  const rate      = parseFloat(document.getElementById('s-rate').value) / 100;
+  const creditPct = parseFloat(document.getElementById('s-credit').value);
+
+  const kwhYear       = (bill/rate)*12;
+  const systemKw      = kwhYear/(sunHours*365);
+  const panelsNeeded  = Math.ceil(systemKw/0.4);
+  const roofPanels    = Math.floor(roofSqft/17.5);
+  const actualPanels  = Math.min(panelsNeeded, roofPanels);
+  const coveragePct   = Math.min(100, (actualPanels/panelsNeeded)*100);
+  const actualKw      = actualPanels*0.4;
+  const grossCost     = actualKw*3000;
+  const netCost       = grossCost*(1-creditPct);
+  const annualProd    = actualKw*sunHours*365*0.80;
+  const annualSavings = annualProd*rate;
+  const payback       = netCost/annualSavings;
+  const net25         = annualSavings*25 - netCost;
+
+  let chart = '<div class="payback-chart">';
+  const yrs = Math.min(13, Math.ceil(payback)+2);
+  for (let y=1; y<=yrs; y++) {
+    const cum    = y*annualSavings;
+    const isPaid = cum >= netCost;
+    const pct    = Math.min(100, (cum/netCost)*100);
+    const diff   = cum - netCost;
+    chart += `<div class="payback-row">
+      <span class="payback-yr">Yr ${y}</span>
+      <div class="payback-bar-bg"><div class="payback-bar-fill ${isPaid?'profit':'recovering'}" style="width:${pct}%"></div></div>
+      <span class="payback-amount">${isPaid?'+$'+fmt(diff,0):'-$'+fmt(netCost-cum,0)}</span>
+    </div>`;
+  }
+  chart += '</div>';
+
+  document.getElementById('s-results').innerHTML = `
+    <p class="results-title">Solar Analysis</p>
+    <div class="result-main">
+      <div class="result-main-label">Annual Savings</div>
+      <div class="result-main-val">$${fmt(annualSavings)}<span class="result-main-unit">/yr</span></div>
+    </div>
+    <div class="result-rows">
+      <div class="result-row"><span class="result-row-label">Monthly bill reduction</span><span class="result-row-val good">−$${fmt(annualSavings/12,0)}/mo</span></div>
+      <div class="result-row"><span class="result-row-label">System size</span><span class="result-row-val">${fmt(actualKw,1)} kW (${actualPanels} panels)</span></div>
+      <div class="result-row"><span class="result-row-label">Roof coverage</span><span class="result-row-val ${coveragePct<80?'warn':'good'}">${fmt(coveragePct,0)}% of needs met</span></div>
+      <div class="result-row"><span class="result-row-label">Gross system cost</span><span class="result-row-val">$${fmt(grossCost,0)}</span></div>
+      ${creditPct>0?`<div class="result-row"><span class="result-row-label">After 30% tax credit</span><span class="result-row-val good">$${fmt(netCost,0)}</span></div>`:''}
+      <div class="result-row"><span class="result-row-label">Payback period</span><span class="result-row-val ${payback<8?'good':payback<12?'warn':'bad'}">${fmt(payback,1)} years</span></div>
+      <div class="result-row"><span class="result-row-label">25-year net gain</span><span class="result-row-val good">$${fmt(net25,0)}</span></div>
+    </div>
+    <p class="section-label">Payback progress</p>
+    ${chart}
+    <div class="result-tip"><strong>Tip:</strong> Get 3 quotes from local installers — prices vary 20–40% by region. This estimate uses a national average of $3,000/kW installed.</div>`;
+}
+
+// ── 4. WATER HEATING ──────────────────────────────────────────────────────
+function calcWater() {
+  const type   = document.getElementById('w-type').value;
+  const people = parseInt(document.getElementById('w-people').value);
+  const shower = parseInt(document.getElementById('w-shower').value);
+  const erate  = parseFloat(document.getElementById('w-erate').value)/100;
+  const grate  = parseFloat(document.getElementById('w-grate').value);
+
+  const gallonsDay = (20 + (shower-8)*2) * people;
+  const baseKwh    = gallonsDay * 0.105 * 365;
+
+  const sys = {
+    elec_tank:     { ef:0.92, fuel:'elec', label:'Electric Tank',          standby:0.15 },
+    gas_tank:      { ef:0.60, fuel:'gas',  label:'Gas Tank',               standby:0.12 },
+    elec_tankless: { ef:0.99, fuel:'elec', label:'Electric Tankless',      standby:0 },
+    gas_tankless:  { ef:0.87, fuel:'gas',  label:'Gas Tankless',           standby:0 },
+    heat_pump_wh:  { ef:3.50, fuel:'elec', label:'Heat Pump Water Heater', standby:0 },
+  };
+
+  function cost(key) {
+    const s = sys[key];
+    if (s.fuel==='elec') return (baseKwh/s.ef)*erate*(1+s.standby);
+    return ((baseKwh*0.03412)/s.ef)*grate*(1+s.standby);
+  }
+
+  const myCost = cost(type);
+  const order  = ['heat_pump_wh','gas_tankless','gas_tank','elec_tankless','elec_tank'];
+  const rows   = order.map(k => {
+    const c = cost(k); const s = myCost - c; const isMe = k===type;
+    return `<div class="result-row">
+      <span class="result-row-label">${sys[k].label}${isMe?' ← you':''}</span>
+      <span class="result-row-val ${isMe?'':s>0?'good':'bad'}">$${fmt(c,0)}/yr${!isMe&&s>0?' (save $'+fmt(s,0)+')':''}</span>
+    </div>`;
+  }).join('');
+
+  const hpSave = myCost - cost('heat_pump_wh');
+  document.getElementById('w-results').innerHTML = `
+    <p class="results-title">Results — ${sys[type].label}</p>
+    <div class="result-main">
+      <div class="result-main-label">Your Annual Water Heating Cost</div>
+      <div class="result-main-val">$${fmt(myCost)}<span class="result-main-unit">/yr</span></div>
+    </div>
+    <p class="section-label">Compare all system types</p>
+    <div class="result-rows">${rows}</div>
+    ${hpSave>50&&type!=='heat_pump_wh'?`<div class="result-tip"><strong>Best upgrade:</strong> A heat pump water heater could save you ~$${fmt(hpSave,0)}/year and qualifies for a $600 federal tax credit. Typical payback: 3–5 years.</div>`:''}`;
+}
+
+// ── 5. LIGHTING ───────────────────────────────────────────────────────────
+function calcLighting() {
+  const bulbs   = parseInt(document.getElementById('l-bulbs').value);
+  const hours   = parseInt(document.getElementById('l-hours').value);
+  const currW   = parseInt(document.getElementById('l-current').value);
+  const rate    = parseFloat(document.getElementById('l-rate').value)/100;
+  const hpy     = hours*365;
+
+  const types = [
+    { name:'Incandescent', w:60,  life:1200,  bCost:1.0,  color:'#dc2626' },
+    { name:'CFL',          w:15,  life:10000, bCost:3.0,  color:'#d97706' },
+    { name:'LED (10W)',    w:10,  life:25000, bCost:3.5,  color:'#16a34a' },
+    { name:'LED (8W)',     w:8,   life:25000, bCost:4.0,  color:'#15803d' },
+  ];
+
+  function annualCost(t) {
+    return (t.w/1000)*hpy*bulbs*rate + (hpy/t.life)*bulbs*t.bCost;
+  }
+
+  const maxC = annualCost(types[0]);
+  const bars = types.map(t => {
+    const c = annualCost(t);
+    const isMe = t.w === currW;
+    return `<div class="bulb-row">
+      <div class="bulb-row-header">
+        <span class="bulb-name">${t.name}${isMe?' ← current':''}</span>
+        <span class="bulb-cost">$${fmt(c,0)}/yr</span>
+      </div>
+      <div class="bulb-bar-bg"><div class="bulb-bar-fill" style="width:${(c/maxC)*100}%;background:${t.color}"></div></div>
+    </div>`;
+  }).join('');
+
+  const currCost = annualCost(types.find(t=>t.w===currW)||types[2]);
+  const ledCost  = annualCost(types[2]);
+  const savings  = currCost - ledCost;
+
+  document.getElementById('l-results').innerHTML = `
+    <p class="results-title">${bulbs} bulbs at ${hours} hrs/day</p>
+    <div class="result-main">
+      <div class="result-main-label">Your Current Annual Lighting Cost</div>
+      <div class="result-main-val">$${fmt(currCost)}<span class="result-main-unit">/yr</span></div>
+    </div>
+    <p class="section-label">All bulb types compared</p>
+    <div class="bulb-comparison">${bars}</div>
+    ${savings>5
+      ? `<div class="result-tip" style="margin-top:1rem"><strong>Switching to LED saves $${fmt(savings,0)}/year.</strong> At ~$3.50/bulb, ${bulbs} LEDs cost $${fmt(bulbs*3.5,0)} upfront and pay back in ${fmt((bulbs*3.5)/savings*12,0)} months.</div>`
+      : `<div class="result-tip" style="margin-top:1rem"><strong>Great — you're already on efficient bulbs.</strong> Your lighting costs are near-optimal.</div>`
+    }`;
+}
+
+// ── 6. ENERGY SCORE ───────────────────────────────────────────────────────
+function calcScore() {
+  const vals   = [1,2,3,4,5,6,7,8].map(i=>parseInt(document.getElementById('q'+i).value));
+  const penalty = vals.reduce((a,b)=>a+b,0);
+  const score  = Math.max(1, Math.min(10, +(10 - penalty/17).toFixed(1)));
+
+  const grades = [
+    { min:8.5, label:'Excellent', color:'#15803d', desc:'Your home is highly efficient. Focus on maintaining what you have and consider solar next.' },
+    { min:6.5, label:'Good',      color:'#16a34a',    desc:'Above average efficiency. A few targeted upgrades could push you to excellent.' },
+    { min:4.5, label:'Average',   color:'#d97706',    desc:'Typical American home. Meaningful savings available with the right upgrades.' },
+    { min:2.5, label:'Below Avg', color:'#ea580c',    desc:'Below average efficiency. Significant savings potential — start with the tips below.' },
+    { min:0,   label:'Critical',  color:'#dc2626',    desc:'High energy waste. Addressing these issues could cut your bill by 30–50%.' },
+  ];
+  const g = grades.find(gr=>score>=gr.min)||grades[4];
+
+  const circ   = 2*Math.PI*46;
+  const offset = circ - (score/10)*circ;
+
+  const allTips = [
+    { penalty: vals[5], threshold:8,  text:'<strong>Air seal outlets & doors</strong> — Foam gaskets behind outlet covers and weatherstripping cost under $50 and save $100–$300/year.' },
+    { penalty: vals[0], threshold:10, text:'<strong>Add attic insulation</strong> — Bringing attic insulation to R-38 is the highest-ROI home improvement, often saving 15–25% on heating & cooling.' },
+    { penalty: vals[1], threshold:5,  text:'<strong>Install a smart thermostat</strong> — A Nest or Ecobee pays back in 3–6 months and saves ~$180/year with no behavior change required.' },
+    { penalty: vals[3], threshold:8,  text:'<strong>Switch all bulbs to LED</strong> — At $3–4 per bulb, switching 20 bulbs saves ~$150/year and pays back in under a year.' },
+    { penalty: vals[6], threshold:15, text:'<strong>Service or replace your HVAC</strong> — A system over 15 years old runs at 60–70% original efficiency. A new unit pays back in 6–9 years.' },
+    { penalty: vals[2], threshold:10, text:'<strong>Upgrade to a heat pump water heater</strong> — Uses 70% less energy than electric resistance and qualifies for a $600 federal tax credit.' },
+    { penalty: vals[4], threshold:8,  text:'<strong>Add window film or cellular shades</strong> — Blocks 50–79% of heat gain for $1–3/sqft, saving $100+/year on AC.' },
+  ];
+  const tips = allTips.filter(t=>t.penalty>=t.threshold).slice(0,3);
+  if(!tips.length) tips.push({ text:'Your home scores well across all categories. A professional energy audit may uncover additional hidden savings.' });
+
+  const tipsHTML = tips.map((t,i)=>`
+    <div class="score-tip-item">
+      <div class="score-tip-num">${i+1}</div>
+      <div class="score-tip-text">${t.text}</div>
+    </div>`).join('');
+
+  document.getElementById('sc-results').innerHTML = `
+    <div class="score-display">
+      <div class="score-ring-wrap">
+        <svg class="score-ring" width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="score-ring-bg" cx="60" cy="60" r="46"/>
+          <circle class="score-ring-arc" cx="60" cy="60" r="46"
+            stroke="${g.color}"
+            stroke-dasharray="${circ.toFixed(2)}"
+            stroke-dashoffset="${offset.toFixed(2)}"/>
+        </svg>
+        <div class="score-number" style="color:${g.color}">${score}</div>
+      </div>
+      <div class="score-grade" style="color:${g.color}">${g.label} Efficiency</div>
+      <div class="score-desc">${g.desc}</div>
+    </div>
+    <div class="divider"></div>
+    <p class="section-label">Your top savings opportunities</p>
+    <div class="score-tips">${tipsHTML}</div>`;
+}
+
+// ── FAQ ────────────────────────────────────────────────────────────────────
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+
+// ── Footer year ────────────────────────────────────────────────────────────
+document.getElementById('current-year').textContent = new Date().getFullYear();
+
+// ── Fix score color reference ──────────────────────────────────────────────
+const var_green700 = '#15803d';
+</script>
+</body>
+</html>
