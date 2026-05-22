@@ -30,7 +30,7 @@
 # done: water heater temperature setting 120 degrees save money
 # done: insulating electrical outlets and switch plates stop drafts
 # done: dehumidifier vs air conditioner which saves more energy
-washing machine cold water cycle savings per year
+# done: washing machine cold water cycle savings per year
 HVAC filter replacement schedule save on heating cooling
 smart home energy monitor Sense vs Emporia Vue review
 ceiling insulation DIY guide save on heating cooling bills
