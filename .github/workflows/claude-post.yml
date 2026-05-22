@@ -354,11 +354,7 @@ jobs:
               new_card + '\n' + insertion_point
           )
 
-          with open("index.html", "w") as f:
-              f.write(updated)
-
-
-          # Update latest-grid: prepend new card with latest-badge, keep only 4
+          # ── FIX: Update latest-grid BEFORE writing to disk ──
           import re as re2
           latest_card = new_card.replace(
               'class="post-card" data-category',
@@ -381,6 +377,12 @@ jobs:
                   f'<div class="latest-grid">\n          {new_latest_inner}\n        </div>\n      </div>\n    </section>'
               )
               print("Latest guides section updated")
+          else:
+              print("WARNING: latest-grid pattern not matched — section not updated")
+
+          # ── Write once, after both updates are applied ──
+          with open("index.html", "w") as f:
+              f.write(updated)
 
           print(f"Homepage updated with card for: {filename}")
           PYEOF
