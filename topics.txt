@@ -32,7 +32,7 @@
 # done: dehumidifier vs air conditioner which saves more energy
 # done: washing machine cold water cycle savings per year
 # done: HVAC filter replacement schedule save on heating cooling
-smart home energy monitor Sense vs Emporia Vue review
+# done: smart home energy monitor Sense vs Emporia Vue review
 ceiling insulation DIY guide save on heating cooling bills
 draft snake door bottom seal cheapest energy saving fix
 power factor correction save money myth vs reality
