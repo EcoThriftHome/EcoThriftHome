@@ -35,7 +35,7 @@
 # done: smart home energy monitor Sense vs Emporia Vue review
 # done: ceiling insulation DIY guide save on heating cooling bills
 # done: draft snake door bottom seal cheapest energy saving fix
-power factor correction save money myth vs reality
+# done: power factor correction save money myth vs reality
 energy efficient window treatments save on heating cooling
 home energy rebates and tax credits available 2025
 extension cord vs smart plug which is safer and more efficient
