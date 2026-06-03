@@ -37,7 +37,7 @@
 # done: draft snake door bottom seal cheapest energy saving fix
 # done: power factor correction save money myth vs reality
 # done: energy efficient window treatments save on heating cooling
-home energy rebates and tax credits available 2025
+# done: home energy rebates and tax credits available 2025
 extension cord vs smart plug which is safer and more efficient
 
 # ── APPLIANCES & DEVICES ──────────────────────────────────────
