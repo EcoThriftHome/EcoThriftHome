@@ -1,3 +1,3 @@
-/about    /about.html    200
-/contact  /contact.html  200
-/privacy  /privacy.html  200
+# Redirect .html URLs to clean URLs (301 permanent)
+/blog/*.html  /blog/:splat  301
+/*.html       /:splat       301
