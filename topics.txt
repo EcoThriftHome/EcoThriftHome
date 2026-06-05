@@ -38,7 +38,7 @@
 # done: power factor correction save money myth vs reality
 # done: energy efficient window treatments save on heating cooling
 # done: home energy rebates and tax credits available 2025
-extension cord vs smart plug which is safer and more efficient
+# done: extension cord vs smart plug which is safer and more efficient
 
 # ── APPLIANCES & DEVICES ──────────────────────────────────────
 how much electricity does a TV use and how to reduce it
