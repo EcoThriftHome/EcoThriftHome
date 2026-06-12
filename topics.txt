@@ -44,7 +44,7 @@
 # done: how much electricity does a TV use and how to reduce it
 # done: best energy efficient space heaters to lower heating bills
 # done: how much does it cost to run a dryer and how to cut it
-air fryer vs oven energy use which saves more electricity
+# done: air fryer vs oven energy use which saves more electricity
 does leaving a fan on waste electricity the real numbers
 how much electricity does a gaming console use per year
 best energy efficient window AC units ranked and reviewed
