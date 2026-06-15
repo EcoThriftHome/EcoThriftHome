@@ -46,7 +46,7 @@
 # done: how much does it cost to run a dryer and how to cut it
 # done: air fryer vs oven energy use which saves more electricity
 # done: does leaving a fan on waste electricity the real numbers
-how much electricity does a gaming console use per year
+# done: how much electricity does a gaming console use per year
 best energy efficient window AC units ranked and reviewed
 microwave vs oven vs stove energy use comparison
 how much power does a desktop computer use vs laptop
