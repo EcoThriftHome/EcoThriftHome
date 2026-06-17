@@ -47,7 +47,7 @@
 # done: air fryer vs oven energy use which saves more electricity
 # done: does leaving a fan on waste electricity the real numbers
 # done: how much electricity does a gaming console use per year
-best energy efficient window AC units ranked and reviewed
+# done: best energy efficient window AC units ranked and reviewed
 microwave vs oven vs stove energy use comparison
 how much power does a desktop computer use vs laptop
 smart TV vs regular TV energy consumption and savings
