@@ -48,7 +48,7 @@
 # done: does leaving a fan on waste electricity the real numbers
 # done: how much electricity does a gaming console use per year
 # done: best energy efficient window AC units ranked and reviewed
-microwave vs oven vs stove energy use comparison
+# done: microwave vs oven vs stove energy use comparison
 how much power does a desktop computer use vs laptop
 smart TV vs regular TV energy consumption and savings
 best LED shop lights for garage energy savings reviewed
