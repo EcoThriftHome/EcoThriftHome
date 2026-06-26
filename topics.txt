@@ -52,7 +52,7 @@
 # done: how much power does a desktop computer use vs laptop
 # done: smart TV vs regular TV energy consumption and savings
 # done: best LED shop lights for garage energy savings reviewed
-how much does a pool pump cost to run and how to reduce it
+# done: how much does a pool pump cost to run and how to reduce it
 electric blanket vs space heater which saves more money
 how much electricity does a hot tub use per month
 induction cooktop vs gas stove energy cost comparison
