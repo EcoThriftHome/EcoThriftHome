@@ -54,7 +54,7 @@
 # done: best LED shop lights for garage energy savings reviewed
 # done: how much does a pool pump cost to run and how to reduce it
 # done: electric blanket vs space heater which saves more money
-how much electricity does a hot tub use per month
+# done: how much electricity does a hot tub use per month
 induction cooktop vs gas stove energy cost comparison
 
 # ── HEATING & COOLING ─────────────────────────────────────────
