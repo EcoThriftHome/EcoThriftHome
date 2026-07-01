@@ -55,7 +55,7 @@
 # done: how much does a pool pump cost to run and how to reduce it
 # done: electric blanket vs space heater which saves more money
 # done: how much electricity does a hot tub use per month
-induction cooktop vs gas stove energy cost comparison
+# done: induction cooktop vs gas stove energy cost comparison
 
 # ── HEATING & COOLING ─────────────────────────────────────────
 how to lower heating bill in winter without turning down thermostat
