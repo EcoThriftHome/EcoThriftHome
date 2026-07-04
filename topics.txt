@@ -59,7 +59,7 @@
 
 # ── HEATING & COOLING ─────────────────────────────────────────
 # done: how to lower heating bill in winter without turning down thermostat
-mini split heat pump vs central air which saves more money
+# done: mini split heat pump vs central air which saves more money
 radiant floor heating vs forced air which is more efficient
 how to keep house cool in summer without AC 10 proven methods
 geothermal heating and cooling worth the cost breakdown
