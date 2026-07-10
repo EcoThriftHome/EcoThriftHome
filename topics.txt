@@ -62,7 +62,7 @@
 # done: mini split heat pump vs central air which saves more money
 # done: radiant floor heating vs forced air which is more efficient
 # done: how to keep house cool in summer without AC 10 proven methods
-geothermal heating and cooling worth the cost breakdown
+# done: geothermal heating and cooling worth the cost breakdown
 window AC vs portable AC which uses less electricity
 how to stop cold air coming through electrical outlets
 swamp cooler vs air conditioner which saves more money
