@@ -64,7 +64,7 @@
 # done: how to keep house cool in summer without AC 10 proven methods
 # done: geothermal heating and cooling worth the cost breakdown
 # done: window AC vs portable AC which uses less electricity
-how to stop cold air coming through electrical outlets
+# done: how to stop cold air coming through electrical outlets
 swamp cooler vs air conditioner which saves more money
 what temperature should I set my thermostat in winter to save money
 whole house fan vs air conditioner cost comparison
