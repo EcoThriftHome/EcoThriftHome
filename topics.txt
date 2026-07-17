@@ -66,7 +66,7 @@
 # done: window AC vs portable AC which uses less electricity
 # done: how to stop cold air coming through electrical outlets
 # done: swamp cooler vs air conditioner which saves more money
-what temperature should I set my thermostat in winter to save money
+# done: what temperature should I set my thermostat in winter to save money
 whole house fan vs air conditioner cost comparison
 how to heat one room efficiently without heating whole house
 smart thermostat schedules that save the most money
