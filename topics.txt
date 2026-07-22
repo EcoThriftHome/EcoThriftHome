@@ -69,7 +69,7 @@
 # done: what temperature should I set my thermostat in winter to save money
 # done: whole house fan vs air conditioner cost comparison
 # done: how to heat one room efficiently without heating whole house
-smart thermostat schedules that save the most money
+# done: smart thermostat schedules that save the most money
 how to reduce AC bills in summer 12 proven tips
 does closing vents in unused rooms save energy myth busted
 best portable heaters for small rooms energy efficiency ranked
