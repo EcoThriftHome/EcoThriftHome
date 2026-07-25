@@ -140,19 +140,19 @@
 
   <!-- Static Pages -->
   <url>
-    <loc>https://ecothrifthome.com/about.html</loc>
+    <loc>https://ecothrifthome.com/about</loc>
     <lastmod>2025-03-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ecothrifthome.com/contact.html</loc>
+    <loc>https://ecothrifthome.com/contact</loc>
     <lastmod>2025-03-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ecothrifthome.com/privacy.html</loc>
+    <loc>https://ecothrifthome.com/privacy</loc>
     <lastmod>2025-03-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
