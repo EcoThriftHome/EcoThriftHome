@@ -50,7 +50,7 @@ jobs:
           Write a complete, publish-ready HTML blog post about: {topic}
 
           Published date: {today} ({today_nice})
-          Canonical URL: https://ecothrifthome.com/blog/SLUG.html (replace SLUG with a descriptive slug)
+          Canonical URL: https://ecothrifthome.com/blog/SLUG (replace SLUG with a descriptive slug)
 
           YOU MUST USE THESE EXACT HTML STRUCTURES — DO NOT INVENT YOUR OWN:
 

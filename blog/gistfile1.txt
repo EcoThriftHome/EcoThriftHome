@@ -19,11 +19,11 @@
   <meta name="keywords" content="smart power strips save money, best smart power strip energy saving, phantom power electricity waste, vampire power how to stop, advanced power strip home office, smart power strip vs regular, reduce standby power, lower electricity bill easy, energy saving power strip Amazon, eliminate vampire loads home">
   <meta name="author" content="EcoThrift Home">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://ecothrifthome.com/blog/smart-power-strips-stop-phantom-power.html">
+  <link rel="canonical" href="https://ecothrifthome.com/blog/smart-power-strips-stop-phantom-power">
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://ecothrifthome.com/blog/smart-power-strips-stop-phantom-power.html">
+  <meta property="og:url" content="https://ecothrifthome.com/blog/smart-power-strips-stop-phantom-power">
   <meta property="og:title" content="Smart Power Strips: Stop Phantom Power and Save $100/Year">
   <meta property="og:description" content="Phantom power silently drains $100+ from your bill yearly. A $25 smart strip fixes it automatically.">
   <meta property="og:image" content="https://ecothrifthome.com/images/smart-power-strips-og.jpg">
@@ -56,7 +56,7 @@
     },
     "datePublished": "2025-04-03",
     "dateModified": "2025-04-03",
-    "mainEntityOfPage": "https://ecothrifthome.com/blog/smart-power-strips-stop-phantom-power.html",
+    "mainEntityOfPage": "https://ecothrifthome.com/blog/smart-power-strips-stop-phantom-power",
     "keywords": ["smart power strips", "phantom power", "vampire power", "standby power", "energy saving", "lower electricity bill"],
     "articleSection": "Power & Standby"
   }
@@ -70,7 +70,7 @@
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ecothrifthome.com/" },
       { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://ecothrifthome.com/#blog-posts" },
-      { "@type": "ListItem", "position": 3, "name": "Smart Power Strips: Stop Phantom Power and Save $100/Year", "item": "https://ecothrifthome.com/blog/smart-power-strips-stop-phantom-power.html" }
+      { "@type": "ListItem", "position": 3, "name": "Smart Power Strips: Stop Phantom Power and Save $100/Year", "item": "https://ecothrifthome.com/blog/smart-power-strips-stop-phantom-power" }
     ]
   }
   </script>
