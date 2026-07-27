@@ -72,7 +72,7 @@
 # done: smart thermostat schedules that save the most money
 # done: how to reduce AC bills in summer 12 proven tips
 # done: does closing vents in unused rooms save energy myth busted
-best portable heaters for small rooms energy efficiency ranked
+# done: best portable heaters for small rooms energy efficiency ranked
 
 # ── LIGHTING ──────────────────────────────────────────────────
 smart bulbs vs LED bulbs which saves more electricity
