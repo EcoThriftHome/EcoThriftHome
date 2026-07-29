@@ -75,7 +75,7 @@
 # done: best portable heaters for small rooms energy efficiency ranked
 
 # ── LIGHTING ──────────────────────────────────────────────────
-smart bulbs vs LED bulbs which saves more electricity
+# done: smart bulbs vs LED bulbs which saves more electricity
 best outdoor solar lights to replace electric pathway lighting
 how much do LED bulbs really save the honest math
 smart lighting systems worth the cost Philips Hue vs LIFX
