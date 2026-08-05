@@ -79,7 +79,7 @@
 # done: best outdoor solar lights to replace electric pathway lighting
 # done: how much do LED bulbs really save the honest math
 # done: smart lighting systems worth the cost Philips Hue vs LIFX
-occupancy sensor vs timer switch which saves more energy
+# done: occupancy sensor vs timer switch which saves more energy
 best under cabinet LED lighting save on kitchen lighting bills
 how to reduce lighting costs in your home room by room guide
 dimmer switches save electricity how much can you really save
