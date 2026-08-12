@@ -83,7 +83,7 @@
 # done: best under cabinet LED lighting save on kitchen lighting bills
 # done: how to reduce lighting costs in your home room by room guide
 # done: dimmer switches save electricity how much can you really save
-natural light hacks reduce daytime lighting costs to zero
+# done: natural light hacks reduce daytime lighting costs to zero
 
 # ── WATER HEATING ─────────────────────────────────────────────
 how long should you run hot water before showering wasted energy
