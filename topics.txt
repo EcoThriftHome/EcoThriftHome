@@ -86,7 +86,7 @@
 # done: natural light hacks reduce daytime lighting costs to zero
 
 # ── WATER HEATING ─────────────────────────────────────────────
-how long should you run hot water before showering wasted energy
+# done: how long should you run hot water before showering wasted energy
 best low flow showerheads that dont sacrifice pressure
 shower timer to cut water heating bills does it really work
 how to insulate a hot water heater yourself save money
