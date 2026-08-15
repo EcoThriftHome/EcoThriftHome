@@ -87,7 +87,7 @@
 
 # ── WATER HEATING ─────────────────────────────────────────────
 # done: how long should you run hot water before showering wasted energy
-best low flow showerheads that dont sacrifice pressure
+# done: best low flow showerheads that dont sacrifice pressure
 shower timer to cut water heating bills does it really work
 how to insulate a hot water heater yourself save money
 on demand hot water recirculation pump worth the cost
