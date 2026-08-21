@@ -90,7 +90,7 @@
 # done: best low flow showerheads that dont sacrifice pressure
 # done: shower timer to cut water heating bills does it really work
 # done: how to insulate a hot water heater yourself save money
-on demand hot water recirculation pump worth the cost
+# done: on demand hot water recirculation pump worth the cost
 how many gallons of hot water does a shower use real numbers
 water heater blanket insulation jacket worth it or not
 
