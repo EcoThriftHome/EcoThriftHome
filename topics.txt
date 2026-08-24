@@ -92,7 +92,7 @@
 # done: how to insulate a hot water heater yourself save money
 # done: on demand hot water recirculation pump worth the cost
 # done: how many gallons of hot water does a shower use real numbers
-water heater blanket insulation jacket worth it or not
+# done: water heater blanket insulation jacket worth it or not
 
 # ── SOLAR & RENEWABLE ─────────────────────────────────────────
 small solar panel kits for home beginners guide
