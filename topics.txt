@@ -100,7 +100,7 @@
 # done: how much do solar panels save on electricity bills real numbers
 # done: rooftop solar panels worth it for renters and apartment dwellers
 # done: best solar generators for home backup power reviewed
-portable solar panels for camping and emergency power reviewed
+# done: portable solar panels for camping and emergency power reviewed
 solar attic fan vs electric attic fan cost savings compared
 
 # ── FRUGAL LIVING & MONEY SAVING ─────────────────────────────
