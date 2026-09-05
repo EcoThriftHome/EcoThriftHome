@@ -101,7 +101,7 @@
 # done: rooftop solar panels worth it for renters and apartment dwellers
 # done: best solar generators for home backup power reviewed
 # done: portable solar panels for camping and emergency power reviewed
-solar attic fan vs electric attic fan cost savings compared
+# done: solar attic fan vs electric attic fan cost savings compared
 
 # ── FRUGAL LIVING & MONEY SAVING ─────────────────────────────
 how to cut electric bill in half 15 changes that actually work
