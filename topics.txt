@@ -109,7 +109,7 @@
 # done: how to lower utility bills in an apartment renters guide
 # done: free ways to save money on electricity starting tonight
 # done: energy saving tips for renters that dont require landlord approval
-how much does the average household spend on electricity per year
+# done: how much does the average household spend on electricity per year
 how to negotiate a lower electricity rate with your utility company
 average electric bill by home size and how to beat it
 ways to save money on utilities in summer vs winter
