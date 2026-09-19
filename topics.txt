@@ -111,7 +111,7 @@
 # done: energy saving tips for renters that dont require landlord approval
 # done: how much does the average household spend on electricity per year
 # done: how to negotiate a lower electricity rate with your utility company
-average electric bill by home size and how to beat it
+# done: average electric bill by home size and how to beat it
 ways to save money on utilities in summer vs winter
 biggest energy wasters in your home ranked by cost
 
