@@ -113,7 +113,7 @@
 # done: how to negotiate a lower electricity rate with your utility company
 # done: average electric bill by home size and how to beat it
 # done: ways to save money on utilities in summer vs winter
-biggest energy wasters in your home ranked by cost
+# done: biggest energy wasters in your home ranked by cost
 
 # ── BUYING GUIDES ─────────────────────────────────────────────
 best smart thermostats under $100 ranked and reviewed 2025
