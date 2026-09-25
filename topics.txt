@@ -116,7 +116,7 @@
 # done: biggest energy wasters in your home ranked by cost
 
 # ── BUYING GUIDES ─────────────────────────────────────────────
-best smart thermostats under $100 ranked and reviewed 2025
+# done: best smart thermostats under $100 ranked and reviewed 2025
 best energy monitors for home electricity tracking reviewed
 best smart power strips for home office ranked 2025
 best LED bulbs for every room brightness and color guide
