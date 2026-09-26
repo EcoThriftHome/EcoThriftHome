@@ -117,7 +117,7 @@
 
 # ── BUYING GUIDES ─────────────────────────────────────────────
 # done: best smart thermostats under $100 ranked and reviewed 2025
-best energy monitors for home electricity tracking reviewed
+# done: best energy monitors for home electricity tracking reviewed
 best smart power strips for home office ranked 2025
 best LED bulbs for every room brightness and color guide
 best programmable thermostats for renters no wiring needed
