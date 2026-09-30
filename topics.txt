@@ -119,7 +119,7 @@
 # done: best smart thermostats under $100 ranked and reviewed 2025
 # done: best energy monitors for home electricity tracking reviewed
 # done: best smart power strips for home office ranked 2025
-best LED bulbs for every room brightness and color guide
+# done: best LED bulbs for every room brightness and color guide
 best programmable thermostats for renters no wiring needed
 best window insulation kits for winter ranked and reviewed
 best door draft stoppers ranked by effectiveness and price
