@@ -121,7 +121,7 @@
 # done: best smart power strips for home office ranked 2025
 # done: best LED bulbs for every room brightness and color guide
 # done: best programmable thermostats for renters no wiring needed
-best window insulation kits for winter ranked and reviewed
+# done: best window insulation kits for winter ranked and reviewed
 best door draft stoppers ranked by effectiveness and price
 best smart plugs with energy monitoring reviewed 2025
 best portable air conditioners for small rooms energy efficiency
