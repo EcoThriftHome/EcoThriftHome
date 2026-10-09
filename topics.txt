@@ -124,7 +124,7 @@
 # done: best window insulation kits for winter ranked and reviewed
 # done: best door draft stoppers ranked by effectiveness and price
 # done: best smart plugs with energy monitoring reviewed 2025
-best portable air conditioners for small rooms energy efficiency
+# done: best portable air conditioners for small rooms energy efficiency
 best dehumidifiers for basement energy efficient models reviewed
 
 # ── INSULATION & AIR SEALING ──────────────────────────────────
