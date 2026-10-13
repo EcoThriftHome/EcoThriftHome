@@ -256,9 +256,30 @@ jobs:
 
           html = message.content[0].text.strip()
 
-          match = re.search(r'ecothrifthome\.com/blog/([a-z0-9-]+)\.html', html)
-          slug = match.group(1) if match else f"post-{today}"
+          # Slug comes from the canonical tag (extensionless since Jul 2026).
+          match = re.search(r'rel="canonical"[^>]*href="https://ecothrifthome\.com/blog/([a-z0-9-]+)', html)
+          if not match:
+              # Fallback: build a slug from the <title>, never a date placeholder
+              t = re.search(r'<title>([^<|]+)', html)
+              base = t.group(1) if t else f"post-{today}"
+              slug = re.sub(r'[^a-z0-9]+', '-', base.lower()).strip('-')[:80]
+          else:
+              slug = match.group(1)
+          slug = re.sub(r'-20\d\d$', '', slug)  # no years in URLs
+          if os.path.exists(f"blog/{slug}.html"):
+              slug = f"{slug}-{today}"
+          if match and match.group(1) != slug:
+              # keep canonical / og:url / schema @id pointing at the real file
+              html = html.replace(f"ecothrifthome.com/blog/{match.group(1)}", f"ecothrifthome.com/blog/{slug}")
           filename = f"{slug}.html"
+
+          # Add the new post to sitemap.xml
+          sm = open("sitemap.xml").read()
+          loc = f"https://ecothrifthome.com/blog/{slug}"
+          if loc not in sm:
+              entry = f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n"
+              sm = sm.replace("</urlset>", entry + "</urlset>")
+              open("sitemap.xml", "w").write(sm)
 
           with open(f"blog/{filename}", "w") as f:
               f.write(html)
@@ -410,7 +431,7 @@ jobs:
           title    = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else slug.replace("-", " ").title()
           desc     = desc_match.group(1) if desc_match else "Save money on energy at home."
           savings  = save_match.group(1) if save_match else "100"
-          post_url = f"https://ecothrifthome.com/blog/{filename}"
+          post_url = f"https://ecothrifthome.com/blog/{slug}"
 
           client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
@@ -743,7 +764,7 @@ jobs:
           auth_req = google.auth.transport.requests.Request()
           creds.refresh(auth_req)
 
-          url = f"https://ecothrifthome.com/blog/{filename}"
+          url = f"https://ecothrifthome.com/blog/{filename[:-5]}"
           resp = requests.post(
               "https://indexing.googleapis.com/v3/urlNotifications:publish",
               headers={"Authorization": f"Bearer {creds.token}"},
