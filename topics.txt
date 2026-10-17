@@ -131,7 +131,7 @@
 # done: garage door insulation kit worth it how much you can save
 # done: how to insulate windows for winter without replacing them
 # done: basement rim joist insulation the leak most homeowners miss
-chimney draft stopper fireplace balloon stop heat escaping
+# done: chimney draft stopper fireplace balloon stop heat escaping
 how to find air leaks in your house with a candle or incense
 spray foam vs caulk which to use for sealing air leaks
 attic hatch and pull down stairs insulation cover worth it
