@@ -132,7 +132,7 @@
 # done: how to insulate windows for winter without replacing them
 # done: basement rim joist insulation the leak most homeowners miss
 # done: chimney draft stopper fireplace balloon stop heat escaping
-how to find air leaks in your house with a candle or incense
+# done: how to find air leaks in your house with a candle or incense
 spray foam vs caulk which to use for sealing air leaks
 attic hatch and pull down stairs insulation cover worth it
 wall outlet foam gaskets vs child safety plugs for drafts
