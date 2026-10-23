@@ -134,7 +134,7 @@
 # done: chimney draft stopper fireplace balloon stop heat escaping
 # done: how to find air leaks in your house with a candle or incense
 # done: spray foam vs caulk which to use for sealing air leaks
-attic hatch and pull down stairs insulation cover worth it
+# done: attic hatch and pull down stairs insulation cover worth it
 wall outlet foam gaskets vs child safety plugs for drafts
 
 # ── LAUNDRY & KITCHEN ─────────────────────────────────────────
