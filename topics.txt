@@ -135,7 +135,7 @@
 # done: how to find air leaks in your house with a candle or incense
 # done: spray foam vs caulk which to use for sealing air leaks
 # done: attic hatch and pull down stairs insulation cover worth it
-wall outlet foam gaskets vs child safety plugs for drafts
+# done: wall outlet foam gaskets vs child safety plugs for drafts
 
 # ── LAUNDRY & KITCHEN ─────────────────────────────────────────
 dryer balls vs dryer sheets do wool balls cut drying time
