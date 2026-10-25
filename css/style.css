@@ -633,6 +633,17 @@ strong { font-weight: 600; }
 }
 .copyright { font-size: .8125rem; color: rgba(255,255,255,.45); }
 
+/* Disclosure inside a post (white background) — the footer style above is
+   light text for the dark footer and is invisible here. */
+article .affiliate-disclosure,
+.post-content .affiliate-disclosure {
+  color: var(--gray-600);
+  margin-top: 2rem; padding-top: 1.25rem;
+  border-top: 1px solid var(--gray-200);
+}
+article .affiliate-disclosure a,
+.post-content .affiliate-disclosure a { color: var(--green-700); }
+
 @media (max-width: 900px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }

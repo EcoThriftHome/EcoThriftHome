@@ -250,11 +250,14 @@ jobs:
           client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
           message = client.messages.create(
               model="claude-sonnet-4-6",
-              max_tokens=8000,
+              max_tokens=16000,
               messages=[{"role": "user", "content": prompt}]
           )
 
           html = message.content[0].text.strip()
+          print(f"stop_reason={message.stop_reason} output_tokens={message.usage.output_tokens}")
+          if message.stop_reason == "max_tokens":
+              print("::warning::Post hit the output limit and was cut off; finish_post.py will close the page.")
 
           # Slug comes from the canonical tag (extensionless since Jul 2026).
           match = re.search(r'rel="canonical"[^>]*href="https://ecothrifthome\.com/blog/([a-z0-9-]+)', html)
@@ -299,6 +302,13 @@ jobs:
           curl -L "${{ inputs.filename }}" -o "blog/${{ inputs.postname }}"
           echo "${{ inputs.postname }}" > /tmp/post_filename.txt
           echo "Downloaded: ${{ inputs.postname }}"
+
+      - name: Make sure the post is a complete page
+        run: |
+          FILE="blog/$(cat /tmp/post_filename.txt)"
+          python3 scripts/finish_post.py "$FILE"
+          tail -c 20 "$FILE" | grep -q "</html>" || { echo "::error::$FILE is still incomplete"; exit 1; }
+          grep -qi "as an amazon associate" "$FILE" || { echo "::error::$FILE has no affiliate disclosure"; exit 1; }
 
       - name: Update homepage
         run: |
