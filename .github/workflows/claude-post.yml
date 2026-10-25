@@ -26,10 +26,21 @@ jobs:
         id: topic
         if: ${{ !inputs.filename }}
         run: |
-          TOPIC=$(grep -v '^#' topics.txt | grep -v '^$' | head -1)
-          echo "topic=$TOPIC" >> $GITHUB_OUTPUT
-          sed -i "0,/^${TOPIC}/s/^${TOPIC}/# done: ${TOPIC}/" topics.txt
-          echo "Picked topic: $TOPIC"
+          python3 << 'PYEOF'
+          import os
+          lines = open("topics.txt").read().split("\n")
+          for i, line in enumerate(lines):
+              if line.strip() and not line.lstrip().startswith("#"):
+                  topic = line.strip()
+                  lines[i] = "# done: " + topic
+                  break
+          else:
+              raise SystemExit("topics.txt has no topics left")
+          open("topics.txt", "w").write("\n".join(lines))
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"topic={topic}\n")
+          print("Picked topic:", topic)
+          PYEOF
 
       - name: Generate post with Claude
         id: generate
@@ -41,13 +52,38 @@ jobs:
           import anthropic, re, os
           from datetime import date
 
-          topic = os.environ["TOPIC"]
+          import glob
+          raw_topic = os.environ["TOPIC"]
+          topic, _, note = raw_topic.partition("|")
+          topic, note = topic.strip(), note.strip()
           today = date.today().strftime("%Y-%m-%d")
           today_nice = date.today().strftime("%B %-d, %Y")
+          year = date.today().year
 
-          prompt = f"""You are a content writer for EcoThrift Home (ecothrifthome.com), a blog about evidence-based, budget-first energy saving tips for homeowners. Tone: practical, friendly, data-driven. Never salesy.
+          voice = open("content/voice.md").read()
+          facts = open("content/author-facts.md").read()
+          existing = []
+          for path in sorted(glob.glob("blog/*.html")):
+              m = re.search(r"<title>([^<|]+)", open(path, encoding="utf-8").read())
+              if m:
+                  existing.append(f"- {os.path.basename(path)[:-5]}: {m.group(1).strip()}")
+          existing_posts = "\n".join(existing)
+          note_block = f"\nNotes from Stan for this post (use them, they are true): {note}\n" if note else ""
+
+          prompt = f"""You write for EcoThrift Home (ecothrifthome.com), a blog about evidence-based, budget-first energy saving for homeowners and renters. Never salesy.
 
           Write a complete, publish-ready HTML blog post about: {topic}
+          {note_block}
+          FOLLOW THIS VOICE GUIDE CLOSELY:
+          {voice}
+
+          AUTHOR FACTS (the only personal details you may use; never invent others):
+          {facts}
+
+          EXISTING POSTS (slug: title). Don't repeat an existing post's angle; if the topic overlaps one, take a clearly different angle. Use these slugs for the Related Posts sidebar and for 1-3 in-text links where genuinely relevant, linking as href="SLUG" with no .html:
+          {existing_posts}
+
+          The current year is {year}. Don't put a year in the title or slug unless the post is about that year.
 
           Published date: {today} ({today_nice})
           Canonical URL: https://ecothrifthome.com/blog/SLUG (replace SLUG with a descriptive slug)
@@ -109,9 +145,8 @@ jobs:
               </div>
               <h1>[FULL H1 TITLE]</h1>
               <p class="post-subtitle">[SUBTITLE]</p>
+              [OPTIONAL: include this stats row only if three genuinely useful numbers exist for this topic; otherwise omit it entirely]
               <div class="post-hero-stats" aria-label="Key statistics">
-                <div class="stat"><span class="stat-value">[VALUE]</span><span class="stat-label">[LABEL]</span></div>
-                <div class="stat"><span class="stat-value">[VALUE]</span><span class="stat-label">[LABEL]</span></div>
                 <div class="stat"><span class="stat-value">[VALUE]</span><span class="stat-label">[LABEL]</span></div>
               </div>
             </div>
@@ -127,12 +162,12 @@ jobs:
             </aside>
           </div>
 
-          AMAZON PRODUCT CARDS (copy exactly, use this structure for every product):
+          AMAZON PRODUCT CARDS (use this structure for every product; include 1-3 products only where a product genuinely helps, real products only):
           <div class="product-rec" itemscope itemtype="https://schema.org/Product">
             <meta itemprop="image" content="https://ecothrifthome.com/images/placeholder-product.jpg">
             <meta itemprop="brand" content="[BRAND NAME]">
             <meta itemprop="sku" content="[PRODUCT-SLUG]">
-            <h4 itemprop="name">🥇 [PRODUCT NAME]</h4>
+            <h4 itemprop="name">[PRODUCT NAME]</h4>
             <p itemprop="description">[DESCRIPTION]</p>
             <div class="product-rec-meta">
               <span class="rec-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -153,44 +188,30 @@ jobs:
             </a>
           </div>
 
-          SIDEBAR (copy exactly):
+          SIDEBAR (structure to copy; pick 3-4 related posts from EXISTING POSTS, real slugs only, no .html):
           <div class="sidebar-widget">
             <h4>Related Posts</h4>
             <div class="sidebar-posts">
               <div class="sidebar-post">
-                <a href="led-bulb-upgrade-save-200-per-year.html">
-                  <span class="sidebar-post-icon" aria-hidden="true">💡</span>
-                  <div><h5>The $30 LED Upgrade That Cuts Your Lighting Bill by 80%</h5><p>Saves up to $200/yr</p></div>
+                <a href="[EXISTING-SLUG]">
+                  <span class="sidebar-post-icon" aria-hidden="true">[ONE EMOJI]</span>
+                  <div><h5>[THAT POST'S TITLE]</h5><p>[SHORT HOOK, 2-5 WORDS]</p></div>
                 </a>
               </div>
-              <div class="sidebar-post">
-                <a href="smart-thermostat-habits-save-180-per-year.html">
-                  <span class="sidebar-post-icon" aria-hidden="true">🌡️</span>
-                  <div><h5>Smart Thermostat Habits That Save $180/Year</h5><p>Saves up to $180/yr</p></div>
-                </a>
-              </div>
-              <div class="sidebar-post">
-                <a href="smart-power-strips-stop-phantom-power.html">
-                  <span class="sidebar-post-icon" aria-hidden="true">🔌</span>
-                  <div><h5>Smart Power Strips: Stop Phantom Power</h5><p>Saves up to $100/yr</p></div>
-                </a>
-              </div>
+              [REPEAT FOR EACH RELATED POST]
             </div>
           </div>
+          [OPTIONAL "Quick Facts" widget, only if you have 3+ solid numbers not already in the hero:]
           <div class="sidebar-widget">
-            <h4>Quick Savings Facts</h4>
+            <h4>Quick Facts</h4>
             <ul style="list-style:none; display:flex; flex-direction:column; gap:.625rem;">
-              <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
-              <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
-              <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
-              <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
               <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">[STAT VALUE]</strong> [STAT LABEL]</li>
             </ul>
           </div>
           <div class="post-cta-box">
             <h4>Calculate Your Savings</h4>
             <p>See how much your household can save with our free calculator.</p>
-            <a href="/#savings-calculator" class="btn btn-primary">Open Calculator</a>
+            <a href="/calculator" class="btn btn-primary">Open Calculator</a>
           </div>
 
           FOOTER (copy exactly):
@@ -237,13 +258,13 @@ jobs:
           </footer>
           <script src="../js/main.js"></script>
 
-          ALSO REQUIRED:
-          - Include Article + FAQ + Breadcrumb schema.org JSON-LD in <head>
-          - Key takeaway box: <div class="key-takeaway" role="note"><strong>Key Takeaway:</strong> [ONE SENTENCE]</div>
-          - A savings comparison <table class="savings-table"> with thead and tbody
-          - An authoritative <blockquote> citing EPA, DOE, or ENERGY STAR
-          - Affiliate disclosure paragraph before closing article tag
-          - 1200-1800 words of body content
+          REQUIREMENTS:
+          - Article + Breadcrumb schema.org JSON-LD in <head>; add FAQPage only if the post has an FAQ, and make its text match the visible FAQ exactly
+          - Answer the main question directly in the first one or two sentences of the article
+          - Tables use <table class="savings-table"> with thead and tbody; only when comparing 3+ options
+          - Quotes: only real ones you are certain of, in a <blockquote>; otherwise paraphrase and name the source. A blockquote is optional
+          - End the article with this disclosure paragraph: <p class="affiliate-disclosure"><strong>Affiliate Disclosure:</strong> Some links in this article are Amazon affiliate links. As an Amazon Associate, EcoThrift Home earns from qualifying purchases, at no extra cost to you. See our full <a href="/about.html#affiliate-disclosure">affiliate disclosure</a>.</p>
+          - Length: what the topic needs, usually 900-1,800 words of body content. Do not pad
 
           Return ONLY the raw HTML. No explanation, no markdown fences. Start with <!DOCTYPE html> and end with </html>."""
 

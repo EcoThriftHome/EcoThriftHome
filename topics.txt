@@ -1,3 +1,6 @@
+# FORMAT: one topic per line. Optional notes after a | are passed to the writer as true facts, e.g.
+#   attic radiant barrier worth it in hot climates | my attic hits 140F in July
+# Lines starting with # are skipped; the pipeline marks used topics "# done:".
 # done: weatherstripping and door seals to stop drafts
 # done: low-flow showerheads that save on water heating
 # done: energy efficient window treatments and curtains

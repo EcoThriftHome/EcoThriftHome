@@ -1,0 +1,4 @@
+# Rewrites, with the Search Console baseline at the time (28 days ending 2026-10-22).
+# Re-check each page 2-3 weeks after its rewrite date; revert from git if it dropped and hasn't recovered.
+slug	rewritten	baseline_clicks	baseline_impressions	baseline_position	notes
+dehumidifier-vs-air-conditioner-energy-savings	2026-10-24	1	660	13.0	sample rewrite, interim voice; title now "Which Uses Less Electricity?"
