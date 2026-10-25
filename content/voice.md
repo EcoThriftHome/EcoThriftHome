@@ -39,6 +39,8 @@ next. The goal is a genuinely useful, informative post in that tone.
 - Never mention the author's job, profession, employer, industry or
   credentials. No "as an engineer", "in my line of work", "at work we", "in
   the field". Explaining how something works is fine; claiming expertise is not.
+- Keep everything residential: homes, apartments, household equipment and
+  bills. No industrial, commercial or workplace topics or examples.
 - Never invent personal experience. No "I installed", "in my house", "we
   tested", "our readers told us", unless that exact fact appears in
   content/author-facts.md.
