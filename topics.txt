@@ -144,7 +144,7 @@
 # done: dryer balls vs dryer sheets do wool balls cut drying time
 # done: how to clean dryer vent duct save energy and prevent fires
 # done: drying rack vs clothes dryer how much you save air drying
-slow cooker vs instant pot vs oven cheapest way to cook dinner
+# done: slow cooker vs instant pot vs oven cheapest way to cook dinner
 electric kettle vs stovetop vs microwave cheapest way to boil water
 chest freezer vs upright freezer energy use comparison
 second refrigerator in garage how much it really costs you
