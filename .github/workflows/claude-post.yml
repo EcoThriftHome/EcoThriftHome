@@ -120,8 +120,8 @@ jobs:
                     <li><a href="/#blog-posts">Blog Posts</a></li>
                     <li><a href="/#savings-calculator">Savings Calculator</a></li>
                     <li><a href="/#top-products">Top Products</a></li>
-                    <li><a href="/about.html">About</a></li>
-                    <li><a href="/contact.html">Contact</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
                   </ul>
                 </nav>
               </div>
@@ -237,10 +237,10 @@ jobs:
                 <nav class="footer-nav" aria-label="Company navigation">
                   <h3>Company</h3>
                   <ul role="list">
-                    <li><a href="/about.html">About</a></li>
-                    <li><a href="/contact.html">Contact</a></li>
-                    <li><a href="/about.html#affiliate-disclosure">Disclosure</a></li>
-                    <li><a href="/privacy.html">Privacy</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/about#affiliate-disclosure">Disclosure</a></li>
+                    <li><a href="/privacy">Privacy</a></li>
                   </ul>
                 </nav>
                 <div class="footer-social">
@@ -263,7 +263,7 @@ jobs:
           - Answer the main question directly in the first one or two sentences of the article
           - Tables use <table class="savings-table"> with thead and tbody; only when comparing 3+ options
           - Quotes: only real ones you are certain of, in a <blockquote>; otherwise paraphrase and name the source. A blockquote is optional
-          - End the article with this disclosure paragraph: <p class="affiliate-disclosure"><strong>Affiliate Disclosure:</strong> Some links in this article are Amazon affiliate links. As an Amazon Associate, EcoThrift Home earns from qualifying purchases, at no extra cost to you. See our full <a href="/about.html#affiliate-disclosure">affiliate disclosure</a>.</p>
+          - End the article with this disclosure paragraph: <p class="affiliate-disclosure"><strong>Affiliate Disclosure:</strong> Some links in this article are Amazon affiliate links. As an Amazon Associate, EcoThrift Home earns from qualifying purchases, at no extra cost to you. See our full <a href="/about#affiliate-disclosure">affiliate disclosure</a>.</p>
           - Length: what the topic needs, usually 900-1,800 words of body content. Do not pad
 
           Return ONLY the raw HTML. No explanation, no markdown fences. Start with <!DOCTYPE html> and end with </html>."""
@@ -376,7 +376,7 @@ jobs:
           new_card = (
               '\n          <!-- Post: ' + slug + ' -->\n'
               '          <article class="post-card" data-category="' + category + '" role="listitem" itemscope itemtype="https://schema.org/Article">\n'
-              '            <a href="blog/' + filename + '" class="post-card-link" aria-label="Read: ' + title + '">\n'
+              '            <a href="/blog/' + slug + '" class="post-card-link" aria-label="Read: ' + title + '">\n'
               '              <div class="post-card-img" aria-hidden="true">\n'
               '                <span class="post-icon">' + emoji + '</span>\n'
               '                <div class="savings-badge">Save up to $' + savings + '/yr</div>\n'

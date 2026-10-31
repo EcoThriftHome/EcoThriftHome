@@ -20,34 +20,33 @@ jobs:
 
           client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-          POST_MAP = [
-            {"slug":"led-bulb-upgrade-save-200-per-year.html","title":"The $30 LED Upgrade That Cuts Your Lighting Bill by 80%","topics":["LED","bulbs","lighting","electricity"]},
-            {"slug":"smart-thermostat-habits-save-180-per-year.html","title":"Smart Thermostat Habits That Save $180/Year","topics":["thermostat","heating","cooling","HVAC"]},
-            {"slug":"stop-vampire-power-save-150-per-year.html","title":"The Vampire Power Problem","topics":["vampire power","phantom load","standby","electronics"]},
-            {"slug":"smart-power-strips-stop-phantom-power.html","title":"Smart Power Strips: Stop Phantom Power","topics":["power strip","phantom power","standby"]},
-            {"slug":"weatherstripping-door-seals-stop-drafts.html","title":"Weatherstripping and Door Seals","topics":["drafts","air sealing","doors","windows"]},
-            {"slug":"low-flow-showerheads-save-water-heating.html","title":"Low-Flow Showerheads","topics":["showerhead","water heating","bathroom"]},
-            {"slug":"energy-efficient-window-treatments-curtains.html","title":"Energy Efficient Window Treatments and Curtains","topics":["curtains","windows","blinds","heat loss"]},
-            {"slug":"unplug-phone-charger-save-energy-money.html","title":"Does Unplugging Phone Chargers Save Money?","topics":["charger","phantom power","standby","plugs"]},
-            {"slug":"cold-water-laundry-washing-savings.html","title":"Cold Water Laundry: Save $120/Year","topics":["laundry","washing machine","appliances","water heating"]},
-            {"slug":"ceiling-fans-vs-air-conditioning-costs.html","title":"Ceiling Fans vs Air Conditioning","topics":["ceiling fan","AC","air conditioning","cooling"]},
-            {"slug":"programmable-vs-smart-thermostat-comparison.html","title":"Programmable vs Smart Thermostat","topics":["thermostat","smart thermostat","heating","cooling"]},
-            {"slug":"diy-home-energy-audit-step-by-step.html","title":"How to Do a DIY Home Energy Audit","topics":["energy audit","air leaks","insulation","drafts"]},
-            {"slug":"solar-phone-chargers-small-devices.html","title":"Solar Phone Chargers for Small Devices","topics":["solar","charger","renewable energy"]},
-            {"slug":"best-power-usage-monitors-track-electricity.html","title":"Best Power Usage Monitors to Track Electricity","topics":["energy monitor","electricity tracking","power meter"]},
-            {"slug":"best-smart-power-strips-2025.html","title":"Best Smart Power Strips in 2025: Ranked and Reviewed","topics":["power strip","smart outlet","phantom power"]},
-            {"slug":"insulate-water-heater-save-money.html","title":"How to Insulate Your Water Heater","topics":["water heater","insulation","hot water"]},
-            {"slug":"sense-energy-monitor-review-save-money-tracking-electricity.html","title":"Sense Energy Monitor Review","topics":["energy monitor","electricity tracking","smart home"]},
-            {"slug":"thermal-curtains-cellular-shades-cut-heating-cooling-bills.html","title":"Thermal Curtains and Cellular Shades","topics":["curtains","cellular shades","windows","insulation","heating","cooling"]},
-            {"slug":"heat-pump-water-heater-vs-traditional-savings.html","title":"Heat Pump Water Heater vs Traditional","topics":["heat pump","water heater","hot water","energy efficient"]},
-            {"slug":"mini-split-vs-window-ac-vs-central-air-cost-comparison.html","title":"Mini Split vs Window AC vs Central Air","topics":["mini split","window AC","central air","HVAC","cooling"]},
-          ]
+          # Build the post list from every file in blog/ (was a hardcoded list of the first 20 posts)
+          import glob
+          STOP = {"the","a","an","and","or","vs","to","for","of","in","on","your","how","much","does","do","is","it","per","year","save","savings","best","with","that","what","why","my","so","by"}
+          def article(html):
+              s = html.find("<article"); e = html.find('<aside class="post-sidebar"')
+              return html[s if s > 0 else 0 : e if e > 0 else len(html)]
+          POST_MAP = []
+          for path in sorted(glob.glob("blog/*.html")):
+              slug = os.path.basename(path)[:-5]
+              html = open(path, encoding="utf-8").read()
+              m = re.search(r"<title>([^<|]+)", html)
+              title = m.group(1).strip() if m else slug.replace("-", " ")
+              topics = [w for w in slug.split("-") if w not in STOP and not w.isdigit()]
+              POST_MAP.append({"slug": slug, "title": title, "topics": topics, "body": article(html)})
+          # Count in-text links each post already receives, so under-linked posts get priority
+          inbound = {p["slug"]: 0 for p in POST_MAP}
+          for p in POST_MAP:
+              for linked in set(re.findall(r'href="/blog/([a-z0-9-]+)"', p["body"])):
+                  if linked in inbound and linked != p["slug"]:
+                      inbound[linked] += 1
+          MAX_INTEXT_LINKS = 6  # skip posts that already link out this much
 
           blog_dir = "blog"
           total_added = 0
 
           for post in POST_MAP:
-              filepath = os.path.join(blog_dir, post["slug"])
+              filepath = os.path.join(blog_dir, post["slug"] + ".html")
               if not os.path.exists(filepath):
                   print("Skipping (not found): " + post["slug"])
                   continue
@@ -55,9 +54,14 @@ jobs:
               with open(filepath, "r", encoding="utf-8") as fh:
                   original = fh.read()
 
-              other_posts = [p for p in POST_MAP if p["slug"] != post["slug"]]
+              existing_out = set(re.findall(r'href="/blog/([a-z0-9-]+)"', post["body"]))
+              if len(existing_out) >= MAX_INTEXT_LINKS:
+                  print("Skipping (already well linked): " + post["slug"])
+                  continue
+              other_posts = [p for p in POST_MAP if p["slug"] != post["slug"] and p["slug"] not in existing_out]
               other_list = "\n".join([
                   "- slug: " + p["slug"] + ', title: "' + p["title"] + '", topics: ' + ", ".join(p["topics"])
+                  + (" [PRIORITY: few links point here]" if inbound[p["slug"]] < 2 else "")
                   for p in other_posts
               ])
 
@@ -83,6 +87,7 @@ jobs:
                   'RULES:\n'
                   '- Only link where it genuinely helps the reader\n'
                   '- Never use the same slug twice\n'
+                  '- When two candidates fit equally well, prefer posts marked PRIORITY\n'
                   '- The anchor_text must be an exact substring of search_text\n'
                   '- The search_text must be unique enough to find exactly one match in the article\n'
                   '- If no links make sense, return empty array\n\n'
@@ -124,7 +129,9 @@ jobs:
                       try:
                           search  = link.get("search_text", "").strip()
                           anchor  = link.get("anchor_text", "").strip()
-                          slug    = link.get("slug", "").strip()
+                          slug    = link.get("slug", "").strip().replace(".html", "")
+                          if slug not in inbound:
+                              continue
 
                           if not search or not anchor or not slug:
                               continue
