@@ -146,7 +146,7 @@
 # done: drying rack vs clothes dryer how much you save air drying
 # done: slow cooker vs instant pot vs oven cheapest way to cook dinner
 # done: electric kettle vs stovetop vs microwave cheapest way to boil water
-chest freezer vs upright freezer energy use comparison
+# done: chest freezer vs upright freezer energy use comparison
 second refrigerator in garage how much it really costs you
 toaster oven vs full size oven energy savings for small meals
 range hood vs opening a window kitchen ventilation energy costs
