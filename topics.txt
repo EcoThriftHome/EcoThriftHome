@@ -148,7 +148,7 @@
 # done: electric kettle vs stovetop vs microwave cheapest way to boil water
 # done: chest freezer vs upright freezer energy use comparison
 # done: second refrigerator in garage how much it really costs you
-toaster oven vs full size oven energy savings for small meals
+# done: toaster oven vs full size oven energy savings for small meals
 range hood vs opening a window kitchen ventilation energy costs
 
 # ── SMART HOME & AUTOMATION ───────────────────────────────────
