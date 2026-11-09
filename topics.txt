@@ -149,7 +149,7 @@
 # done: chest freezer vs upright freezer energy use comparison
 # done: second refrigerator in garage how much it really costs you
 # done: toaster oven vs full size oven energy savings for small meals
-range hood vs opening a window kitchen ventilation energy costs
+# done: range hood vs opening a window kitchen ventilation energy costs
 
 # ── SMART HOME & AUTOMATION ───────────────────────────────────
 smart thermostat geofencing save money when you leave home
