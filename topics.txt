@@ -152,7 +152,7 @@
 # done: range hood vs opening a window kitchen ventilation energy costs
 
 # ── SMART HOME & AUTOMATION ───────────────────────────────────
-smart thermostat geofencing save money when you leave home
+# done: smart thermostat geofencing save money when you leave home
 smart water leak detectors prevent costly water damage reviewed
 smart blinds and shades automate window coverings save energy
 whole home energy monitoring setup guide for beginners
