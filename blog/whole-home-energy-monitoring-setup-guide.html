@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whole Home Energy Monitoring Setup Guide for Beginners | EcoThrift Home</title>
+  <meta name="description" content="A practical beginner's guide to setting up whole-home energy monitoring. Learn which monitor to buy, how to install it, and what to actually do with the data.">
+  <link rel="canonical" href="https://ecothrifthome.com/blog/whole-home-energy-monitoring-setup-guide">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMP2LEKHG1"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-VMP2LEKHG1");</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8063778947792419" crossorigin="anonymous"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://ecothrifthome.com/blog/whole-home-energy-monitoring-setup-guide#article",
+        "headline": "Whole Home Energy Monitoring Setup Guide for Beginners",
+        "description": "A practical beginner's guide to setting up whole-home energy monitoring. Learn which monitor to buy, how to install it, and what to actually do with the data.",
+        "datePublished": "2026-11-16",
+        "dateModified": "2026-11-16",
+        "publisher": {
+          "@type": "Organization",
+          "name": "EcoThrift Home",
+          "url": "https://ecothrifthome.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://ecothrifthome.com/images/logo.png"
+          }
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://ecothrifthome.com/blog/whole-home-energy-monitoring-setup-guide"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ecothrifthome.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://ecothrifthome.com/#blog-posts"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Whole Home Energy Monitoring Setup Guide",
+            "item": "https://ecothrifthome.com/blog/whole-home-energy-monitoring-setup-guide"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do I need an electrician to install a whole-home energy monitor?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most CT-clamp monitors do not require an electrician for the sensor installation itself — you clip the sensors onto existing wires without cutting anything. However, you are working inside an electrical panel, which carries real shock risk. If you are not comfortable with that, hiring an electrician for a one-hour job is reasonable and typically costs $75–$150."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will a whole-home monitor work if I have solar panels?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, most current monitors including Emporia Vue and Sense support solar configurations. You add a second set of CT sensors on the solar feed so the monitor can show both what you generate and what you consume. Check the product's solar kit before buying."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does it take to see real savings from energy monitoring?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most people spot two or three quick wins in the first week — an appliance left on, a water heater set too high, something with high standby draw. Bigger behavioral changes typically pay off over the first one to three months. The monitor itself pays for itself faster if you act on what you find."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What's the difference between a whole-home monitor and a smart plug with energy monitoring?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A smart plug measures one device at a time — whatever is plugged into it. A whole-home monitor measures everything flowing through your main panel simultaneously, so you get a complete picture without plugging anything in or out. The two are complementary: use the whole-home monitor to find the big draws, then a smart plug to get precise data on a specific appliance."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can a whole-home energy monitor identify individual appliances automatically?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sense uses machine learning to detect appliance signatures and can identify many devices over time, though it takes days to weeks to learn your home and accuracy varies. Emporia Vue does not do automatic device detection — it shows total and circuit-level usage, but you label things yourself. Both approaches have trade-offs."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<header class="site-header" role="banner">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="logo" aria-label="EcoThrift Home - Homepage">
+        <span class="logo-icon" aria-hidden="true">🌿</span>
+        <div class="logo-text">
+          <span class="logo-name">EcoThrift Home</span>
+          <span class="logo-tagline">Save Energy. Save Money.</span>
+        </div>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="main-nav" class="main-nav" role="navigation" aria-label="Main navigation">
+        <ul role="list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/#blog-posts">Blog Posts</a></li>
+          <li><a href="/#savings-calculator">Savings Calculator</a></li>
+          <li><a href="/#top-products">Top Products</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="post-hero">
+  <div class="container">
+    <nav class="post-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <a href="/#blog-posts">Blog</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <span aria-current="page">Whole Home Energy Monitoring</span>
+    </nav>
+    <div class="post-meta">
+      <span class="post-category">Energy Monitoring</span>
+      <span class="post-date"><time datetime="2026-11-16">November 16, 2026</time></span>
+      <span class="post-read-time">10 min read</span>
+    </div>
+    <h1>Whole Home Energy Monitoring Setup Guide for Beginners</h1>
+    <p class="post-subtitle">How to pick the right monitor, install it safely, and turn the data into actual savings on your electric bill.</p>
+    <div class="post-hero-stats" aria-label="Key statistics">
+      <div class="stat"><span class="stat-value">$150–$300</span><span class="stat-label">typical monitor cost</span></div>
+      <div class="stat"><span class="stat-value">10–30%</span><span class="stat-label">potential bill reduction</span></div>
+      <div class="stat"><span class="stat-value">1–2 hrs</span><span class="stat-label">average install time</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="post-layout container">
+  <article class="post-content" id="article-main">
+
+    <p>A whole-home energy monitor installs in your electrical panel, measures everything flowing through it in real time, and shows you exactly where your electricity is going. That's the core of it. The reason it's worth the upfront cost is that you can't fix what you can't see — and most households have at least one or two significant draws they don't know about until they start looking.</p>
+
+    <p>This guide walks you through choosing a monitor, installing it, and using the data to actually lower your bill. We'll keep the electrical panel safety notes honest: it's a beginner-friendly job, but not a zero-care one.</p>
+
+    <h2>Why Bother With a Whole-Home Monitor Instead of Smart Plugs?</h2>
+
+    <p>Smart plugs with energy monitoring (we've covered <a href="smart-plug-energy-monitoring-vampire-power">those in detail here</a>) are great for profiling one appliance at a time. But you'd need dozens of them to cover a whole house, and many of your biggest draws — the HVAC system, water heater, dryer, electric range — aren't plugged into standard outlets at all. They're wired directly into circuits.</p>
+
+    <p>A whole-home monitor uses current transformers (CT sensors) that clamp around the wires coming into your panel. Nothing gets cut or rewired; the sensors just read the magnetic field around the wire. You get a live picture of your total consumption, and on most monitors you can add per-circuit sensors to see individual loads. That's genuinely different from anything a smart plug can do.</p>
+
+    <p>The honest trade-off: a whole-home monitor costs more upfront, requires you to open your electrical panel, and needs a nearby WiFi signal and a power outlet. If your panel is in an awkward location, check those two things before you buy anything.</p>
+
+    <h2>Choosing the Right Monitor</h2>
+
+    <p>There are really three options worth considering for a residential installation. We've compared Sense and Emporia Vue in depth in a <a href="sense-vs-emporia-vue-energy-monitor-review">dedicated head-to-head review</a>, so here's the condensed version with a third option included.</p>
+
+    <table class="savings-table">
+      <thead>
+        <tr>
+          <th>Monitor</th>
+          <th>Price (approx.)</th>
+          <th>Circuit sensors included</th>
+          <th>Appliance detection</th>
+          <th>Monthly fee</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Emporia Vue Gen 3</td>
+          <td>~$70</td>
+          <td>8 (expandable to 16)</td>
+          <td>No (manual labeling)</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td>Sense Energy Monitor</td>
+          <td>~$299</td>
+          <td>2 (mains only)</td>
+          <td>Yes (machine learning)</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td>Emporia Vue with 16-circuit kit</td>
+          <td>~$120</td>
+          <td>16</td>
+          <td>No (manual labeling)</td>
+          <td>None</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>For most beginners, the Emporia Vue Gen 3 is the practical starting point. It's inexpensive, has no subscription, the app is straightforward, and the per-circuit sensors let you see individual loads clearly without relying on pattern-matching software. Sense's appliance detection is genuinely impressive when it works, but it takes days or weeks to learn your home and doesn't identify everything. We covered it in a <a href="sense-energy-monitor-review-save-money-tracking-electricity">full Sense review here</a> if you want the detail on that.</p>
+
+    <p>If you have solar panels, both Sense and the Emporia Vue support solar monitoring — you just need to verify you're buying the solar-compatible version or kit. It adds CT sensors on the solar feed so the app can show net usage.</p>
+
+    <h2>What You Need Before You Start</h2>
+
+    <p>Before ordering anything, check a few things. Your electrical panel needs to have space near the breakers for the CT sensors — typically the sensors clip around the main service wires, which are the two thick cables feeding the panel from the utility. Those wires are almost always accessible. The gateway (the box that connects to WiFi) needs a standard 240V or 120V outlet nearby depending on the monitor, and your phone's WiFi network needs to reach the panel location.</p>
+
+    <p>Also check whether your panel is a tandem-breaker or older fuse-based setup. The CT sensors work regardless, but some older panels have tight clearances. If you can't see the main service wires clearly after turning off the main breaker, that's a job for an electrician.</p>
+
+    <p>Tools you'll need: a flathead and Phillips screwdriver, a smartphone, and the monitor's app downloaded before you start. That's it for the basic install.</p>
+
+    <h2>Installing the Monitor: Step by Step</h2>
+
+    <p>These steps reflect the general process for CT-clamp monitors like the Emporia Vue. Your specific unit will include an installation guide; follow it for anything that conflicts with this overview.</p>
+
+    <p><strong>Step 1: Turn off the main breaker.</strong> This cuts power to every circuit in your panel. The main service wires feeding into the top of the panel will still be live — they come from the utility and cannot be shut off at your panel. Don't touch those wires. This is the one thing that warrants real care: keep your hands away from the top of the panel where the service entrance wires connect.</p>
+
+    <p><strong>Step 2: Remove the panel cover.</strong> Unscrew it and set it aside. You'll see rows of breakers and the wires connecting them. The main service wires are the two thick wires (or lugs) at the top, usually copper or aluminum, connecting to the main breaker.</p>
+
+    <p><strong>Step 3: Clip the main CT sensors.</strong> The two large CT clamps snap around the two main service wires — one on each wire. They're directional on most monitors, so follow the arrow on the sensor to make sure it faces the correct way. They clip on and off without touching the wire itself.</p>
+
+    <p><strong>Step 4: Add circuit-level CT sensors (if applicable).</strong> If your monitor came with smaller CT sensors for individual circuits, clip those around the hot wire of each circuit breaker you want to monitor. Each breaker has one wire coming out of it; that's the one you clamp. Label each sensor as you go — a small piece of tape with "dryer," "HVAC," "water heater" saves a lot of guesswork later.</p>
+
+    <p><strong>Step 5: Route the sensor cables to the gateway.</strong> The sensor cables run from inside the panel to the gateway box. Most installs route them through a knockout hole at the bottom of the panel. The gateway itself mounts on the wall near the panel and plugs into a nearby outlet.</p>
+
+    <p><strong>Step 6: Replace the panel cover and restore power.</strong> Turn the main breaker back on. The gateway will power up and begin connecting.</p>
+
+    <p><strong>Step 7: Set up the app.</strong> Follow the in-app setup to connect the gateway to your WiFi network and assign your circuits. This takes about 10 minutes. Once it's connected, you'll start seeing real-time data almost immediately.</p>
+
+    <p>Total time for a straightforward panel: about one to two hours, with most of that being the app setup and circuit labeling rather than the physical installation.</p>
+
+    <h2>What to Look at First Once It's Running</h2>
+
+    <p>The first thing to check is your baseline: what does your home draw at 2 a.m. on a weeknight when nothing is deliberately on? This is your always-on load. For a typical home it might be 200–500 watts from things like the refrigerator cycling, the router, cable box, and standby electronics. If it's closer to 800–1,000 watts, something is running that shouldn't be — that's worth investigating before anything else.</p>
+
+    <p>At $0.17/kWh (close to the current U.S. average per the EIA), 500 watts of always-on load costs about $720 per year. 1,000 watts costs about $1,440. The gap between those two numbers is the opportunity, and your monitor will show you exactly where it's coming from.</p>
+
+    <p>After the overnight baseline, run your appliances one at a time and watch the app. Turn on the dryer and note the spike. Run the dishwasher. Set the oven to 350°F and watch it cycle. This manual mapping exercise takes an afternoon but gives you a mental model of your home's loads that you'll carry forward. It's also more reliable than waiting weeks for automatic detection software to figure it out.</p>
+
+    <p>The three things most people find in the first week that they didn't expect: a water heater set too high cycling constantly, an old second refrigerator in the garage drawing more than expected (we did a full breakdown on <a href="second-refrigerator-garage-cost">that cost here</a>), and standby draws from entertainment equipment that never fully powers off.</p>
+
+    <h2>Turning Data Into Savings</h2>
+
+    <p>The monitor doesn't save you money by itself — the savings come from what you do with the information. Here's how to think about it practically.</p>
+
+    <p>Sort your loads by size and ask whether each one is operating correctly. A water heater that's short-cycling more than once per hour on a moderate day may have sediment buildup or a failing element. A dryer that runs for 90 minutes on a normal load is either overloaded, has a clogged vent, or both. A heat pump that runs almost continuously in mild weather may have a refrigerant issue or a dirty filter. These are cases where the monitor reveals a maintenance problem, not just a usage habit — fixing the underlying issue saves more than behavioral change alone.</p>
+
+    <p>For loads that are working correctly but just large, the monitor helps you time them. If your utility has time-of-use rates, you can see when your biggest draws run and shift them to off-peak hours. Running the dishwasher and dryer after 9 p.m. instead of at 7 p.m. can save $5–$15 per month depending on your rate structure — not dramatic on its own, but it adds up over a year and costs nothing once it's a habit.</p>
+
+    <p>Realistic savings expectations: the EIA and ENERGY STAR generally cite 10–30% bill reductions for households that actively use energy monitoring data to change behavior. The lower end is more typical if you've already done the basics (LED bulbs, a programmable thermostat, no egregious standby draws). The higher end is realistic if you've never looked closely at your usage before. If you want to understand what your bill should look like for your home size, our post on <a href="average-electric-bill-by-home-size">average electric bills by home size</a> gives a useful baseline.</p>
+
+    <h2>A Few Things to Set Realistic Expectations On</h2>
+
+    <p>The monitor shows you watts and kilowatt-hours. It doesn't fix anything by itself, and it won't pay for itself unless you use it regularly in the first few months when the novelty is high and the discoveries are most frequent. Set a reminder to check the app weekly for the first two months, then monthly after that.</p>
+
+    <p>Also: some loads are genuinely hard to reduce. The refrigerator runs what it runs; unless it's old and inefficient, there's not much to do there. Central AC in a hot climate is similarly constrained — the envelope of your house determines how hard it works more than any setting. The monitor is most useful for catching abnormalities and high standby draws, not for optimizing things that are already running efficiently.</p>
+
+    <p>If you have a 200-amp panel with mostly modern circuits, the whole install is about as complex as setting up a router. If you have an older home with a 100-amp panel, mixed wiring, or a subpanel setup, it's still doable but takes more planning to make sure you're monitoring the right feeds.</p>
+
+    <div class="product-rec" itemscope itemtype="https://schema.org/Product">
+      <meta itemprop="image" content="https://ecothrifthome.com/images/placeholder-product.jpg">
+      <meta itemprop="brand" content="Emporia">
+      <meta itemprop="sku" content="emporia-vue-gen3-energy-monitor">
+      <h4 itemprop="name">Emporia Vue Gen 3 Smart Home Energy Monitor</h4>
+      <p itemprop="description">Clamp-on whole-home monitor with 8 circuit sensors included, real-time app, no subscription fee. Straightforward install for most standard panels.</p>
+      <div class="product-rec-meta">
+        <span class="rec-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+          <meta itemprop="availability" content="https://schema.org/InStock">
+          <meta itemprop="url" content="https://www.amazon.com/s?k=Emporia+Vue+Gen+3+Smart+Home+Energy+Monitor&tag=ecothriftho03-20">
+          <meta itemprop="priceCurrency" content="USD">
+          <meta itemprop="price" content="70">
+          <span>~$70</span>
+        </span>
+        <span class="rec-savings">No monthly fee</span>
+      </div>
+      <a href="https://www.amazon.com/s?k=Emporia+Vue+Gen+3+Smart+Home+Energy+Monitor&tag=ecothriftho03-20"
+         class="btn btn-amazon"
+         rel="nofollow sponsored noopener noreferrer"
+         target="_blank"
+         aria-label="Buy Emporia Vue Gen 3 on Amazon (affiliate link, opens in new tab)">
+        <i class="fab fa-amazon" aria-hidden="true"></i> Check Price on Amazon
+      </a>
+    </div>
+
+    <div class="product-rec" itemscope itemtype="https://schema.org/Product">
+      <meta itemprop="image" content="https://ecothrifthome.com/images/placeholder-product.jpg">
+      <meta itemprop="brand" content="Sense">
+      <meta itemprop="sku" content="sense-energy-monitor">
+      <h4 itemprop="name">Sense Energy Monitor</h4>
+      <p itemprop="description">Whole-home monitor with machine-learning appliance detection. Good choice if you want automatic device identification rather than manual circuit mapping. Costs more upfront but no subscription.</p>
+      <div class="product-rec-meta">
+        <span class="rec-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+          <meta itemprop="availability" content="https://schema.org/InStock">
+          <meta itemprop="url" content="https://www.amazon.com/s?k=Sense+Energy+Monitor&tag=ecothriftho03-20">
+          <meta itemprop="priceCurrency" content="USD">
+          <meta itemprop="price" content="299">
+          <span>~$299</span>
+        </span>
+        <span class="rec-savings">Automatic appliance detection</span>
+      </div>
+      <a href="https://www.amazon.com/s?k=Sense+Energy+Monitor&tag=ecothriftho03-20"
+         class="btn btn-amazon"
+         rel="nofollow sponsored noopener noreferrer"
+         target="_blank"
+         aria-label="Buy Sense Energy Monitor on Amazon (affiliate link, opens in new tab)">
+        <i class="fab fa-amazon" aria-hidden="true"></i> Check Price on Amazon
+      </a>
+    </div>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-section">
+      <h3>Do I need an electrician to install a whole-home energy monitor?</h3>
+      <p>Most CT-clamp monitors do not require an electrician for the sensor installation itself — you clip the sensors onto existing wires without cutting anything. However, you are working inside an electrical panel, which carries real shock risk. If you're not comfortable with that, hiring an electrician for a one-hour job is reasonable and typically costs $75–$150.</p>
+
+      <h3>Will a whole-home monitor work if I have solar panels?</h3>
+      <p>Yes, most current monitors including Emporia Vue and Sense support solar configurations. You add a second set of CT sensors on the solar feed so the monitor can show both what you generate and what you consume. Check the product's solar kit before buying.</p>
+
+      <h3>How long does it take to see real savings from energy monitoring?</h3>
+      <p>Most people spot two or three quick wins in the first week — an appliance left on, a water heater set too high, something with high standby draw. Bigger behavioral changes typically pay off over the first one to three months. The monitor itself pays for itself faster if you act on what you find.</p>
+
+      <h3>What's the difference between a whole-home monitor and a smart plug with energy monitoring?</h3>
+      <p>A smart plug measures one device at a time — whatever is plugged into it. A whole-home monitor measures everything flowing through your main panel simultaneously, so you get a complete picture without plugging anything in or out. The two are complementary: use the whole-home monitor to find the big draws, then a smart plug to get precise data on a specific appliance.</p>
+
+      <h3>Can a whole-home energy monitor identify individual appliances automatically?</h3>
+      <p>Sense uses machine learning to detect appliance signatures and can identify many devices over time, though it takes days to weeks to learn your home and accuracy varies. Emporia Vue does not do automatic device detection — it shows total and circuit-level usage, but you label things yourself. Both approaches have trade-offs.</p>
+    </div>
+
+    <h2>In Short</h2>
+
+    <p>Get the Emporia Vue Gen 3 if you want a low-cost, no-subscription starting point that shows you circuit-level data clearly. Get the Sense if you'd rather pay more upfront for automatic appliance detection and don't mind waiting a few weeks for it to learn your home. Install it on a weekday afternoon, check your overnight baseline first, then run your appliances one at a time to build a picture of your loads. The savings come from acting on what you find — not from the monitor running in the background while you ignore it.</p>
+
+    <p class="affiliate-disclosure"><strong>Affiliate Disclosure:</strong> Some links in this article are Amazon affiliate links. As an Amazon Associate, EcoThrift Home earns from qualifying purchases, at no extra cost to you. See our full <a href="/about#affiliate-disclosure">affiliate disclosure</a>.</p>
+
+  </article>
+
+  <aside class="post-sidebar" aria-label="Related posts and resources">
+    <div class="sidebar-widget">
+      <h4>Related Posts</h4>
+      <div class="sidebar-posts">
+        <div class="sidebar-post">
+          <a href="sense-vs-emporia-vue-energy-monitor-review">
+            <span class="sidebar-post-icon" aria-hidden="true">⚡</span>
+            <div><h5>Sense vs Emporia Vue: Which Energy Monitor Is Worth It?</h5><p>Full head-to-head comparison</p></div>
+          </a>
+        </div>
+        <div class="sidebar-post">
+          <a href="sense-energy-monitor-review-save-money-tracking-electricity">
+            <span class="sidebar-post-icon" aria-hidden="true">📊</span>
+            <div><h5>Sense Energy Monitor Review: Can It Really Save You Money?</h5><p>Honest numbers inside</p></div>
+          </a>
+        </div>
+        <div class="sidebar-post">
+          <a href="biggest-energy-wasters-home-ranked-by-cost">
+            <span class="sidebar-post-icon" aria-hidden="true">💸</span>
+            <div><h5>Biggest Energy Wasters in Your Home, Ranked by Cost</h5><p>Know what to look for</p></div>
+          </a>
+        </div>
+        <div class="sidebar-post">
+          <a href="average-electric-bill-by-home-size">
+            <span class="sidebar-post-icon" aria-hidden="true">🏠</span>
+            <div><h5>Average Electric Bill by Home Size</h5><p>Is your bill too high?</p></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-widget">
+      <h4>Quick Facts</h4>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:.625rem;">
+        <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">$0.17/kWh</strong> approximate U.S. average electricity rate (EIA)</li>
+        <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">500W overnight</strong> typical always-on load in a standard home</li>
+        <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">No subscription</strong> required for Emporia Vue or Sense</li>
+        <li style="font-size:.875rem; color:var(--gray-700);"><strong style="color:var(--green-700);">1–2 hours</strong> typical install time for a standard panel</li>
+      </ul>
+    </div>
+
+    <div class="post-cta-box">
+      <h4>Calculate Your Savings</h4>
+      <p>See how much your household can save with our free calculator.</p>
+      <a href="/calculator" class="btn btn-primary">Open Calculator</a>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo footer-logo" aria-label="EcoThrift Home">
+          <span aria-hidden="true">🌿</span>
+          <div><span class="logo-name">EcoThrift Home</span><span class="logo-tagline">Save Energy. Save Money.</span></div>
+        </a>
+        <p>Evidence-based, budget-first energy saving tips for every home.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <h3>Explore</h3>
+        <ul role="list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/#blog-posts">Blog Posts</a></li>
+          <li><a href="/#top-products">Top Products</a></li>
+          <li><a href="/#faq">FAQs</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-nav" aria-label="Company navigation">
+        <h3>Company</h3>
+        <ul role="list">
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/about#affiliate-disclosure">Disclosure</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+        </ul>
+      </nav>
+      <div class="footer-social">
+        <h3>Follow</h3>
+        <div class="social-links">
+          <a href="https://pinterest.com/ecothrifthome" rel="noopener noreferrer" target="_blank" aria-label="Pinterest"><i class="fab fa-pinterest" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="affiliate-disclosure"><strong>Affiliate Disclosure:</strong> EcoThrift Home is a participant in the Amazon Services LLC Associates Program. As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.</p>
+      <p class="copyright">&copy; <span id="current-year"></span> EcoThrift Home. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

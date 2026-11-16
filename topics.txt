@@ -155,7 +155,7 @@
 # done: smart thermostat geofencing save money when you leave home
 # done: smart water leak detectors prevent costly water damage reviewed
 # done: smart blinds and shades automate window coverings save energy
-whole home energy monitoring setup guide for beginners
+# done: whole home energy monitoring setup guide for beginners
 smart irrigation controllers cut outdoor water bills reviewed
 do smart home devices use more electricity than they save
 best home automation routines that save energy on autopilot
