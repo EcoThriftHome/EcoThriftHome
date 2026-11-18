@@ -156,7 +156,7 @@
 # done: smart water leak detectors prevent costly water damage reviewed
 # done: smart blinds and shades automate window coverings save energy
 # done: whole home energy monitoring setup guide for beginners
-smart irrigation controllers cut outdoor water bills reviewed
+# done: smart irrigation controllers cut outdoor water bills reviewed
 do smart home devices use more electricity than they save
 best home automation routines that save energy on autopilot
 
