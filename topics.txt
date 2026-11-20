@@ -157,7 +157,7 @@
 # done: smart blinds and shades automate window coverings save energy
 # done: whole home energy monitoring setup guide for beginners
 # done: smart irrigation controllers cut outdoor water bills reviewed
-do smart home devices use more electricity than they save
+# done: do smart home devices use more electricity than they save
 best home automation routines that save energy on autopilot
 
 # ── SEASONAL & WEATHER ────────────────────────────────────────
