@@ -158,7 +158,7 @@
 # done: whole home energy monitoring setup guide for beginners
 # done: smart irrigation controllers cut outdoor water bills reviewed
 # done: do smart home devices use more electricity than they save
-best home automation routines that save energy on autopilot
+# done: best home automation routines that save energy on autopilot
 
 # ── SEASONAL & WEATHER ────────────────────────────────────────
 fall energy checklist 12 things to do before winter hits
