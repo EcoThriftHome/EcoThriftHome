@@ -161,7 +161,7 @@
 # done: best home automation routines that save energy on autopilot
 
 # ── SEASONAL & WEATHER ────────────────────────────────────────
-fall energy checklist 12 things to do before winter hits
+# done: fall energy checklist 12 things to do before winter hits
 spring energy checklist prepare your home for cooling season
 how to keep upstairs cool when downstairs is cold summer fix
 best way to heat a garage workshop in winter cheaply
